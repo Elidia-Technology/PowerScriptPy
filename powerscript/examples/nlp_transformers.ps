@@ -1,0 +1,548 @@
+// PowerScript Natural Language Processing Example
+// Demonstrates transformer implementation and text processing
+
+import { torch } from "torch";
+import { torch.nn as nn } from "torch";
+import { torch.nn.functional as F } from "torch";
+import { transformers } from "transformers";
+import { numpy as np } from "numpy";
+import { re } from "re";
+
+// Multi-Head Attention Implementation
+class MultiHeadAttention extends nn.Module {
+    private numHeads: number;
+    private dModel: number;
+    private dK: number;
+    private wQ: nn.Linear;
+    private wK: nn.Linear;
+    private wV: nn.Linear;
+    private wO: nn.Linear;
+    private dropout: nn.Dropout;
+    
+    constructor(dModel: number, numHeads: number, dropout: number = 0.1) {
+        super();
+        
+        this.numHeads = numHeads;
+        this.dModel = dModel;
+        this.dK = dModel / numHeads;
+        
+        this.wQ = nn.Linear(dModel, dModel);
+        this.wK = nn.Linear(dModel, dModel);
+        this.wV = nn.Linear(dModel, dModel);
+        this.wO = nn.Linear(dModel, dModel);
+        this.dropout = nn.Dropout(dropout);
+    }
+    
+    forward(query: torch.Tensor, key: torch.Tensor, value: torch.Tensor, mask?: torch.Tensor): torch.Tensor {
+        const batchSize = query.size(0);
+        
+        // Linear transformations
+        const Q = this.wQ(query);
+        const K = this.wK(key);
+        const V = this.wV(value);
+        
+        // Reshape for multi-head attention
+        const QHeads = Q.view(batchSize, -1, this.numHeads, this.dK).transpose(1, 2);
+        const KHeads = K.view(batchSize, -1, this.numHeads, this.dK).transpose(1, 2);
+        const VHeads = V.view(batchSize, -1, this.numHeads, this.dK).transpose(1, 2);
+        
+        // Scaled dot-product attention
+        const attention = this.scaledDotProductAttention(QHeads, KHeads, VHeads, mask);
+        
+        // Concatenate heads
+        const concatenated = attention.transpose(1, 2).contiguous()
+            .view(batchSize, -1, this.dModel);
+        
+        return this.wO(concatenated);
+    }
+    
+    private scaledDotProductAttention(
+        Q: torch.Tensor, 
+        K: torch.Tensor, 
+        V: torch.Tensor, 
+        mask?: torch.Tensor
+    ): torch.Tensor {
+        const scores = torch.matmul(Q, K.transpose(-2, -1)) / Math.sqrt(this.dK);
+        
+        if (mask) {
+            scores.masked_fill_(mask === 0, -1e9);
+        }
+        
+        const attentionWeights = F.softmax(scores, -1);
+        const droppedWeights = this.dropout(attentionWeights);
+        
+        return torch.matmul(droppedWeights, V);
+    }
+}
+
+// Transformer Encoder Layer
+class TransformerEncoderLayer extends nn.Module {
+    private multiHeadAttention: MultiHeadAttention;
+    private feedForward: nn.Sequential;
+    private norm1: nn.LayerNorm;
+    private norm2: nn.LayerNorm;
+    private dropout: nn.Dropout;
+    
+    constructor(dModel: number, numHeads: number, dFF: number, dropout: number = 0.1) {
+        super();
+        
+        this.multiHeadAttention = new MultiHeadAttention(dModel, numHeads, dropout);
+        this.feedForward = nn.Sequential(
+            nn.Linear(dModel, dFF),
+            nn.ReLU(),
+            nn.Dropout(dropout),
+            nn.Linear(dFF, dModel)
+        );
+        
+        this.norm1 = nn.LayerNorm(dModel);
+        this.norm2 = nn.LayerNorm(dModel);
+        this.dropout = nn.Dropout(dropout);
+    }
+    
+    forward(x: torch.Tensor, mask?: torch.Tensor): torch.Tensor {
+        // Self-attention with residual connection
+        const attended = this.multiHeadAttention.forward(x, x, x, mask);
+        x = this.norm1(x + this.dropout(attended));
+        
+        // Feed-forward with residual connection
+        const ff = this.feedForward.forward(x);
+        x = this.norm2(x + this.dropout(ff));
+        
+        return x;
+    }
+}
+
+// Text Tokenizer
+class Tokenizer {
+    private vocabToId: Map<string, number>;
+    private idToVocab: Map<number, string>;
+    private maxLength: number;
+    
+    constructor(maxLength: number = 512) {
+        this.vocabToId = new Map();
+        this.idToVocab = new Map();
+        this.maxLength = maxLength;
+        
+        // Special tokens
+        this.addToken("<pad>");
+        this.addToken("<unk>");
+        this.addToken("<bos>");
+        this.addToken("<eos>");
+    }
+    
+    private addToken(token: string): void {
+        if (!this.vocabToId.has(token)) {
+            const id = this.vocabToId.size;
+            this.vocabToId.set(token, id);
+            this.idToVocab.set(id, token);
+        }
+    }
+    
+    buildVocab(texts: string[]): void {
+        const tokenCounts = new Map<string, number>();
+        
+        for (const text of texts) {
+            const tokens = this.tokenize(text);
+            for (const token of tokens) {
+                tokenCounts.set(token, (tokenCounts.get(token) || 0) + 1);
+            }
+        }
+        
+        // Add tokens that appear more than once
+        for (const [token, count] of tokenCounts) {
+            if (count > 1) {
+                this.addToken(token);
+            }
+        }
+    }
+    
+    private tokenize(text: string): string[] {
+        // Simple word tokenization (in practice, use subword tokenization)
+        return text.toLowerCase()
+            .replace(/[^\w\s]/g, " ")
+            .split(/\s+/)
+            .filter(token => token.length > 0);
+    }
+    
+    encode(text: string): number[] {
+        const tokens = this.tokenize(text);
+        const ids = [this.vocabToId.get("<bos>")!];
+        
+        for (const token of tokens) {
+            const id = this.vocabToId.get(token) || this.vocabToId.get("<unk>")!;
+            ids.push(id);
+        }
+        
+        ids.push(this.vocabToId.get("<eos>")!);
+        
+        // Pad or truncate to max length
+        while (ids.length < this.maxLength) {
+            ids.push(this.vocabToId.get("<pad>")!);
+        }
+        
+        return ids.slice(0, this.maxLength);
+    }
+    
+    decode(ids: number[]): string {
+        const tokens = ids
+            .map(id => this.idToVocab.get(id) || "<unk>")
+            .filter(token => !["<pad>", "<bos>", "<eos>"].includes(token));
+        
+        return tokens.join(" ");
+    }
+    
+    get vocabSize(): number {
+        return this.vocabToId.size;
+    }
+}
+
+// Transformer Language Model
+class TransformerLM extends nn.Module {
+    private embedding: nn.Embedding;
+    private positionalEncoding: nn.Parameter;
+    private encoderLayers: nn.ModuleList;
+    private outputProjection: nn.Linear;
+    private dropout: nn.Dropout;
+    
+    constructor(
+        vocabSize: number,
+        dModel: number = 512,
+        numHeads: number = 8,
+        numLayers: number = 6,
+        dFF: number = 2048,
+        maxLength: number = 512,
+        dropout: number = 0.1
+    ) {
+        super();
+        
+        this.embedding = nn.Embedding(vocabSize, dModel);
+        this.positionalEncoding = nn.Parameter(torch.randn(maxLength, dModel));
+        
+        this.encoderLayers = nn.ModuleList([
+            new TransformerEncoderLayer(dModel, numHeads, dFF, dropout)
+            for (let i = 0; i < numLayers; i++)
+        ]);
+        
+        this.outputProjection = nn.Linear(dModel, vocabSize);
+        this.dropout = nn.Dropout(dropout);
+    }
+    
+    forward(inputIds: torch.Tensor, mask?: torch.Tensor): torch.Tensor {
+        const seqLength = inputIds.size(1);
+        
+        // Embeddings + positional encoding
+        let x = this.embedding(inputIds);
+        x = x + this.positionalEncoding.slice(0, seqLength).unsqueeze(0);
+        x = this.dropout(x);
+        
+        // Pass through encoder layers
+        for (const layer of this.encoderLayers) {
+            x = layer.forward(x, mask);
+        }
+        
+        // Output projection
+        return this.outputProjection(x);
+    }
+    
+    generate(
+        prompt: string,
+        tokenizer: Tokenizer,
+        maxLength: number = 100,
+        temperature: number = 1.0
+    ): string {
+        this.eval();
+        
+        const promptIds = torch.tensor([tokenizer.encode(prompt)]);
+        let generatedIds = promptIds.clone();
+        
+        for (let i = 0; i < maxLength; i++) {
+            const outputs = this.forward(generatedIds);
+            const nextTokenLogits = outputs[0, -1, :] / temperature;
+            const nextTokenProbs = F.softmax(nextTokenLogits, -1);
+            
+            // Sample from the distribution
+            const nextTokenId = torch.multinomial(nextTokenProbs, 1);
+            generatedIds = torch.cat([generatedIds, nextTokenId.unsqueeze(0)], 1);
+            
+            // Stop if we generate an end token
+            if (nextTokenId.item() === tokenizer.vocabToId.get("<eos>")) {
+                break;
+            }
+        }
+        
+        return tokenizer.decode(generatedIds[0].tolist());
+    }
+}
+
+// Sentiment Analysis Model
+class SentimentClassifier extends nn.Module {
+    private encoder: TransformerLM;
+    private classifier: nn.Linear;
+    private dropout: nn.Dropout;
+    
+    constructor(vocabSize: number, numClasses: number = 3) {
+        super();
+        
+        this.encoder = new TransformerLM(vocabSize, 256, 4, 3); // Smaller model
+        this.classifier = nn.Linear(256, numClasses);
+        this.dropout = nn.Dropout(0.3);
+    }
+    
+    forward(inputIds: torch.Tensor, mask?: torch.Tensor): torch.Tensor {
+        // Get contextualized representations
+        const encoderOutput = this.encoder.forward(inputIds, mask);
+        
+        // Use [CLS] token representation (first token)
+        const clsRepresentation = encoderOutput[:, 0, :];
+        const dropped = this.dropout(clsRepresentation);
+        
+        return this.classifier(dropped);
+    }
+}
+
+// NLP Trainer
+class NLPTrainer {
+    private model: nn.Module;
+    private tokenizer: Tokenizer;
+    private optimizer: torch.optim.Optimizer;
+    private criterion: nn.Module;
+    private device: torch.device;
+    
+    constructor(model: nn.Module, tokenizer: Tokenizer, learningRate: number = 0.0001) {
+        this.model = model;
+        this.tokenizer = tokenizer;
+        this.device = torch.cuda.is_available() ? torch.device("cuda") : torch.device("cpu");
+        this.model.to(this.device);
+        
+        this.optimizer = torch.optim.AdamW(this.model.parameters(), { lr: learningRate });
+        this.criterion = nn.CrossEntropyLoss();
+        
+        console.log(`Training on device: ${this.device}`);
+    }
+    
+    async trainBatch(texts: string[], labels?: number[]): Promise<number> {
+        this.model.train();
+        
+        // Tokenize and convert to tensors
+        const inputIds = torch.tensor(texts.map(text => this.tokenizer.encode(text)));
+        inputIds = inputIds.to(this.device);
+        
+        let loss: torch.Tensor;
+        
+        if (labels) {
+            // Supervised training (classification)
+            const labelTensor = torch.tensor(labels).to(this.device);
+            const outputs = this.model.forward(inputIds);
+            loss = this.criterion(outputs, labelTensor);
+        } else {
+            // Language modeling
+            const outputs = this.model.forward(inputIds[:, :-1]);
+            const targets = inputIds[:, 1:];
+            loss = this.criterion(
+                outputs.view(-1, outputs.size(-1)),
+                targets.view(-1)
+            );
+        }
+        
+        // Backward pass
+        this.optimizer.zero_grad();
+        loss.backward();
+        torch.nn.utils.clip_grad_norm_(this.model.parameters(), 1.0);
+        this.optimizer.step();
+        
+        return loss.item();
+    }
+    
+    async evaluate(texts: string[], labels: number[]): Promise<{loss: number, accuracy: number}> {
+        this.model.eval();
+        
+        const inputIds = torch.tensor(texts.map(text => this.tokenizer.encode(text)));
+        const labelTensor = torch.tensor(labels);
+        
+        inputIds = inputIds.to(this.device);
+        labelTensor = labelTensor.to(this.device);
+        
+        const outputs = this.model.forward(inputIds);
+        const loss = this.criterion(outputs, labelTensor);
+        
+        const predicted = torch.argmax(outputs, 1);
+        const correct = (predicted === labelTensor).sum().item();
+        const accuracy = correct / labels.length;
+        
+        return { loss: loss.item(), accuracy };
+    }
+    
+    predictSentiment(text: string): {prediction: string, confidence: number, probabilities: number[]} {
+        this.model.eval();
+        
+        const inputIds = torch.tensor([this.tokenizer.encode(text)]).to(this.device);
+        const outputs = this.model.forward(inputIds);
+        const probabilities = F.softmax(outputs[0], 0);
+        
+        const predictionId = torch.argmax(probabilities).item();
+        const confidence = probabilities[predictionId].item();
+        
+        const sentiments = ["negative", "neutral", "positive"];
+        
+        return {
+            prediction: sentiments[predictionId],
+            confidence,
+            probabilities: probabilities.cpu().numpy()
+        };
+    }
+}
+
+// Text Generation Pipeline
+class TextGenerator {
+    private model: TransformerLM;
+    private tokenizer: Tokenizer;
+    
+    constructor(model: TransformerLM, tokenizer: Tokenizer) {
+        this.model = model;
+        this.tokenizer = tokenizer;
+    }
+    
+    generate(
+        prompt: string,
+        maxLength: number = 100,
+        temperature: number = 1.0,
+        topK: number = 50,
+        topP: number = 0.9
+    ): string {
+        return this.model.generate(prompt, this.tokenizer, maxLength, temperature);
+    }
+    
+    generateBatch(prompts: string[], maxLength: number = 100): string[] {
+        return prompts.map(prompt => this.generate(prompt, maxLength));
+    }
+    
+    completeText(partialText: string, numCompletions: number = 3): string[] {
+        const completions = [];
+        
+        for (let i = 0; i < numCompletions; i++) {
+            const completion = this.generate(partialText, 50, 0.8);
+            completions.push(completion);
+        }
+        
+        return completions;
+    }
+}
+
+// Named Entity Recognition
+class NERTagger {
+    private model: nn.Module;
+    private tokenizer: Tokenizer;
+    private tagToId: Map<string, number>;
+    private idToTag: Map<number, string>;
+    
+    constructor(tokenizer: Tokenizer) {
+        this.tokenizer = tokenizer;
+        
+        // BIO tagging scheme
+        const tags = [
+            "O", "B-PER", "I-PER", "B-ORG", "I-ORG", 
+            "B-LOC", "I-LOC", "B-MISC", "I-MISC"
+        ];
+        
+        this.tagToId = new Map();
+        this.idToTag = new Map();
+        
+        tags.forEach((tag, id) => {
+            this.tagToId.set(tag, id);
+            this.idToTag.set(id, tag);
+        });
+        
+        this.buildModel();
+    }
+    
+    private buildModel(): void {
+        const encoderLayer = new TransformerEncoderLayer(256, 4, 1024, 0.1);
+        this.model = nn.Sequential(
+            nn.Embedding(this.tokenizer.vocabSize, 256),
+            encoderLayer,
+            nn.Linear(256, this.tagToId.size)
+        );
+    }
+    
+    predict(text: string): Array<{token: string, tag: string, confidence: number}> {
+        this.model.eval();
+        
+        const tokens = text.split(" ");
+        const inputIds = torch.tensor([this.tokenizer.encode(text)]);
+        const outputs = this.model.forward(inputIds);
+        const predictions = F.softmax(outputs[0], -1);
+        
+        const results = [];
+        for (let i = 0; i < tokens.length; i++) {
+            const tokenPredictions = predictions[i];
+            const tagId = torch.argmax(tokenPredictions).item();
+            const confidence = tokenPredictions[tagId].item();
+            const tag = this.idToTag.get(tagId) || "O";
+            
+            results.push({
+                token: tokens[i],
+                tag,
+                confidence
+            });
+        }
+        
+        return results;
+    }
+}
+
+// Main NLP Pipeline
+async function main(): Promise<void> {
+    console.log("Starting NLP Pipeline...");
+    
+    // Initialize tokenizer and build vocabulary
+    const tokenizer = new Tokenizer(128);
+    const sampleTexts = [
+        "This is a great movie!",
+        "I hate this product.",
+        "The weather is nice today.",
+        "Machine learning is fascinating."
+    ];
+    
+    tokenizer.buildVocab(sampleTexts);
+    console.log(`Vocabulary size: ${tokenizer.vocabSize}`);
+    
+    // Language Model
+    const languageModel = new TransformerLM(tokenizer.vocabSize, 256, 4, 3);
+    console.log("Language model created");
+    
+    // Text Generation
+    const generator = new TextGenerator(languageModel, tokenizer);
+    
+    // Sentiment Analysis
+    const sentimentModel = new SentimentClassifier(tokenizer.vocabSize);
+    const sentimentTrainer = new NLPTrainer(sentimentModel, tokenizer);
+    
+    console.log("Sentiment classifier created");
+    
+    // Named Entity Recognition
+    const nerTagger = new NERTagger(tokenizer);
+    console.log("NER tagger created");
+    
+    // Example usage
+    const testText = "Apple Inc. is located in Cupertino, California.";
+    const entities = nerTagger.predict(testText);
+    console.log("Named entities:", entities);
+    
+    console.log("NLP pipeline completed!");
+}
+
+// Export classes for module use
+export { 
+    MultiHeadAttention, 
+    TransformerEncoderLayer, 
+    TransformerLM, 
+    SentimentClassifier,
+    Tokenizer, 
+    NLPTrainer, 
+    TextGenerator, 
+    NERTagger 
+};
+
+if (require.main === module) {
+    main().catch(console.error);
+}
