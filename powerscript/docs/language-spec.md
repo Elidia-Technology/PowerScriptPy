@@ -11,7 +11,9 @@
 8. [Async/Await](#asyncawait)
 9. [Generics](#generics)
 10. [Modules](#modules)
-11. [Compilation](#compilation)
+11. [File Handling](#file-handling)
+12. [Built-in Functions](#built-in-functions)
+13. [Compilation](#compilation)
 
 ## Introduction
 
@@ -327,6 +329,107 @@ PowerScript provides comprehensive error reporting:
 - PowerScript stack traces
 - Runtime type validation (optional)
 
+## File Handling
+
+PowerScript provides comprehensive file I/O operations through built-in functions and classes.
+
+### Basic File Operations
+
+```powerscript
+// Write text to file
+file_write("data.txt", "Hello, World!")
+
+// Read text from file
+let content = file_read("data.txt")
+
+// Check if file exists
+if file_exists("data.txt") {
+    console.log("File exists!")
+}
+
+// Append to file
+file_append("data.txt", "\nNew line")
+
+// Delete file
+file_delete("data.txt")
+```
+
+### File Class
+
+```powerscript
+let file = File("document.txt")
+file.write("Content")
+let content = file.read()
+let lines = file.read_lines()
+console.log("Size:", file.size())
+```
+
+### Directory Operations
+
+```powerscript
+// Create directory
+dir_create("new_folder")
+
+// List directory contents
+let files = dir_list(".")
+
+// Directory class
+let dir = Directory("folder")
+dir.create_subdir("subfolder")
+let contents = dir.list_files()
+```
+
+### JSON and CSV Support
+
+```powerscript
+// JSON operations
+let data = { "name": "PowerScript", "version": "1.0" }
+json_write("config.json", data)
+let config = json_read("config.json")
+
+// CSV operations
+let csv_data = [["Name", "Age"], ["Alice", "25"]]
+csv_write("data.csv", csv_data)
+let loaded = csv_read("data.csv")
+```
+
+### File Streaming
+
+```powerscript
+// For large files
+let stream = file_stream("large.txt", "w")
+stream.write("data")
+stream.close()
+```
+
+## Built-in Functions
+
+PowerScript provides a rich set of built-in functions and classes:
+
+### Console Operations
+- `console.log()` - Print to console
+- `console.error()` - Print error
+- `console.warn()` - Print warning
+
+### Math Functions
+- `Math.abs()`, `Math.max()`, `Math.min()`
+- `Math.sqrt()`, `Math.pow()`, `Math.floor()`, `Math.ceil()`
+- `Math.sin()`, `Math.cos()`, `Math.tan()`
+- `Math.random()` - Random number generation
+
+### String Utilities
+- `str()` - Convert to string
+- `len()` - Get length
+- `range()` - Generate number sequence
+
+### Type Conversion
+- `int()`, `float()`, `bool()`
+- `list()`, `dict()`, `set()`
+
+### Date and Time
+- `DateTime.now()` - Current date/time
+- `DateTime.format()` - Format date
+
 ## Best Practices
 
 1. **Use Type Annotations**: Always specify types for better tooling
@@ -335,6 +438,8 @@ PowerScript provides comprehensive error reporting:
 4. **Error Handling**: Use try/catch for error management
 5. **Generics**: Use generics for reusable code
 6. **Module Organization**: Keep modules focused and cohesive
+7. **File Operations**: Always handle file I/O errors with try/catch
+8. **Resource Management**: Close file streams and clean up resources
 
 ## IDE Integration
 

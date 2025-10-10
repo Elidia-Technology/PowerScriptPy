@@ -67,6 +67,14 @@ class Transpiler(ASTVisitor):
         """Generate necessary import statements"""
         imports = []
         
+        # Add PowerScript built-ins import
+        builtins_import = ast.ImportFrom(
+            module='powerscript.runtime.builtins',
+            names=[ast.alias(name='*', asname=None)],
+            level=0
+        )
+        imports.append(builtins_import)
+        
         # Add typing imports if needed
         if self.type_imports:
             typing_import = ast.ImportFrom(

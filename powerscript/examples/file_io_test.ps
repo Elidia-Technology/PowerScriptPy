@@ -1,0 +1,157 @@
+# PowerScript File I/O Test
+# Tests all file handling capabilities
+
+import os
+import tempfile
+import json
+
+# Test basic file operations
+def test_file_write_read():
+    let content = "Hello, PowerScript!"
+    file_write("test.txt", content)
+    let result = file_read("test.txt")
+    assert result == content
+    file_delete("test.txt")
+
+# Test file existence checks
+def test_file_exists():
+    file_write("temp.txt", "test")
+    assert file_exists("temp.txt") == true
+    file_delete("temp.txt")
+    assert file_exists("temp.txt") == false
+
+# Test file append
+def test_file_append():
+    file_write("append_test.txt", "Line 1")
+    file_append("append_test.txt", "\nLine 2")
+    let content = file_read("append_test.txt")
+    assert content == "Line 1\nLine 2"
+    file_delete("append_test.txt")
+
+# Test File class
+def test_file_class():
+    let file = File("class_test.txt")
+    file.write("Test content")
+    assert file.exists() == true
+    assert file.is_file() == true
+    let content = file.read()
+    assert content == "Test content"
+    file.delete()
+
+# Test directory operations
+def test_directory_operations():
+    dir_create("test_dir")
+    assert dir_exists("test_dir") == true
+    
+    let dir = Directory("test_dir")
+    dir.create_subdir("subdir")
+    assert dir_exists("test_dir/subdir") == true
+    
+    dir_delete("test_dir")
+
+# Test JSON operations
+def test_json_operations():
+    let data = {
+        "name": "PowerScript",
+        "version": "1.0",
+        "features": ["file_io", "json"]
+    }
+    
+    json_write("test.json", data)
+    let loaded = json_read("test.json")
+    
+    assert loaded.name == "PowerScript"
+    assert loaded.version == "1.0"
+    assert loaded.features.length == 2
+    
+    file_delete("test.json")
+
+# Test CSV operations
+def test_csv_operations():
+    let data = [
+        ["Name", "Age"],
+        ["Alice", "25"],
+        ["Bob", "30"]
+    ]
+    
+    csv_write("test.csv", data)
+    let loaded = csv_read("test.csv")
+    
+    assert loaded.length == 3
+    assert loaded[0][0] == "Name"
+    assert loaded[1][1] == "25"
+    
+    file_delete("test.csv")
+
+# Test path operations
+def test_path_operations():
+    let path = Path("folder/subfolder/file.txt")
+    assert path.name() == "file.txt"
+    assert path.extension() == ".txt"
+    assert path.stem() == "file"
+    assert path.parent() == "folder/subfolder"
+
+# Test file streaming
+def test_file_streaming():
+    let stream = file_stream("stream_test.txt", "w")
+    stream.write("Line 1\n")
+    stream.write("Line 2\n")
+    stream.close()
+    
+    let read_stream = file_stream("stream_test.txt", "r")
+    let line1 = read_stream.readline()
+    let line2 = read_stream.readline()
+    read_stream.close()
+    
+    assert line1.trim() == "Line 1"
+    assert line2.trim() == "Line 2"
+    
+    file_delete("stream_test.txt")
+
+# Test error handling
+def test_error_handling():
+    try {
+        file_read("nonexistent_file.txt")
+        assert false  // Should not reach here
+    } catch (FileNotFoundError as e) {
+        assert true  // Expected error
+    }
+
+# Run all tests
+def run_file_io_tests():
+    console.log("Running PowerScript File I/O Tests...")
+    
+    test_file_write_read()
+    console.log("✓ File write/read test passed")
+    
+    test_file_exists()
+    console.log("✓ File exists test passed")
+    
+    test_file_append()
+    console.log("✓ File append test passed")
+    
+    test_file_class()
+    console.log("✓ File class test passed")
+    
+    test_directory_operations()
+    console.log("✓ Directory operations test passed")
+    
+    test_json_operations()
+    console.log("✓ JSON operations test passed")
+    
+    test_csv_operations()
+    console.log("✓ CSV operations test passed")
+    
+    test_path_operations()
+    console.log("✓ Path operations test passed")
+    
+    test_file_streaming()
+    console.log("✓ File streaming test passed")
+    
+    test_error_handling()
+    console.log("✓ Error handling test passed")
+    
+    console.log("\n🎉 All file I/O tests passed successfully!")
+
+# Run the tests
+run_file_io_tests()
