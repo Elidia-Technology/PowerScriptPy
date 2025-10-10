@@ -1,0 +1,14 @@
+// Test Arrow Functions
+let add = (x, y) => x + y;
+let double = x => x * 2;
+let greet = name => "Hello " + name;
+
+print(add(5, 3));
+print(double(7));
+print(greet("World"));
+
+// Arrow function with more complex body
+let calculate = (a, b) => {
+    let sum = a + b;
+    return sum * 2;
+};

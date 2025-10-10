@@ -693,7 +693,7 @@ class Parser:
     
     def _assignment(self) -> ExpressionNode:
         """Parse assignment expression"""
-        expr = self._or()
+        expr = self._arrow_function()
         
         if self._match(TokenType.ASSIGN, TokenType.PLUS_ASSIGN, TokenType.MINUS_ASSIGN):
             operator = self._previous()
@@ -705,6 +705,51 @@ class Parser:
             self._error("Invalid assignment target")
         
         return expr
+    
+    def _arrow_function(self) -> ExpressionNode:
+        """Parse arrow function: (x, y) => x + y or x => x * 2"""
+        # Check for arrow function patterns
+        if self._check(TokenType.IDENTIFIER):
+            # Look ahead for arrow: x => ...
+            if self.current + 1 < len(self.tokens) and self.tokens[self.current + 1].type == TokenType.ARROW:
+                # Single parameter arrow function
+                param_name = self._advance().value
+                self._consume(TokenType.ARROW, "Expected '=>'")
+                body = self._assignment()
+                
+                param = ParameterNode(param_name, None, None, self._previous().location)
+                return LambdaNode([param], body, self._previous().location)
+        
+        elif self._check(TokenType.LEFT_PAREN):
+            # Look ahead for potential arrow function: (params) => ...
+            saved_pos = self.current
+            try:
+                self._advance()  # consume '('
+                
+                # Try to parse parameter list
+                params = []
+                if not self._check(TokenType.RIGHT_PAREN):
+                    param_name = self._consume(TokenType.IDENTIFIER, "Expected parameter name").value
+                    params.append(ParameterNode(param_name, None, None, self._previous().location))
+                    
+                    while self._match(TokenType.COMMA):
+                        param_name = self._consume(TokenType.IDENTIFIER, "Expected parameter name").value
+                        params.append(ParameterNode(param_name, None, None, self._previous().location))
+                
+                self._consume(TokenType.RIGHT_PAREN, "Expected ')' after parameters")
+                
+                if self._match(TokenType.ARROW):
+                    # This is an arrow function
+                    body = self._assignment()
+                    return LambdaNode(params, body, self._previous().location)
+                
+            except ParseError:
+                pass
+            
+            # Reset position if not an arrow function
+            self.current = saved_pos
+        
+        return self._or()
     
     def _or(self) -> ExpressionNode:
         """Parse logical OR expression"""

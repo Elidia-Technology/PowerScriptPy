@@ -660,6 +660,55 @@ class Transpiler(ASTVisitor):
         
         return statements
     
+    def visit_destructuring(self, node: DestructuringNode) -> List[ast.AST]:
+        """Visit destructuring node - convert to multiple assignments"""
+        statements = []
+        
+        if isinstance(node.pattern, ArrayPattern):
+            # Array destructuring: [a, b] = arr -> a, b = arr
+            targets = []
+            for i, element in enumerate(node.pattern.elements):
+                if element:  # Skip holes (None elements)
+                    targets.append(ast.Name(id=element, ctx=ast.Store()))
+            
+            if targets:
+                # Create tuple assignment
+                target_tuple = ast.Tuple(elts=targets, ctx=ast.Store())
+                value = node.value.accept(self)
+                assign = ast.Assign(targets=[target_tuple], value=value)
+                statements.append(assign)
+        
+        elif isinstance(node.pattern, ObjectPattern):
+            # Object destructuring: {x, y} = obj -> x = obj['x']; y = obj['y']
+            obj_value = node.value.accept(self)
+            
+            # Create temporary variable to avoid multiple evaluations
+            temp_var = f"_temp_obj_{id(node)}"
+            temp_assign = ast.Assign(
+                targets=[ast.Name(id=temp_var, ctx=ast.Store())],
+                value=obj_value
+            )
+            statements.append(temp_assign)
+            
+            for prop in node.pattern.properties:
+                # Create assignment: var_name = temp_var['key']
+                key_access = ast.Subscript(
+                    value=ast.Name(id=temp_var, ctx=ast.Load()),
+                    slice=ast.Constant(value=prop.key),
+                    ctx=ast.Load()
+                )
+                assign = ast.Assign(
+                    targets=[ast.Name(id=prop.value, ctx=ast.Store())],
+                    value=key_access
+                )
+                statements.append(assign)
+        
+        return statements
+    
+    def visit_spread(self, node: SpreadNode) -> ast.Starred:
+        """Visit spread node - convert to Python starred expression"""
+        return ast.Starred(value=node.expression.accept(self), ctx=ast.Load())
+    
     def visit_try(self, node: TryNode) -> ast.Try:
         """Visit try node"""
         # Try body
@@ -798,8 +847,14 @@ class Transpiler(ASTVisitor):
             # Use single underscore convention
             pass
         
+        # Only add beartype if there are type annotations to check
         if self.runtime_checks_enabled and not node.is_constructor:
-            decorators.append(ast.Name(id='beartype', ctx=ast.Load()))
+            has_type_annotations = (
+                node.return_type is not None or
+                any(param.param_type is not None for param in node.parameters)
+            )
+            if has_type_annotations:
+                decorators.append(ast.Name(id='beartype', ctx=ast.Load()))
         
         return decorators
     

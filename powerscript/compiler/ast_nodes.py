@@ -49,6 +49,8 @@ class NodeType(Enum):
     TEMPLATE_LITERAL = "template_literal"
     IMPORT = "import"
     EXPORT = "export"
+    DESTRUCTURING = "destructuring"
+    SPREAD = "spread"
     UNION_TYPE = "union_type"
     INTERSECTION_TYPE = "intersection_type"
     LITERAL_TYPE = "literal_type"
@@ -464,6 +466,59 @@ class ExportSpecifier:
         self.exported_name = exported_name or local_name  # Exported alias
 
 
+class DestructuringNode(ASTNode):
+    """AST node for destructuring assignment: let {x, y} = obj or let [a, b] = arr"""
+    
+    def __init__(self, pattern: 'DestructuringPattern', value: ExpressionNode, 
+                 location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.DESTRUCTURING, location)
+        self.pattern = pattern  # Array or object pattern
+        self.value = value      # Expression being destructured
+    
+    def accept(self, visitor):
+        return visitor.visit_destructuring(self)
+
+
+class DestructuringPattern:
+    """Base class for destructuring patterns"""
+    pass
+
+
+class ArrayPattern(DestructuringPattern):
+    """Array destructuring pattern: [a, b, ...rest]"""
+    
+    def __init__(self, elements: List[Optional[str]], rest: Optional[str] = None):
+        self.elements = elements  # Variable names, None for holes
+        self.rest = rest         # Rest parameter name
+
+
+class ObjectPattern(DestructuringPattern):
+    """Object destructuring pattern: {x, y: newName, ...rest}"""
+    
+    def __init__(self, properties: List['ObjectPatternProperty'], rest: Optional[str] = None):
+        self.properties = properties
+        self.rest = rest
+
+
+class ObjectPatternProperty:
+    """Property in object destructuring pattern"""
+    
+    def __init__(self, key: str, value: Optional[str] = None):
+        self.key = key      # Property key
+        self.value = value or key  # Local variable name
+
+
+class SpreadNode(ExpressionNode):
+    """AST node for spread operator: ...array"""
+    
+    def __init__(self, expression: ExpressionNode, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.SPREAD, location)
+        self.expression = expression
+    
+    def accept(self, visitor):
+        return visitor.visit_spread(self)
+
+
 class TryNode(ASTNode):
     """Try-catch-finally statement node"""
     
@@ -751,6 +806,12 @@ class ASTVisitor(ABC):
     
     @abstractmethod
     def visit_export(self, node: ExportNode): pass
+    
+    @abstractmethod
+    def visit_destructuring(self, node: DestructuringNode): pass
+    
+    @abstractmethod
+    def visit_spread(self, node: SpreadNode): pass
     
     @abstractmethod
     def visit_union_type(self, node: UnionTypeNode): pass

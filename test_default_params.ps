@@ -1,0 +1,15 @@
+// Test Default Parameters
+function greet(name, greeting = "Hello") {
+    return greeting + " " + name;
+}
+
+function calculate(x, y = 10, z = 5) {
+    return x + y + z;
+}
+
+// Test calls
+print(greet("World"));
+print(greet("Alice", "Hi"));
+print(calculate(1));
+print(calculate(1, 2));
+print(calculate(1, 2, 3));
