@@ -94,18 +94,12 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'powerscriptc=bin.powerscriptc:main',
-            'ps-run=bin.ps_run:main', 
-            'ps-create=bin.ps_create:main',
-            'psc=bin.psc:main',
+            'powerscriptc=powerscript.cli.cli:main',
+            'ps-run=powerscript.cli.cli:main', 
+            'ps-create=powerscript.cli.cli:main',
+            'psc=powerscript.cli.cli:main',
         ],
     },
-    scripts=[
-        'bin/powerscriptc',
-        'bin/ps-run', 
-        'bin/ps-create',
-        'bin/psc',
-    ],
     include_package_data=True,
     package_data={
         "powerscript": [
