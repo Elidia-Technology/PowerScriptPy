@@ -1,0 +1,134 @@
+// PowerScript AI Data Processing Example
+// Demonstrates NumPy and Pandas integration
+
+import { numpy as np } from "numpy";
+import { pandas as pd } from "pandas";
+
+class DataProcessor {
+    private data: any;
+    
+    constructor() {
+        this.data = null;
+    }
+    
+    public loadCSV(filepath: string): void {
+        console.log(`Loading data from ${filepath}...`);
+        this.data = pd.read_csv(filepath);
+        console.log(`Loaded ${this.data.shape[0]} rows and ${this.data.shape[1]} columns`);
+    }
+    
+    public preprocessData(): void {
+        if (!this.data) {
+            throw new Error("No data loaded");
+        }
+        
+        console.log("Preprocessing data...");
+        
+        // Handle missing values
+        this.data = this.data.fillna(this.data.mean());
+        
+        // Normalize numerical columns
+        let numericalCols = this.data.select_dtypes(include=[np.number]).columns;
+        for (let col of numericalCols) {
+            this.data[col] = (this.data[col] - this.data[col].mean()) / this.data[col].std();
+        }
+        
+        console.log("Preprocessing completed!");
+    }
+    
+    public getStatistics(): any {
+        if (!this.data) {
+            throw new Error("No data loaded");
+        }
+        
+        return {
+            shape: this.data.shape,
+            columns: this.data.columns.tolist(),
+            summary: this.data.describe(),
+            missing_values: this.data.isnull().sum()
+        };
+    }
+    
+    public async saveProcessedData(filepath: string): Promise<void> {
+        if (!this.data) {
+            throw new Error("No data loaded");
+        }
+        
+        console.log(`Saving processed data to ${filepath}...`);
+        this.data.to_csv(filepath, index=false);
+        console.log("Data saved successfully!");
+    }
+}
+
+// Feature Engineering Pipeline
+class FeatureEngineer {
+    private data: any;
+    
+    constructor(data: any) {
+        this.data = data;
+    }
+    
+    public createPolynomialFeatures(degree: number = 2): any {
+        console.log(`Creating polynomial features of degree ${degree}...`);
+        
+        let numericalCols = this.data.select_dtypes(include=[np.number]).columns;
+        let polyFeatures: any = {};
+        
+        for (let col of numericalCols) {
+            for (let d = 2; d <= degree; d++) {
+                let featureName = `${col}_poly_${d}`;
+                polyFeatures[featureName] = np.power(this.data[col], d);
+            }
+        }
+        
+        return pd.concat([this.data, pd.DataFrame(polyFeatures)], axis=1);
+    }
+    
+    public createInteractionFeatures(columns: string[]): any {
+        console.log("Creating interaction features...");
+        
+        let interactions: any = {};
+        
+        for (let i = 0; i < columns.length; i++) {
+            for (let j = i + 1; j < columns.length; j++) {
+                let col1 = columns[i];
+                let col2 = columns[j];
+                let featureName = `${col1}_x_${col2}`;
+                interactions[featureName] = this.data[col1] * this.data[col2];
+            }
+        }
+        
+        return pd.concat([this.data, pd.DataFrame(interactions)], axis=1);
+    }
+}
+
+// Usage example
+async function main(): Promise<void> {
+    try {
+        // Create processor
+        let processor = new DataProcessor();
+        
+        // Load and preprocess data
+        processor.loadCSV("data/dataset.csv");
+        processor.preprocessData();
+        
+        // Get statistics
+        let stats = processor.getStatistics();
+        console.log("Dataset Statistics:", stats);
+        
+        // Feature engineering
+        let engineer = new FeatureEngineer(processor.data);
+        let enrichedData = engineer.createPolynomialFeatures(3);
+        enrichedData = engineer.createInteractionFeatures(["feature1", "feature2", "feature3"]);
+        
+        // Save processed data
+        await processor.saveProcessedData("data/processed_dataset.csv");
+        
+        console.log("Data processing pipeline completed!");
+        
+    } catch (error) {
+        console.error("Error in data processing:", error.message);
+    }
+}
+
+main();

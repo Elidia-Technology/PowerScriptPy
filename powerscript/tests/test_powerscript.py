@@ -361,5 +361,142 @@ class TestIntegration:
             os.unlink(temp_file)
 
 
+class TestLSP:
+    """Test the PowerScript Language Server Protocol"""
+    
+    def test_lsp_server_creation(self):
+        """Test LSP server can be created"""
+        try:
+            from powerscript.lsp.server import PowerScriptLanguageServer
+            server = PowerScriptLanguageServer()
+            assert server is not None
+            assert hasattr(server, 'completion_handler')
+            assert hasattr(server, 'diagnostics_handler')
+            assert hasattr(server, 'hover_handler')
+        except ImportError:
+            # LSP dependencies not available, skip test
+            pass
+    
+    def test_protocol_utilities(self):
+        """Test LSP protocol utilities"""
+        from powerscript.lsp.protocol import PowerScriptLSPProtocol, PowerScriptSymbol
+        
+        symbol = PowerScriptSymbol("testFunction", "function", "string", 1, 0)
+        completion_item = PowerScriptLSPProtocol.create_completion_item(symbol)
+        
+        assert completion_item["label"] == "testFunction"
+        assert completion_item["kind"] == 3  # Function kind
+        
+        hover_content = PowerScriptLSPProtocol.create_hover_content(symbol)
+        assert "testFunction" in hover_content["value"]
+
+
+class TestVSCodeIntegration:
+    """Test VS Code extension components"""
+    
+    def test_package_json_structure(self):
+        """Test VS Code extension package.json structure"""
+        import json
+        import os
+        
+        package_json_path = os.path.join(
+            os.path.dirname(__file__), 
+            "..", 
+            "vscode-extension", 
+            "package.json"
+        )
+        
+        if os.path.exists(package_json_path):
+            with open(package_json_path, 'r') as f:
+                package_data = json.load(f)
+            
+            assert package_data["name"] == "powerscript"
+            assert "languages" in package_data["contributes"]
+            assert "grammars" in package_data["contributes"]
+            assert "snippets" in package_data["contributes"]
+            assert "commands" in package_data["contributes"]
+
+
+class TestAIIntegration:
+    """Test AI-specific features and examples"""
+    
+    def test_data_processing_example_syntax(self):
+        """Test data processing example compiles correctly"""
+        import os
+        
+        example_path = os.path.join(
+            os.path.dirname(__file__), 
+            "..", 
+            "examples", 
+            "data_processing.ps"
+        )
+        
+        if os.path.exists(example_path):
+            with open(example_path, 'r') as f:
+                source = f.read()
+            
+            # Test that it parses without syntax errors
+            from powerscript.compiler import Lexer, Parser
+            
+            lexer = Lexer(source)
+            lexer.tokenize()
+            
+            parser = Parser(lexer)
+            ast_nodes = parser.parse()
+            
+            # Should have class definitions
+            assert len(ast_nodes) > 0
+
+
+class TestIntegration:
+    """Integration tests for complete workflows"""
+    
+    def test_complete_transpilation_workflow(self):
+        """Test complete PowerScript to Python workflow"""
+        source = '''
+        class Calculator {
+            constructor(name: string) {
+                this.name = name;
+            }
+            
+            public add(a: number, b: number): number {
+                return a + b;
+            }
+        }
+        
+        let calc = new Calculator("MyCalc");
+        let result = calc.add(10, 20);
+        '''
+        
+        # Lexical analysis
+        from powerscript.compiler import Lexer, Parser, Transpiler
+        
+        lexer = Lexer(source)
+        tokens = lexer.tokenize()
+        assert len(tokens) > 0
+        
+        # Parsing
+        parser = Parser(lexer)
+        ast_nodes = parser.parse()
+        assert len(ast_nodes) > 0
+        
+        # Type checking
+        from powerscript.typechecker import TypeChecker
+        type_checker = TypeChecker()
+        result = type_checker.check(ast_nodes)
+        
+        # Should pass type checking (or have minimal warnings)
+        assert len(result.errors) == 0
+        
+        # Transpilation
+        transpiler = Transpiler()
+        python_code = transpiler.transpile(ast_nodes)
+        
+        # Should generate valid Python code
+        assert python_code is not None
+        assert len(python_code) > 0
+        assert "class Calculator" in python_code
+
+
 if __name__ == "__main__":
     pytest.main([__file__])

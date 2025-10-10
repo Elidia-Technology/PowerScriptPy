@@ -1,0 +1,314 @@
+// PowerScript Machine Learning Model Example
+// Demonstrates PyTorch integration for neural networks
+
+import { torch } from "torch";
+import { torch.nn as nn } from "torch";
+import { torch.optim as optim } from "torch";
+import { numpy as np } from "numpy";
+
+// Neural Network Model
+class NeuralNetwork extends nn.Module {
+    private layers: any[];
+    
+    constructor(inputSize: number, hiddenSizes: number[], outputSize: number) {
+        super();
+        this.layers = [];
+        
+        // Build layers
+        let prevSize = inputSize;
+        for (let i = 0; i < hiddenSizes.length; i++) {
+            this.layers.push(nn.Linear(prevSize, hiddenSizes[i]));
+            this.layers.push(nn.ReLU());
+            prevSize = hiddenSizes[i];
+        }
+        
+        // Output layer
+        this.layers.push(nn.Linear(prevSize, outputSize));
+        
+        // Register layers
+        for (let i = 0; i < this.layers.length; i++) {
+            this.add_module(`layer_${i}`, this.layers[i]);
+        }
+    }
+    
+    public forward(x: any): any {
+        for (let layer of this.layers) {
+            x = layer(x);
+        }
+        return x;
+    }
+}
+
+// Training Pipeline
+class ModelTrainer<T extends nn.Module> {
+    private model: T;
+    private optimizer: any;
+    private criterion: any;
+    private device: string;
+    
+    constructor(model: T, learningRate: number = 0.001) {
+        this.model = model;
+        this.device = torch.cuda.is_available() ? "cuda" : "cpu";
+        this.model.to(this.device);
+        
+        this.optimizer = optim.Adam(this.model.parameters(), lr: learningRate);
+        this.criterion = nn.MSELoss();
+        
+        console.log(`Training on device: ${this.device}`);
+    }
+    
+    public async train(trainLoader: any, epochs: number): Promise<number[]> {
+        console.log(`Starting training for ${epochs} epochs...`);
+        
+        let losses: number[] = [];
+        this.model.train();
+        
+        for (let epoch = 0; epoch < epochs; epoch++) {
+            let epochLoss = 0.0;
+            let numBatches = 0;
+            
+            for (let batch of trainLoader) {
+                let [inputs, targets] = batch;
+                inputs = inputs.to(this.device);
+                targets = targets.to(this.device);
+                
+                // Forward pass
+                this.optimizer.zero_grad();
+                let outputs = this.model(inputs);
+                let loss = this.criterion(outputs, targets);
+                
+                // Backward pass
+                loss.backward();
+                this.optimizer.step();
+                
+                epochLoss += loss.item();
+                numBatches++;
+            }
+            
+            let avgLoss = epochLoss / numBatches;
+            losses.push(avgLoss);
+            
+            if (epoch % 10 === 0) {
+                console.log(`Epoch ${epoch + 1}/${epochs}, Loss: ${avgLoss.toFixed(6)}`);
+            }
+        }
+        
+        console.log("Training completed!");
+        return losses;
+    }
+    
+    public evaluate(testLoader: any): number {
+        console.log("Evaluating model...");
+        
+        this.model.eval();
+        let totalLoss = 0.0;
+        let numBatches = 0;
+        
+        torch.no_grad(() => {
+            for (let batch of testLoader) {
+                let [inputs, targets] = batch;
+                inputs = inputs.to(this.device);
+                targets = targets.to(this.device);
+                
+                let outputs = this.model(inputs);
+                let loss = this.criterion(outputs, targets);
+                
+                totalLoss += loss.item();
+                numBatches++;
+            }
+        });
+        
+        let avgLoss = totalLoss / numBatches;
+        console.log(`Test Loss: ${avgLoss.toFixed(6)}`);
+        
+        return avgLoss;
+    }
+    
+    public predict(inputs: any): any {
+        this.model.eval();
+        
+        torch.no_grad(() => {
+            inputs = inputs.to(this.device);
+            return this.model(inputs);
+        });
+    }
+    
+    public saveModel(filepath: string): void {
+        console.log(`Saving model to ${filepath}...`);
+        torch.save(this.model.state_dict(), filepath);
+        console.log("Model saved successfully!");
+    }
+    
+    public loadModel(filepath: string): void {
+        console.log(`Loading model from ${filepath}...`);
+        this.model.load_state_dict(torch.load(filepath));
+        this.model.to(this.device);
+        console.log("Model loaded successfully!");
+    }
+}
+
+// Data Loader Utility
+class DataLoader {
+    public static createSyntheticData(numSamples: number, inputSize: number): [any, any] {
+        console.log(`Generating ${numSamples} synthetic samples...`);
+        
+        // Generate random input data
+        let X = torch.randn(numSamples, inputSize);
+        
+        // Generate synthetic targets (simple linear relationship)
+        let weights = torch.randn(inputSize, 1);
+        let y = torch.matmul(X, weights) + torch.randn(numSamples, 1) * 0.1;
+        
+        return [X, y];
+    }
+    
+    public static createBatchLoader(X: any, y: any, batchSize: number = 32): any {
+        let dataset = torch.utils.data.TensorDataset(X, y);
+        return torch.utils.data.DataLoader(dataset, batch_size: batchSize, shuffle: true);
+    }
+}
+
+// Hyperparameter Optimization
+class HyperparameterTuner {
+    private bestParams: any = null;
+    private bestScore: number = Infinity;
+    
+    public async tuneHyperparameters(
+        paramGrid: any,
+        trainLoader: any,
+        valLoader: any,
+        inputSize: number,
+        outputSize: number
+    ): Promise<any> {
+        console.log("Starting hyperparameter tuning...");
+        
+        let combinations = this.generateCombinations(paramGrid);
+        
+        for (let i = 0; i < combinations.length; i++) {
+            let params = combinations[i];
+            console.log(`Testing combination ${i + 1}/${combinations.length}:`, params);
+            
+            // Create model with current parameters
+            let model = new NeuralNetwork(inputSize, params.hiddenSizes, outputSize);
+            let trainer = new ModelTrainer(model, params.learningRate);
+            
+            // Train model
+            await trainer.train(trainLoader, params.epochs);
+            
+            // Evaluate on validation set
+            let score = trainer.evaluate(valLoader);
+            
+            // Update best parameters
+            if (score < this.bestScore) {
+                this.bestScore = score;
+                this.bestParams = { ...params };
+                console.log(`New best score: ${score.toFixed(6)}`);
+            }
+        }
+        
+        console.log("Hyperparameter tuning completed!");
+        console.log("Best parameters:", this.bestParams);
+        console.log("Best score:", this.bestScore);
+        
+        return this.bestParams;
+    }
+    
+    private generateCombinations(paramGrid: any): any[] {
+        let keys = Object.keys(paramGrid);
+        let combinations: any[] = [];
+        
+        function cartesianProduct(arrays: any[][]): any[][] {
+            return arrays.reduce((acc, curr) => {
+                let result: any[] = [];
+                acc.forEach(a => {
+                    curr.forEach(c => {
+                        result.push([...a, c]);
+                    });
+                });
+                return result;
+            }, [[]]);
+        }
+        
+        let values = keys.map(key => paramGrid[key]);
+        let products = cartesianProduct(values);
+        
+        for (let product of products) {
+            let combination: any = {};
+            for (let i = 0; i < keys.length; i++) {
+                combination[keys[i]] = product[i];
+            }
+            combinations.push(combination);
+        }
+        
+        return combinations;
+    }
+}
+
+// Main training pipeline
+async function main(): Promise<void> {
+    try {
+        // Configuration
+        const CONFIG = {
+            inputSize: 10,
+            outputSize: 1,
+            numSamples: 10000,
+            batchSize: 64,
+            testSplit: 0.2
+        };
+        
+        // Generate synthetic data
+        let [X, y] = DataLoader.createSyntheticData(CONFIG.numSamples, CONFIG.inputSize);
+        
+        // Split data
+        let splitIndex = Math.floor(CONFIG.numSamples * (1 - CONFIG.testSplit));
+        let XTrain = X.slice(0, splitIndex);
+        let yTrain = y.slice(0, splitIndex);
+        let XTest = X.slice(splitIndex);
+        let yTest = y.slice(splitIndex);
+        
+        // Create data loaders
+        let trainLoader = DataLoader.createBatchLoader(XTrain, yTrain, CONFIG.batchSize);
+        let testLoader = DataLoader.createBatchLoader(XTest, yTest, CONFIG.batchSize);
+        
+        // Hyperparameter tuning
+        let tuner = new HyperparameterTuner();
+        let paramGrid = {
+            hiddenSizes: [[64, 32], [128, 64, 32], [256, 128, 64]],
+            learningRate: [0.001, 0.01, 0.1],
+            epochs: [50, 100]
+        };
+        
+        let bestParams = await tuner.tuneHyperparameters(
+            paramGrid,
+            trainLoader,
+            testLoader,
+            CONFIG.inputSize,
+            CONFIG.outputSize
+        );
+        
+        // Train final model with best parameters
+        console.log("Training final model with best parameters...");
+        let finalModel = new NeuralNetwork(
+            CONFIG.inputSize,
+            bestParams.hiddenSizes,
+            CONFIG.outputSize
+        );
+        
+        let finalTrainer = new ModelTrainer(finalModel, bestParams.learningRate);
+        let losses = await finalTrainer.train(trainLoader, bestParams.epochs * 2);
+        
+        // Final evaluation
+        let testLoss = finalTrainer.evaluate(testLoader);
+        console.log(`Final model test loss: ${testLoss.toFixed(6)}`);
+        
+        // Save model
+        finalTrainer.saveModel("models/neural_network.pth");
+        
+        console.log("ML pipeline completed successfully!");
+        
+    } catch (error) {
+        console.error("Error in ML pipeline:", error.message);
+    }
+}
+
+main();
