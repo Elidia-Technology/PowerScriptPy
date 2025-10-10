@@ -370,6 +370,8 @@ class Parser:
             return self._while_statement()
         elif self._match(TokenType.FOR):
             return self._for_statement()
+        elif self._match(TokenType.SWITCH):
+            return self._switch_statement()
         elif self._match(TokenType.TRY):
             return self._try_statement()
         elif self._match(TokenType.THROW):
@@ -420,6 +422,53 @@ class Parser:
         
         body = self._statement_as_block()
         return ForNode(variable, iterable, body, iterable.location)
+    
+    def _switch_statement(self) -> SwitchNode:
+        """Parse switch statement: switch (expr) { case value: ... default: ... }"""
+        location = self._previous().location
+        
+        self._consume(TokenType.LEFT_PAREN, "Expected '(' after 'switch'")
+        expression = self._expression()
+        self._consume(TokenType.RIGHT_PAREN, "Expected ')' after switch expression")
+        
+        self._consume(TokenType.LEFT_BRACE, "Expected '{' before switch body")
+        
+        cases = []
+        default_case = None
+        
+        while not self._check(TokenType.RIGHT_BRACE) and not self._is_at_end():
+            if self._match(TokenType.CASE):
+                case_node = self._case_clause()
+                cases.append(case_node)
+            elif self._match(TokenType.DEFAULT):
+                if default_case is not None:
+                    self._error("Multiple default cases in switch statement")
+                self._consume(TokenType.COLON, "Expected ':' after 'default'")
+                statements = []
+                while not self._check(TokenType.CASE) and not self._check(TokenType.DEFAULT) and not self._check(TokenType.RIGHT_BRACE) and not self._is_at_end():
+                    statements.append(self._statement())
+                default_case = CaseNode([], BlockNode(statements, self._previous().location), is_default=True, location=self._previous().location)
+            else:
+                self._error("Expected 'case' or 'default' in switch statement")
+        
+        self._consume(TokenType.RIGHT_BRACE, "Expected '}' after switch body")
+        return SwitchNode(expression, cases, default_case, location)
+    
+    def _case_clause(self) -> CaseNode:
+        """Parse case clause: case value1, value2: statements"""
+        location = self._previous().location
+        
+        values = [self._expression()]
+        while self._match(TokenType.COMMA):
+            values.append(self._expression())
+        
+        self._consume(TokenType.COLON, "Expected ':' after case values")
+        
+        statements = []
+        while not self._check(TokenType.CASE) and not self._check(TokenType.DEFAULT) and not self._check(TokenType.RIGHT_BRACE) and not self._is_at_end():
+            statements.append(self._statement())
+        
+        return CaseNode(values, BlockNode(statements, location), is_default=False, location=location)
     
     def _return_statement(self) -> ReturnNode:
         """Parse return statement"""

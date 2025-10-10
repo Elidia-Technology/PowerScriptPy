@@ -44,6 +44,8 @@ class NodeType(Enum):
     F_STRING = "f_string"
     SWITCH = "switch"
     CASE = "case"
+    BREAK = "break"
+    CONTINUE = "continue"
     UNION_TYPE = "union_type"
     INTERSECTION_TYPE = "intersection_type"
     LITERAL_TYPE = "literal_type"
@@ -355,6 +357,54 @@ class ForNode(ASTNode):
         return visitor.visit_for(self)
 
 
+class SwitchNode(ASTNode):
+    """AST node for switch statements"""
+    
+    def __init__(self, expression: ExpressionNode, cases: List['CaseNode'], 
+                 default_case: Optional['CaseNode'] = None, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.SWITCH, location)
+        self.expression = expression
+        self.cases = cases
+        self.default_case = default_case
+    
+    def accept(self, visitor):
+        return visitor.visit_switch(self)
+
+
+class CaseNode(ASTNode):
+    """AST node for case clauses in switch statements"""
+    
+    def __init__(self, values: List[ExpressionNode], body: BlockNode, 
+                 is_default: bool = False, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.CASE, location)
+        self.values = values  # For case 1, 2, 3: multiple values
+        self.body = body
+        self.is_default = is_default  # True for default case
+    
+    def accept(self, visitor):
+        return visitor.visit_case(self)
+
+
+class BreakNode(ASTNode):
+    """AST node for break statements"""
+    
+    def __init__(self, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.BREAK, location)
+    
+    def accept(self, visitor):
+        return visitor.visit_break(self)
+
+
+class ContinueNode(ASTNode):
+    """AST node for continue statements"""
+    
+    def __init__(self, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.CONTINUE, location)
+    
+    def accept(self, visitor):
+        return visitor.visit_continue(self)
+
+
 class TryNode(ASTNode):
     """Try-catch-finally statement node"""
     
@@ -621,6 +671,12 @@ class ASTVisitor(ABC):
     
     @abstractmethod
     def visit_ellipsis(self, node: EllipsisNode): pass
+    
+    @abstractmethod
+    def visit_switch(self, node: SwitchNode): pass
+    
+    @abstractmethod
+    def visit_case(self, node: CaseNode): pass
     
     @abstractmethod
     def visit_union_type(self, node: UnionTypeNode): pass

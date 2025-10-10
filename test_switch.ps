@@ -1,0 +1,44 @@
+// Test Switch/Case statements
+let grade = "A";
+let score = 85;
+
+// Basic switch with strings
+switch (grade) {
+    case "A":
+        print("Excellent!");
+        break;
+    case "B":
+        print("Good job!");
+        break;
+    case "C":
+        print("Average");
+        break;
+    default:
+        print("Unknown grade");
+}
+
+// Switch with multiple values and numbers
+switch (score) {
+    case 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100:
+        print("A grade");
+        break;
+    case 80, 81, 82, 83, 84, 85, 86, 87, 88, 89:
+        print("B grade");
+        break;
+    default:
+        print("Lower grade");
+}
+
+// Switch with expressions
+let status = 1;
+switch (status + 1) {
+    case 1:
+        print("Status: Pending");
+        break;
+    case 2:
+        print("Status: Active");
+        break;
+    case 3:
+        print("Status: Complete");
+        break;
+}

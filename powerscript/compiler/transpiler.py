@@ -506,6 +506,72 @@ class Transpiler(ASTVisitor):
         
         return ast.For(target=target, iter=iter_expr, body=body, orelse=[])
     
+    def visit_switch(self, node: SwitchNode) -> List[ast.AST]:
+        """Visit switch node - transpile to if-elif chain"""
+        switch_expr = node.expression.accept(self)
+        
+        # Create a temporary variable to store the switch expression value
+        temp_var = f"_switch_expr_{id(node)}"
+        assign_stmt = ast.Assign(
+            targets=[ast.Name(id=temp_var, ctx=ast.Store())],
+            value=switch_expr
+        )
+        
+        statements = [assign_stmt]
+        
+        # Build if-elif chain
+        if_node = None
+        current_node = None
+        
+        for case in node.cases:
+            # Create condition: temp_var == case_value1 or temp_var == case_value2 ...
+            conditions = []
+            for case_value in case.values:
+                compare = ast.Compare(
+                    left=ast.Name(id=temp_var, ctx=ast.Load()),
+                    ops=[ast.Eq()],
+                    comparators=[case_value.accept(self)]
+                )
+                conditions.append(compare)
+            
+            # Combine conditions with OR
+            if len(conditions) == 1:
+                condition = conditions[0]
+            else:
+                condition = ast.BoolOp(op=ast.Or(), values=conditions)
+            
+            # Get case body
+            case_body = case.body.accept(self)
+            
+            if if_node is None:
+                # First case becomes if
+                if_node = ast.If(test=condition, body=case_body, orelse=[])
+                current_node = if_node
+            else:
+                # Subsequent cases become elif
+                elif_node = ast.If(test=condition, body=case_body, orelse=[])
+                current_node.orelse = [elif_node]
+                current_node = elif_node
+        
+        # Add default case if present
+        if node.default_case:
+            default_body = node.default_case.body.accept(self)
+            if current_node:
+                current_node.orelse = default_body
+            else:
+                # Only default case
+                statements.extend(default_body)
+                return statements
+        
+        if if_node:
+            statements.append(if_node)
+        
+        return statements
+    
+    def visit_case(self, node: CaseNode) -> List[ast.AST]:
+        """Visit case node - handled by visit_switch"""
+        return node.body.accept(self)
+    
     def visit_try(self, node: TryNode) -> ast.Try:
         """Visit try node"""
         # Try body
