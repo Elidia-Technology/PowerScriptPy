@@ -638,29 +638,19 @@ class Transpiler(ASTVisitor):
             return ast.ImportFrom(module=node.module_name, names=aliases, level=0)
     
     def visit_export(self, node: ExportNode) -> List[ast.AST]:
-        """Visit export node - In Python, we'll add to __all__ and make declarations available"""
+        """Visit export node - In Python, we'll just generate the declaration"""
         statements = []
         
         if node.declaration:
-            # Export a declaration
+            # Export a declaration - just generate the declaration itself
             decl_stmt = node.declaration.accept(self)
             if isinstance(decl_stmt, list):
                 statements.extend(decl_stmt)
             else:
                 statements.append(decl_stmt)
-            
-            # Add to __all__ if it's a named export
-            if hasattr(node.declaration, 'name') and isinstance(node.declaration.name, str):
-                export_name = node.declaration.name
-                # Create or update __all__ list
-                all_stmt = ast.Assign(
-                    targets=[ast.Name(id='__all__', ctx=ast.Store())],
-                    value=ast.List(elts=[ast.Constant(value=export_name)], ctx=ast.Load())
-                )
-                statements.insert(0, all_stmt)
         
         elif node.specifiers:
-            # Named exports: export { name1, name2 }
+            # Named exports: export { name1, name2 } - create __all__ list
             export_names = [spec.exported_name for spec in node.specifiers]
             all_stmt = ast.Assign(
                 targets=[ast.Name(id='__all__', ctx=ast.Store())],
