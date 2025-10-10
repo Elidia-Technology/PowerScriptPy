@@ -532,3 +532,46 @@ class TypeChecker(ASTVisitor):
     def _add_warning(self, message: str, node: Optional[ASTNode] = None):
         """Add a type checking warning"""
         self.warnings.append(TypeCheckError(message, node, TypeErrorSeverity.WARNING))
+    
+    def visit_try(self, node):
+        """Visit try statement"""
+        # Type check try block
+        node.try_block.accept(self)
+        
+        # Type check catch clauses
+        for catch_clause in node.catch_clauses:
+            catch_clause.accept(self)
+        
+        # Type check finally block
+        if node.finally_block:
+            node.finally_block.accept(self)
+        
+        return None
+    
+    def visit_catch(self, node):
+        """Visit catch clause"""
+        # Add exception variable to environment if present
+        old_env = self.environment
+        self.environment = TypeEnvironment(old_env)
+        
+        if node.exception_name:
+            exception_type = node.exception_type or 'Error'
+            self.environment.define_variable(node.exception_name, exception_type)
+        
+        # Type check catch body
+        node.body.accept(self)
+        
+        # Restore environment
+        self.environment = old_env
+        return None
+    
+    def visit_throw(self, node):
+        """Visit throw statement"""
+        # Type check the thrown expression
+        expr_type = self._infer_expression_type(node.expression)
+        
+        # Should be an Error type or string
+        if expr_type not in ['Error', 'string', 'any']:
+            self._add_warning(f"Thrown expression should be Error type, got '{expr_type}'", node)
+        
+        return None
