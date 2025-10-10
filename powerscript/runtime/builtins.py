@@ -21,12 +21,12 @@ class Console:
     @staticmethod
     def log(*args, sep: str = ' ', end: str = '\n'):
         """Print to console (equivalent to console.log)"""
-        print(*args, sep=sep, end=end)
+        __builtins__['print'](*args, sep=sep, end=end)
     
     @staticmethod
     def error(*args, sep: str = ' ', end: str = '\n'):
         """Print to stderr"""
-        print(*args, sep=sep, end=end, file=sys.stderr)
+        __builtins__['print'](*args, sep=sep, end=end, file=sys.stderr)
     
     @staticmethod
     def warn(*args, sep: str = ' ', end: str = '\n'):
@@ -36,7 +36,7 @@ class Console:
     @staticmethod
     def input(prompt: str = "") -> str:
         """Get user input"""
-        return input(prompt)
+        return __builtins__['input'](prompt)
     
     @staticmethod
     def clear():
@@ -363,7 +363,35 @@ def bool(obj):
 
 
 # Global built-in objects
+_fs = FileSystem()
+_console = Console()
+
 BUILT_IN_GLOBALS = {
+    # File system operations  
+    'FileSystem': FileSystem,
+    'file_write': _fs.write_text,
+    'file_read': _fs.read_text,
+    'file_append': _fs.append_text,
+    'file_exists': _fs.exists,
+    'file_delete': _fs.delete_file,
+    'file_copy': _fs.copy_file,
+    'file_move': _fs.move_file,
+    'file_size': _fs.get_size,
+    'file_modified_time': _fs.get_modified_time,
+    'file_stream': FileStream,
+    'dir_create': _fs.create_directory,
+    'dir_delete': _fs.delete_directory,
+    'dir_exists': _fs.exists,
+    'dir_list': _fs.list_directory,
+    'path_join': _fs.join_path,
+    'path_absolute': _fs.get_absolute_path,
+    'temp_file_create': _fs.create_temp_file,
+    'temp_dir_create': _fs.create_temp_directory,
+    'json_write': JSONFile.write,
+    'json_read': JSONFile.read,
+    'csv_write': CSVFile.write,
+    'csv_read': CSVFile.read,
+    
     # Classes
     'Console': Console,
     'File': File,
@@ -377,6 +405,8 @@ BUILT_IN_GLOBALS = {
     'FileError': FileError,
     
     # Functions
+    'console': _console,
+    'range': range,
     'print': print,
     'input': input,
     'len': len,
@@ -391,3 +421,6 @@ BUILT_IN_GLOBALS = {
     'Infinity': float('inf'),
     'NaN': float('nan'),
 }
+
+# Export all built-ins to module globals
+globals().update(BUILT_IN_GLOBALS)
