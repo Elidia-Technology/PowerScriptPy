@@ -349,21 +349,17 @@ def str(obj) -> str:
     """Convert to string"""
     return obj.__str__() if hasattr(obj, '__str__') else repr(obj)
 
-def int(obj) -> int:
+def int(obj):
     """Convert to integer"""
-    if isinstance(obj, str):
-        return int(obj)
-    return int(obj)
+    return __builtins__['int'](obj)
 
-def float(obj) -> float:
+def float(obj):
     """Convert to float"""
-    if isinstance(obj, str):
-        return float(obj)
-    return float(obj)
+    return __builtins__['float'](obj)
 
-def bool(obj) -> bool:
+def bool(obj):
     """Convert to boolean"""
-    return bool(obj)
+    return __builtins__['bool'](obj)
 
 
 # Global built-in objects

@@ -95,13 +95,7 @@ class Transpiler(ASTVisitor):
             imports.append(asyncio_import)
         
         # Add runtime validation imports if needed
-        if self.runtime_checks_enabled:
-            beartype_import = ast.ImportFrom(
-                module='beartype',
-                names=[ast.alias(name='beartype', asname=None)],
-                level=0
-            )
-            imports.append(beartype_import)
+        # Note: beartype import removed for now - runtime_checks_enabled defaults to False
         
         return imports
     
