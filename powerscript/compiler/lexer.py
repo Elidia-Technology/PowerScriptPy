@@ -35,6 +35,8 @@ class TokenType(Enum):
     RETURN = auto()
     BREAK = auto()
     CONTINUE = auto()
+    SWITCH = auto()
+    CASE = auto()
     TRY = auto()
     CATCH = auto()
     FINALLY = auto()
@@ -175,6 +177,8 @@ class Lexer:
         'return': TokenType.RETURN,
         'break': TokenType.BREAK,
         'continue': TokenType.CONTINUE,
+        'switch': TokenType.SWITCH,
+        'case': TokenType.CASE,
         'try': TokenType.TRY,
         'catch': TokenType.CATCH,
         'finally': TokenType.FINALLY,

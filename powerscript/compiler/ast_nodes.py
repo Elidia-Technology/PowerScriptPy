@@ -42,6 +42,8 @@ class NodeType(Enum):
     SLICE = "slice"
     ELLIPSIS = "ellipsis"
     F_STRING = "f_string"
+    SWITCH = "switch"
+    CASE = "case"
     UNION_TYPE = "union_type"
     INTERSECTION_TYPE = "intersection_type"
     LITERAL_TYPE = "literal_type"
