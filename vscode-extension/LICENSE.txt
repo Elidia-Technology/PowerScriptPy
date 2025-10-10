@@ -1,8 +1,6 @@
-"""
 MIT License
 
 Copyright (c) 2025 Saleem Ahmad (Elite India Org Team)
-Email: team@eliteindia.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,20 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-"""
-
-from .type_checker import TypeChecker, TypeCheckResult, TypeCheckError
-from .static_analyzer import StaticAnalyzer, AnalysisResult
-from .type_inference import TypeInference, InferredType
-from .pyright_integration import PyrightIntegration
-
-__all__ = [
-    "TypeChecker",
-    "TypeCheckResult", 
-    "TypeCheckError",
-    "StaticAnalyzer",
-    "AnalysisResult",
-    "TypeInference",
-    "InferredType",
-    "PyrightIntegration"
-]
