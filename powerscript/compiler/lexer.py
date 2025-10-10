@@ -15,6 +15,7 @@ class TokenType(Enum):
     IDENTIFIER = auto()
     STRING = auto()
     F_STRING = auto()
+    TEMPLATE_LITERAL = auto()
     NUMBER = auto()
     BOOLEAN = auto()
     NULL = auto()
@@ -233,9 +234,9 @@ class Lexer:
         # String literals
         (TokenType.F_STRING, re.compile(r'f"(?:[^"\\]|\\.)*"')),  # F-string with double quotes
         (TokenType.F_STRING, re.compile(r"f'(?:[^'\\]|\\.)*'")),  # F-string with single quotes
+        (TokenType.TEMPLATE_LITERAL, re.compile(r'`(?:[^`\\]|\\.)*`')),  # Template literals
         (TokenType.STRING, re.compile(r'"(?:[^"\\]|\\.)*"')),
         (TokenType.STRING, re.compile(r"'(?:[^'\\]|\\.)*'")),
-        (TokenType.STRING, re.compile(r'`(?:[^`\\]|\\.)*`')),  # Template strings
         
         # Number literals
         (TokenType.NUMBER, re.compile(r'\d+\.\d+|\d+\.|\.\d+|\d+')),

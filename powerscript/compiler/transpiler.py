@@ -540,8 +540,9 @@ class Transpiler(ASTVisitor):
             else:
                 condition = ast.BoolOp(op=ast.Or(), values=conditions)
             
-            # Get case body
-            case_body = case.body.accept(self)
+            # Get case body, filter out break statements (not needed in if/elif)
+            case_statements = case.body.accept(self)
+            case_body = [stmt for stmt in case_statements if not isinstance(stmt, ast.Break)]
             
             if if_node is None:
                 # First case becomes if
@@ -555,7 +556,8 @@ class Transpiler(ASTVisitor):
         
         # Add default case if present
         if node.default_case:
-            default_body = node.default_case.body.accept(self)
+            default_statements = node.default_case.body.accept(self)
+            default_body = [stmt for stmt in default_statements if not isinstance(stmt, ast.Break)]
             if current_node:
                 current_node.orelse = default_body
             else:
@@ -571,6 +573,102 @@ class Transpiler(ASTVisitor):
     def visit_case(self, node: CaseNode) -> List[ast.AST]:
         """Visit case node - handled by visit_switch"""
         return node.body.accept(self)
+    
+    def visit_break(self, node: BreakNode) -> ast.Break:
+        """Visit break node"""
+        return ast.Break()
+    
+    def visit_continue(self, node: ContinueNode) -> ast.Continue:
+        """Visit continue node"""
+        return ast.Continue()
+    
+    def visit_template_literal(self, node: TemplateLiteralNode) -> ast.JoinedStr:
+        """Visit template literal node and convert to Python f-string"""
+        import re
+        
+        # Parse the template literal content to create values list
+        values = []
+        
+        content = node.value[1:-1]  # Remove backticks
+        
+        # Split content by ${expr} patterns
+        expr_pattern = r'\$\{([^}]+)\}'
+        last_end = 0
+        expr_idx = 0
+        
+        for match in re.finditer(expr_pattern, content):
+            # Add text before the expression
+            if match.start() > last_end:
+                text = content[last_end:match.start()]
+                if text:
+                    values.append(ast.Constant(value=text))
+            
+            # Add the expression
+            if expr_idx < len(node.expressions):
+                formatted_value = ast.FormattedValue(
+                    value=node.expressions[expr_idx].accept(self),
+                    conversion=-1,  # No conversion
+                    format_spec=None
+                )
+                values.append(formatted_value)
+                expr_idx += 1
+            
+            last_end = match.end()
+        
+        # Add remaining text
+        if last_end < len(content):
+            remaining = content[last_end:]
+            if remaining:
+                values.append(ast.Constant(value=remaining))
+        
+        return ast.JoinedStr(values=values)
+    
+    def visit_import(self, node: ImportNode) -> Union[ast.Import, ast.ImportFrom]:
+        """Visit import node"""
+        if node.is_default_import:
+            # Default import: import defaultName from "module" -> from module import defaultName
+            alias = ast.alias(name="*", asname=node.specifiers[0].local_name)
+            return ast.ImportFrom(module=node.module_name, names=[alias], level=0)
+        else:
+            # Named imports: import { name1, name2 } from "module" -> from module import name1, name2
+            aliases = []
+            for spec in node.specifiers:
+                alias = ast.alias(name=spec.imported_name, asname=spec.local_name if spec.local_name != spec.imported_name else None)
+                aliases.append(alias)
+            return ast.ImportFrom(module=node.module_name, names=aliases, level=0)
+    
+    def visit_export(self, node: ExportNode) -> List[ast.AST]:
+        """Visit export node - In Python, we'll add to __all__ and make declarations available"""
+        statements = []
+        
+        if node.declaration:
+            # Export a declaration
+            decl_stmt = node.declaration.accept(self)
+            if isinstance(decl_stmt, list):
+                statements.extend(decl_stmt)
+            else:
+                statements.append(decl_stmt)
+            
+            # Add to __all__ if it's a named export
+            if hasattr(node.declaration, 'name') and isinstance(node.declaration.name, str):
+                export_name = node.declaration.name
+                # Create or update __all__ list
+                all_stmt = ast.Assign(
+                    targets=[ast.Name(id='__all__', ctx=ast.Store())],
+                    value=ast.List(elts=[ast.Constant(value=export_name)], ctx=ast.Load())
+                )
+                statements.insert(0, all_stmt)
+        
+        elif node.specifiers:
+            # Named exports: export { name1, name2 }
+            export_names = [spec.exported_name for spec in node.specifiers]
+            all_stmt = ast.Assign(
+                targets=[ast.Name(id='__all__', ctx=ast.Store())],
+                value=ast.List(elts=[ast.Constant(value=name) for name in export_names], ctx=ast.Load())
+            )
+            statements.append(all_stmt)
+        
+        return statements
     
     def visit_try(self, node: TryNode) -> ast.Try:
         """Visit try node"""

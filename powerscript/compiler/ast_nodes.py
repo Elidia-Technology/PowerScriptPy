@@ -46,6 +46,9 @@ class NodeType(Enum):
     CASE = "case"
     BREAK = "break"
     CONTINUE = "continue"
+    TEMPLATE_LITERAL = "template_literal"
+    IMPORT = "import"
+    EXPORT = "export"
     UNION_TYPE = "union_type"
     INTERSECTION_TYPE = "intersection_type"
     LITERAL_TYPE = "literal_type"
@@ -405,6 +408,62 @@ class ContinueNode(ASTNode):
         return visitor.visit_continue(self)
 
 
+class TemplateLiteralNode(ExpressionNode):
+    """AST node for template literals `Hello ${name}!`"""
+    
+    def __init__(self, value: str, expressions: List[ExpressionNode] = None, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.TEMPLATE_LITERAL, location)
+        self.value = value  # Original template with placeholders
+        self.expressions = expressions or []  # Parsed expressions from ${expr}
+    
+    def accept(self, visitor):
+        return visitor.visit_template_literal(self)
+
+
+class ImportNode(ASTNode):
+    """AST node for import statements"""
+    
+    def __init__(self, module_name: str, specifiers: List['ImportSpecifier'] = None, 
+                 is_default_import: bool = False, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.IMPORT, location)
+        self.module_name = module_name
+        self.specifiers = specifiers or []  # Named imports: { name1, name2 }
+        self.is_default_import = is_default_import  # import defaultName from "module"
+    
+    def accept(self, visitor):
+        return visitor.visit_import(self)
+
+
+class ImportSpecifier:
+    """Import specifier for named imports"""
+    
+    def __init__(self, imported_name: str, local_name: Optional[str] = None):
+        self.imported_name = imported_name  # Original name in module
+        self.local_name = local_name or imported_name  # Local alias
+
+
+class ExportNode(ASTNode):
+    """AST node for export statements"""
+    
+    def __init__(self, declaration: Optional[ASTNode] = None, specifiers: List['ExportSpecifier'] = None,
+                 is_default: bool = False, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.EXPORT, location)
+        self.declaration = declaration  # export class/function/etc
+        self.specifiers = specifiers or []  # export { name1, name2 }
+        self.is_default = is_default  # export default
+    
+    def accept(self, visitor):
+        return visitor.visit_export(self)
+
+
+class ExportSpecifier:
+    """Export specifier for named exports"""
+    
+    def __init__(self, local_name: str, exported_name: Optional[str] = None):
+        self.local_name = local_name  # Local name
+        self.exported_name = exported_name or local_name  # Exported alias
+
+
 class TryNode(ASTNode):
     """Try-catch-finally statement node"""
     
@@ -677,6 +736,21 @@ class ASTVisitor(ABC):
     
     @abstractmethod
     def visit_case(self, node: CaseNode): pass
+    
+    @abstractmethod
+    def visit_break(self, node: BreakNode): pass
+    
+    @abstractmethod
+    def visit_continue(self, node: ContinueNode): pass
+    
+    @abstractmethod
+    def visit_template_literal(self, node: TemplateLiteralNode): pass
+    
+    @abstractmethod
+    def visit_import(self, node: ImportNode): pass
+    
+    @abstractmethod
+    def visit_export(self, node: ExportNode): pass
     
     @abstractmethod
     def visit_union_type(self, node: UnionTypeNode): pass

@@ -38,7 +38,11 @@ class Parser:
     def _declaration(self) -> Optional[ASTNode]:
         """Parse top-level declarations"""
         try:
-            if self._match(TokenType.CLASS):
+            if self._match(TokenType.IMPORT):
+                return self._import_declaration()
+            elif self._match(TokenType.EXPORT):
+                return self._export_declaration()
+            elif self._match(TokenType.CLASS):
                 return self._class_declaration()
             elif self._match(TokenType.FUNCTION):
                 return self._function_declaration()
@@ -225,6 +229,106 @@ class Parser:
         
         return VariableNode(name, var_type, initializer, is_const, AccessModifier.PUBLIC, name_token.location)
     
+    def _import_declaration(self) -> ImportNode:
+        """Parse import declaration: 
+        - import defaultName from "module"
+        - import { name1, name2 } from "module"  
+        - import * as name from "module"
+        """
+        location = self._previous().location
+        
+        specifiers = []
+        is_default_import = False
+        module_name = ""
+        
+        if self._match(TokenType.LEFT_BRACE):
+            # Named imports: import { name1, name2 } from "module"
+            while not self._check(TokenType.RIGHT_BRACE) and not self._is_at_end():
+                imported_name = self._consume(TokenType.IDENTIFIER, "Expected import name").value
+                local_name = imported_name
+                
+                if self._match(TokenType.AS):
+                    local_name = self._consume(TokenType.IDENTIFIER, "Expected local name after 'as'").value
+                
+                specifiers.append(ImportSpecifier(imported_name, local_name))
+                
+                if not self._match(TokenType.COMMA):
+                    break
+            
+            self._consume(TokenType.RIGHT_BRACE, "Expected '}' after import specifiers")
+            self._consume(TokenType.FROM, "Expected 'from' after import specifiers")
+            module_name = self._consume(TokenType.STRING, "Expected module name").value[1:-1]  # Remove quotes
+        
+        elif self._check(TokenType.IDENTIFIER):
+            # Default import: import defaultName from "module"
+            default_name = self._consume(TokenType.IDENTIFIER, "Expected default import name").value
+            specifiers.append(ImportSpecifier("default", default_name))
+            is_default_import = True
+            self._consume(TokenType.FROM, "Expected 'from' after default import")
+            module_name = self._consume(TokenType.STRING, "Expected module name").value[1:-1]  # Remove quotes
+        
+        else:
+            self._error("Expected import specifier or default import name")
+        
+        self._consume(TokenType.SEMICOLON, "Expected ';' after import declaration")
+        return ImportNode(module_name, specifiers, is_default_import, location)
+    
+    def _export_declaration(self) -> ExportNode:
+        """Parse export declaration:
+        - export { name1, name2 }
+        - export default expression
+        - export class/function/variable
+        """
+        location = self._previous().location
+        
+        if self._match(TokenType.DEFAULT):
+            # Export default
+            if self._match(TokenType.CLASS):
+                declaration = self._class_declaration()
+            elif self._match(TokenType.FUNCTION):
+                declaration = self._function_declaration()
+            else:
+                # Export default expression
+                expr = self._expression()
+                self._consume(TokenType.SEMICOLON, "Expected ';' after export default expression")
+                declaration = expr
+            
+            return ExportNode(declaration=declaration, is_default=True, location=location)
+        
+        elif self._match(TokenType.LEFT_BRACE):
+            # Named exports: export { name1, name2 }
+            specifiers = []
+            
+            while not self._check(TokenType.RIGHT_BRACE) and not self._is_at_end():
+                local_name = self._consume(TokenType.IDENTIFIER, "Expected export name").value
+                exported_name = local_name
+                
+                if self._match(TokenType.AS):
+                    exported_name = self._consume(TokenType.IDENTIFIER, "Expected exported name after 'as'").value
+                
+                specifiers.append(ExportSpecifier(local_name, exported_name))
+                
+                if not self._match(TokenType.COMMA):
+                    break
+            
+            self._consume(TokenType.RIGHT_BRACE, "Expected '}' after export specifiers")
+            self._consume(TokenType.SEMICOLON, "Expected ';' after export declaration")
+            
+            return ExportNode(specifiers=specifiers, location=location)
+        
+        else:
+            # Export declaration: export class/function/variable
+            if self._match(TokenType.CLASS):
+                declaration = self._class_declaration()
+            elif self._match(TokenType.FUNCTION):
+                declaration = self._function_declaration()
+            elif self._match(TokenType.LET, TokenType.CONST):
+                declaration = self._variable_declaration()
+            else:
+                self._error("Expected exportable declaration after 'export'")
+            
+            return ExportNode(declaration=declaration, location=location)
+    
     def _parameters(self) -> List[ParameterNode]:
         """Parse function parameters"""
         self._consume(TokenType.LEFT_PAREN, "Expected '(' before parameters")
@@ -378,6 +482,10 @@ class Parser:
             return self._throw_statement()
         elif self._match(TokenType.RETURN):
             return self._return_statement()
+        elif self._match(TokenType.BREAK):
+            return self._break_statement()
+        elif self._match(TokenType.CONTINUE):
+            return self._continue_statement()
         elif self._match(TokenType.WITH):
             return self._with_statement()
         elif self._match(TokenType.YIELD):
@@ -480,6 +588,18 @@ class Parser:
         
         self._consume(TokenType.SEMICOLON, "Expected ';' after return value")
         return ReturnNode(value, location)
+    
+    def _break_statement(self) -> BreakNode:
+        """Parse break statement"""
+        location = self._previous().location
+        self._consume(TokenType.SEMICOLON, "Expected ';' after break")
+        return BreakNode(location)
+    
+    def _continue_statement(self) -> ContinueNode:
+        """Parse continue statement"""
+        location = self._previous().location
+        self._consume(TokenType.SEMICOLON, "Expected ';' after continue")
+        return ContinueNode(location)
     
     def _try_statement(self) -> TryNode:
         """Parse try-catch-finally statement"""
@@ -726,6 +846,9 @@ class Parser:
         
         if self._match(TokenType.F_STRING):
             return self._f_string()
+        
+        if self._match(TokenType.TEMPLATE_LITERAL):
+            return self._template_literal()
         
         if self._match(TokenType.IDENTIFIER):
             return IdentifierNode(self._previous().value, self._previous().location)
@@ -1001,6 +1124,40 @@ class Parser:
                 expressions.append(IdentifierNode(expr_str, location))
         
         return FStringNode(value, expressions, location)
+
+    def _template_literal(self) -> TemplateLiteralNode:
+        """Parse template literal with expression interpolation: `Hello ${name}!`"""
+        import re
+        
+        location = self._previous().location
+        value = self._previous().value
+        # Remove backticks
+        content = value[1:-1]
+        
+        expressions = []
+        
+        # Find ${expr} patterns
+        expr_pattern = r'\$\{([^}]+)\}'
+        matches = list(re.finditer(expr_pattern, content))
+        
+        for match in matches:
+            expr_str = match.group(1)
+            # Create a mini-parser for the expression
+            try:
+                # Parse the expression string as PowerScript code
+                from .lexer import Lexer
+                lexer = Lexer()
+                expr_tokens = lexer.tokenize(expr_str)
+                # Create a sub-parser for the expression
+                sub_parser = Parser(expr_tokens)
+                sub_parser.current = 0
+                expr_ast = sub_parser._expression()
+                expressions.append(expr_ast)
+            except Exception:
+                # If parsing fails, treat as identifier
+                expressions.append(IdentifierNode(expr_str, location))
+        
+        return TemplateLiteralNode(value, expressions, location)
 
     # Helper methods
     def _match(self, *types: TokenType) -> bool:

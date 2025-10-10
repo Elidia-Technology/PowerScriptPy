@@ -1,0 +1,22 @@
+// Test Template Literals
+let name = "PowerScript";
+let version = 1.0;
+let status = "complete";
+
+// Basic template literal
+print(`Hello, ${name}!`);
+
+// Template with multiple expressions
+print(`${name} version ${version} is ${status}`);
+
+// Template with expressions and calculations
+let x = 10;
+let y = 20;
+print(`The sum of ${x} and ${y} is ${x + y}`);
+
+// Template with method calls
+let message = "world";
+print(`Hello ${message.toUpperCase()}!`);
+
+// Nested template literal
+let greeting = `Welcome to ${`${name} v${version}`}!`;
