@@ -1,0 +1,117 @@
+// PowerScript Extension Demo File
+// This file demonstrates all language features supported by the VS Code extension
+
+import { Logger } from './utils/logger';
+import * as math from './math/calculator';
+
+// Class definition with inheritance
+class Animal {
+    constructor(name: string) {
+        this.name = name;
+    }
+    
+    speak(): string {
+        return `${this.name} makes a sound`;
+    }
+}
+
+class Dog : Animal {
+    constructor(name: string, breed: string) {
+        super(name);
+        this.breed = breed;
+    }
+    
+    speak(): string {
+        return `${this.name} barks!`;
+    }
+    
+    wagTail() {
+        console.log("Wagging tail...");
+    }
+}
+
+// Function with type annotations
+function greetUser(name: string, age: number): string {
+    return `Hello ${name}, you are ${age} years old!`;
+}
+
+// Arrow function with generics
+const processArray = <T>(items: T[], processor: (item: T) => T): T[] => {
+    return items.map(processor);
+};
+
+// Async function with await
+async function fetchUserData(userId: number): Hello {
+    try {
+        const response = await fetch(`/api/users/${userId}`);
+        const userData = await response.json();
+        return userData;
+    } catch (error) {
+        console.error("Failed to fetch user data:", error);
+        throw error;
+    }
+}
+
+// Variable declarations with different types
+let userName: string = "John Doe";
+const userAge: number = 30;
+var isActive: boolean = true;
+
+// Template literals and F-strings
+const welcomeMessage: string = `Welcome ${userName}!`;
+const formattedMessage = f"User {userName} is {userAge} years old";
+
+// Object with complex structure
+const userProfile: Hello = {
+    id: 1,
+    name: userName,
+    age: userAge,
+    preferences: {
+        theme: "dark",
+        language: "en-US",
+        notifications: true
+    },
+    skills: ["JavaScript", "Python", "PowerScript"]
+};
+
+// Control flow statements
+if (isActive) {
+    console.log("User is active");
+} else {
+    console.log("User is inactive");
+}
+
+switch (userProfile.preferences.theme) {
+    case "dark":
+        console.log("Using dark theme");
+        break;
+    case "light":
+        console.log("Using light theme");
+        break;
+    default:
+        console.log("Using default theme");
+}
+
+// Loops
+for (let i = 0; i < userProfile.skills.length; i++) {
+    console.log(`Skill ${i + 1}: ${userProfile.skills[i]}`);
+}
+
+while (userAge > 0) {
+    console.log("Age is positive");
+    break;
+}
+
+// Error handling
+try {
+    const result = processArray([1, 2, 3], x => x * 2);
+    console.log("Processed array:", result);
+} catch (error) {
+    console.error("Error processing array:", error);
+} finally {
+    console.log("Processing complete");
+}
+
+// Export for module system
+export { Dog, greetUser, processArray, fetchUserData };
+export default userProfile;
