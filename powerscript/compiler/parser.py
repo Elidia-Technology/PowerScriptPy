@@ -339,12 +339,14 @@ class Parser:
         if self._match(TokenType.IDENTIFIER):
             return IdentifierNode(self._previous().value, self._previous().location)
         
-        if self._match(TokenType.STRING, TokenType.NUMBER, TokenType.BOOLEAN):
+        if self._match(TokenType.STRING, TokenType.NUMBER, TokenType.BOOLEAN, TokenType.NULL):
             value = self._previous().value
             if self._previous().type == TokenType.BOOLEAN:
                 value = value == "true"
             elif self._previous().type == TokenType.NUMBER:
                 value = float(value) if '.' in value else int(value)
+            elif self._previous().type == TokenType.NULL:
+                value = None
             else:
                 # Remove quotes from string
                 value = value[1:-1]

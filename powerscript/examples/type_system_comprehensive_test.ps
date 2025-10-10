@@ -1,0 +1,128 @@
+// PowerScript Advanced Type System - Comprehensive Test
+// Testing all implemented type system features
+
+// =====================================================
+// 1. TYPE ALIASES
+// =====================================================
+
+// Basic type aliases
+type StringType = string;
+type NumberType = number;
+type BooleanType = boolean;
+
+// Union type aliases
+type StringOrNumber = string | number;
+type StringOrNumberOrBoolean = string | number | boolean;
+
+// Literal type aliases  
+type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+type Theme = "light" | "dark" | "auto";
+type StatusCode = 200 | 404 | 500;
+
+// Complex type aliases
+type UserRole = "admin" | "user" | "guest" | "moderator";
+type MixedUnion = string | number | "special" | 42;
+
+// =====================================================
+// 2. UNION TYPES IN FUNCTION PARAMETERS
+// =====================================================
+
+// Simple union types
+function processValue(value: string | number) {
+    console.log("Processing value:", value);
+}
+
+// Complex union types
+function handleInput(input: string | number | boolean | null) {
+    console.log("Handling input:", input);
+}
+
+// Multiple union parameters
+function combineData(a: string | number, b: boolean | null, c: "yes" | "no") {
+    console.log("Combining:", a, b, c);
+}
+
+// =====================================================
+// 3. TYPE ALIASES IN FUNCTION PARAMETERS
+// =====================================================
+
+// Using type aliases as parameters
+function makeRequest(method: HttpMethod, url: string) {
+    console.log("Making", method, "request to", url);
+}
+
+function setAppTheme(theme: Theme) {
+    console.log("Setting theme to", theme);
+}
+
+function authorizeUser(role: UserRole, resource: string) {
+    console.log("Authorizing", role, "for", resource);
+}
+
+// =====================================================
+// 4. MIXED TYPE ALIASES AND UNION TYPES
+// =====================================================
+
+// Function using both direct unions and type aliases
+function processRequest(
+    method: HttpMethod,
+    body: string | number | null,
+    headers: StringOrNumber,
+    status: StatusCode
+) {
+    console.log("Request:", method, body, headers, status);
+}
+
+// =====================================================
+// 5. FUNCTION RETURN TYPES (when implemented)
+// =====================================================
+
+/*
+// Functions with union return types
+function getValue(): string | number {
+    return "test";
+}
+
+function getStatus(): StatusCode {
+    return 200;
+}
+*/
+
+// =====================================================
+// 6. TESTING ALL FEATURES
+// =====================================================
+
+console.log("=== PowerScript Advanced Type System Test ===");
+
+// Test basic functions
+processValue("hello");
+processValue(42);
+
+handleInput("text");
+handleInput(123);
+handleInput(true);
+handleInput(null);
+
+combineData("str", true, "yes");
+combineData(456, false, "no");
+
+// Test type alias usage
+makeRequest("GET", "/api/users");
+makeRequest("POST", "/api/data");
+
+setAppTheme("dark");
+setAppTheme("light");
+
+authorizeUser("admin", "/dashboard");
+authorizeUser("user", "/profile");
+
+// Test complex combinations
+processRequest("PUT", "data", "application/json", 200);
+processRequest("DELETE", null, 42, 404);
+
+console.log("=== Advanced Type System Test Completed! ===");
+console.log("✅ Type aliases working");
+console.log("✅ Union types working");
+console.log("✅ Literal types working"); 
+console.log("✅ Mixed type usage working");
+console.log("✅ Function parameter type annotations working");

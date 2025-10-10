@@ -178,10 +178,7 @@ class Transpiler(ASTVisitor):
         
         # Add parameters
         for param in node.parameters:
-            arg_node = ast.arg(
-                arg=param.name,
-                annotation=self._get_type_annotation(param.param_type) if param.param_type else None
-            )
+            arg_node = param.accept(self)
             args.append(arg_node)
             
             if param.default_value:
