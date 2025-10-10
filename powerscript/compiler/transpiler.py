@@ -333,7 +333,39 @@ class Transpiler(ASTVisitor):
     
     def visit_literal(self, node: LiteralNode) -> ast.Constant:
         """Visit literal node"""
-        return ast.Constant(value=node.value)
+        value = node.value
+        
+        # Handle different number formats
+        if isinstance(value, str) and value.replace('.', '').replace('-', '').replace('+', '').replace('e', '').replace('E', '').isdigit() == False:
+            # Check for special number formats
+            if value.startswith('0x') or value.startswith('0X'):
+                # Hexadecimal
+                try:
+                    value = int(value, 16)
+                except ValueError:
+                    value = float.fromhex(value)
+            elif value.startswith('0b') or value.startswith('0B'):
+                # Binary
+                try:
+                    value = int(value, 2)
+                except ValueError:
+                    # Handle binary floats (custom implementation)
+                    pass
+            elif value.startswith('0o') or value.startswith('0O'):
+                # Octal
+                try:
+                    value = int(value, 8)
+                except ValueError:
+                    # Handle octal floats (custom implementation)
+                    pass
+            elif 'e' in value.lower():
+                # Scientific notation
+                try:
+                    value = float(value)
+                except ValueError:
+                    pass
+        
+        return ast.Constant(value=value)
     
     def visit_array_literal(self, node: ArrayLiteralNode) -> ast.List:
         """Visit array literal node"""
@@ -472,11 +504,35 @@ class Transpiler(ASTVisitor):
         
         raise TranspilerError(f"Unsupported unary operator: {node.operator}", node)
     
-    def visit_assignment(self, node: AssignmentNode) -> ast.Assign:
+    def visit_assignment(self, node: AssignmentNode) -> Union[ast.Assign, ast.AugAssign]:
         """Visit assignment node"""
         target = node.target.accept(self)
         value = node.value.accept(self)
         
+        # Handle compound assignments
+        if hasattr(node, 'operator') and node.operator != "=":
+            # Map compound operators to AST operators
+            op_map = {
+                "+=": ast.Add(),
+                "-=": ast.Sub(),
+                "*=": ast.Mult(),
+                "/=": ast.Div(),
+                "%=": ast.Mod(),
+                "**=": ast.Pow(),
+            }
+            
+            if node.operator in op_map:
+                # Set target context for reading (for augmented assignment)
+                if isinstance(target, ast.Name):
+                    target.ctx = ast.Store()
+                elif isinstance(target, ast.Attribute):
+                    target.ctx = ast.Store()
+                elif isinstance(target, ast.Subscript):
+                    target.ctx = ast.Store()
+                
+                return ast.AugAssign(target=target, op=op_map[node.operator], value=value)
+        
+        # Regular assignment
         # Ensure target has Store context
         if isinstance(target, ast.Name):
             target.ctx = ast.Store()
@@ -803,9 +859,17 @@ class Transpiler(ASTVisitor):
         
         return ast.ExceptHandler(type=exception_type, name=name, body=body)
     
-    def _get_type_annotation(self, type_str: Optional[str]) -> Optional[ast.AST]:
+    def _get_type_annotation(self, type_annotation) -> Optional[ast.AST]:
         """Convert PowerScript type annotation to Python AST"""
-        if not type_str or not self.strict_typing:
+        if not type_annotation or not self.strict_typing:
+            return None
+        
+        # Convert AST node to string if needed
+        if hasattr(type_annotation, 'name'):  # IdentifierNode
+            type_str = type_annotation.name
+        elif isinstance(type_annotation, str):
+            type_str = type_annotation
+        else:
             return None
         
         # Handle basic types

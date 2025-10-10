@@ -106,6 +106,10 @@ class TokenType(Enum):
     ASSIGN = auto()         # =
     PLUS_ASSIGN = auto()    # +=
     MINUS_ASSIGN = auto()   # -=
+    MULTIPLY_ASSIGN = auto() # *=
+    DIVIDE_ASSIGN = auto()  # /=
+    MODULO_ASSIGN = auto()  # %=
+    POWER_ASSIGN = auto()   # **=
     
     # Comparison
     EQUAL = auto()          # ==
@@ -235,9 +239,13 @@ class Lexer:
         (TokenType.COMMENT, re.compile(r'/\*.*?\*/', re.DOTALL)),
         
         # Multi-character operators (must come before single-character ones)
+        (TokenType.POWER_ASSIGN, re.compile(r'\*\*=')),   # Must come before **
         (TokenType.POWER, re.compile(r'\*\*')),
         (TokenType.PLUS_ASSIGN, re.compile(r'\+=')),
         (TokenType.MINUS_ASSIGN, re.compile(r'-=')),
+        (TokenType.MULTIPLY_ASSIGN, re.compile(r'\*=')),
+        (TokenType.DIVIDE_ASSIGN, re.compile(r'/=')),
+        (TokenType.MODULO_ASSIGN, re.compile(r'%=')),
         (TokenType.EQUAL, re.compile(r'==')),
         (TokenType.NOT_EQUAL, re.compile(r'!=')),
         (TokenType.LESS_EQUAL, re.compile(r'<=')),
@@ -259,8 +267,15 @@ class Lexer:
         (TokenType.STRING, re.compile(r'"(?:[^"\\]|\\.)*"')),
         (TokenType.STRING, re.compile(r"'(?:[^'\\]|\\.)*'")),
         
-        # Number literals
-        (TokenType.NUMBER, re.compile(r'\d+\.\d+|\d+\.|\.\d+|\d+')),
+        # Number literals (order matters - most specific first)
+        (TokenType.NUMBER, re.compile(r'0[bB][01]+(?:\.[01]+)?(?:[eE][+-]?\d+)?')),  # Binary
+        (TokenType.NUMBER, re.compile(r'0[oO][0-7]+(?:\.[0-7]+)?(?:[eE][+-]?\d+)?')),  # Octal
+        (TokenType.NUMBER, re.compile(r'0[xX][0-9a-fA-F]+(?:\.[0-9a-fA-F]+)?(?:[eE][+-]?\d+)?')),  # Hex
+        (TokenType.NUMBER, re.compile(r'\d+\.\d+(?:[eE][+-]?\d+)?')),  # Float with optional scientific
+        (TokenType.NUMBER, re.compile(r'\d+\.(?:[eE][+-]?\d+)?')),     # Float ending with dot
+        (TokenType.NUMBER, re.compile(r'\.\d+(?:[eE][+-]?\d+)?')),     # Float starting with dot
+        (TokenType.NUMBER, re.compile(r'\d+[eE][+-]?\d+')),            # Scientific notation
+        (TokenType.NUMBER, re.compile(r'\d+')),                       # Integer
         
         # Identifiers (must come after keywords check)
         (TokenType.IDENTIFIER, re.compile(r'[a-zA-Z_][a-zA-Z0-9_]*')),

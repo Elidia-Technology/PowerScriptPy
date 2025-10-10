@@ -311,10 +311,11 @@ class AssignmentNode(ExpressionNode):
     """AST node for assignments"""
     
     def __init__(self, target: ExpressionNode, value: ExpressionNode,
-                 location: Optional[SourceLocation] = None):
+                 location: Optional[SourceLocation] = None, operator: str = "="):
         super().__init__(NodeType.ASSIGNMENT, location)
         self.target = target
         self.value = value
+        self.operator = operator
     
     def accept(self, visitor):
         return visitor.visit_assignment(self)

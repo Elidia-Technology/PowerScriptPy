@@ -45,28 +45,34 @@ class CLI:
     def _create_parser(self) -> argparse.ArgumentParser:
         """Create the main argument parser"""
         parser = argparse.ArgumentParser(
-            prog='powerscript',
-            description='PowerScript - A fully structured development language that transpiles to Python',
+            prog='tps',
+            description='PowerScript (TPS) - A fully structured development language that transpiles to Python',
             formatter_class=argparse.RawDescriptionHelpFormatter,
             epilog="""
 Commands:
-  compile (c)     Compile PowerScript files to Python
-  run (r)         Run PowerScript files directly
-  create          Create a new PowerScript project
-  check           Run type checker on PowerScript files
+  compile (c)     Compile TPS files to Python
+  run (r)         Run TPS files directly
+  create          Create a new TPS project
+  check           Run type checker on TPS files
 
 Examples:
-  powerscript compile src/ -o build/
-  powerscript run src/main.ps
-  powerscript create my_project
-  powerscript check src/
+  tps compile src/ -o build/
+  tps run src/main.ps
+  tps create my_project
+  tps check src/
+  
+Easy Commands:
+  tps-compile file.ps    # Direct compile
+  tps-run file.ps        # Direct run
+  tps-create project     # Direct create
+  ps file.ps             # Quick run (alias)
             """
         )
         
         parser.add_argument(
             '--version', '-v',
             action='version',
-            version='PowerScript 0.1.0'
+            version='PowerScript (TPS) 1.0.0'
         )
         
         subparsers = parser.add_subparsers(dest='command', help='Available commands')
@@ -240,6 +246,104 @@ def psc_main() -> int:
     args = ['check'] + sys.argv[1:]
     cli = CLI()
     return cli.run(args)
+
+
+# New simplified TPS command entry points
+def compile_command() -> int:
+    """Direct compile command: tps-compile file.ps"""
+    if len(sys.argv) < 2:
+        print("Usage: tps-compile <file.ps>", file=sys.stderr)
+        return 1
+    
+    args = ['compile'] + sys.argv[1:]
+    cli = CLI()
+    try:
+        return cli.run(args)
+    except Exception as e:
+        print(f"❌ Compilation Error: {e}", file=sys.stderr)
+        return 1
+
+
+def run_command() -> int:
+    """Direct run command: tps-run file.ps"""
+    if len(sys.argv) < 2:
+        print("Usage: tps-run <file.ps>", file=sys.stderr)
+        return 1
+    
+    args = ['run'] + sys.argv[1:]
+    cli = CLI()
+    try:
+        return cli.run(args)
+    except Exception as e:
+        print(f"❌ Runtime Error: {e}", file=sys.stderr)
+        return 1
+
+
+def create_command() -> int:
+    """Direct create command: tps-create project_name"""
+    if len(sys.argv) < 2:
+        print("Usage: tps-create <project_name>", file=sys.stderr)
+        return 1
+    
+    args = ['create'] + sys.argv[1:]
+    cli = CLI()
+    try:
+        return cli.run(args)
+    except Exception as e:
+        print(f"❌ Project Creation Error: {e}", file=sys.stderr)
+        return 1
+
+
+def ps_smart_command() -> int:
+    """Smart PS command - runs file if provided, otherwise compiles all .ps files"""
+    if len(sys.argv) >= 2 and sys.argv[1].endswith('.ps'):
+        # If a .ps file is provided, run it
+        return run_command()
+    else:
+        # Otherwise, do smart compilation
+        return smart_compile()
+
+
+def smart_compile() -> int:
+    """Smart compilation - automatically detects .ps files and compiles them"""
+    import glob
+    import os
+    
+    # Find all .ps files in current directory and subdirectories
+    ps_files = glob.glob("**/*.ps", recursive=True)
+    
+    if not ps_files:
+        print("No .ps files found in current directory.", file=sys.stderr)
+        return 1
+    
+    print(f"🔍 Found {len(ps_files)} PowerScript files:")
+    for file in ps_files:
+        print(f"  📄 {file}")
+    
+    cli = CLI()
+    failed_files = []
+    
+    for ps_file in ps_files:
+        try:
+            print(f"\n🔨 Compiling {ps_file}...")
+            result = cli.run(['compile', ps_file])
+            if result != 0:
+                failed_files.append(ps_file)
+                print(f"❌ Failed to compile {ps_file}")
+            else:
+                print(f"✅ Successfully compiled {ps_file}")
+        except Exception as e:
+            failed_files.append(ps_file)
+            print(f"❌ Error compiling {ps_file}: {e}")
+    
+    if failed_files:
+        print(f"\n❌ Compilation failed for {len(failed_files)} files:")
+        for file in failed_files:
+            print(f"  📄 {file}")
+        return 1
+    else:
+        print(f"\n🎉 Successfully compiled all {len(ps_files)} PowerScript files!")
+        return 0
 
 
 if __name__ == '__main__':

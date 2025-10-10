@@ -1,3 +1,6 @@
+# Typed PowerScript (TPS) - Requirements
+# Install with: pip install tps
+
 # Core dependencies
 beartype>=0.10.0
 lark>=1.1.0

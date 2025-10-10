@@ -1,4 +1,4 @@
-# PowerScript 🚀
+# PowerScript (TPS) 🚀
 
 **A Production-Ready Programming Language that Transpiles to Python**
 
@@ -74,38 +74,50 @@ PowerScript is a complete, modern programming language framework designed for AI
 
 ### Installation & Setup
 
+#### Option 1: Install from PyPI (Recommended)
+
+```bash
+# Install PowerScript (TPS) from PyPI
+pip install tps
+
+# Verify installation
+tps --version
+
+# Start using PowerScript immediately!
+echo 'console.log("Hello PowerScript!");' > hello.ps
+tps-run hello.ps
+```
+
+#### Option 2: Development Installation
+
 ```bash
 # Clone the complete framework
 git clone https://github.com/SaleemLww/Python-PowerScript.git
 cd Python-PowerScript
 
-# Install dependencies
-pip install -r requirements.txt
+# Install in development mode
+pip install -e .
 
-# Make CLI tools executable
+# Make CLI tools executable (optional)
 chmod +x bin/*
-
-# Add to PATH (optional)
-export PATH="$PWD/bin:$PATH"
 ```
 
 ### Create Your First Project
 
 ```bash
 # Create a new PowerScript project
-./bin/ps-create my_ai_project --template ai
+tps-create my_ai_project --template ai
 
 # Navigate to project
 cd my_ai_project
 
-# Compile with watch mode
-./bin/powerscriptc src/ -o build/ --watch
+# Compile with watch mode (if installed from source)
+tps compile src/ -o build/ --watch
 
-# Run PowerScript directly
-./bin/ps-run src/main.ps
-
-# Type check your code
-./bin/psc src/ --json
+# Or use easy commands (recommended)
+tps-compile src/main.ps    # Direct compile
+tps-run src/main.ps        # Direct run
+tps-build                  # Build all .ps files
 ```
 
 ### Example PowerScript Code
@@ -587,7 +599,7 @@ PowerScriptPy/
 │   │   ├── package.json  # Extension manifest
 │   │   ├── syntaxes/     # TextMate grammar
 │   │   ├── snippets/     # Code templates
-│   │   └── src/          # TypeScript extension code
+│   │   └── src/          # Extension source code
 │   ├── examples/         # ✅ 8 AI/ML example projects
 │   │   ├── basic.ps      # Language fundamentals
 │   │   ├── ml_model.ps   # Machine learning
@@ -747,10 +759,30 @@ code .  # VS Code with PowerScript extension
 - **📄 License**: MIT License with proper attribution in all files
 - **🚀 Status**: Production Ready - All 12 development phases complete!
 
+## 🚀 Get Started in 30 Seconds!
+
+```bash
+# 1. Install from PyPI
+pip install tps
+
+# 2. Create your first PowerScript file
+echo 'console.log("Hello PowerScript!");' > hello.ps
+
+# 3. Run it!
+tps-run hello.ps
+# Output: Hello PowerScript!
+
+# 4. Or compile it
+tps-compile hello.ps
+python build/hello.py
+```
+
 ## 🤝 Repository & Community
 
+- **PyPI Package**: [`tps`](https://pypi.org/project/tps/) - `pip install tps`
 - **GitHub**: [SaleemLww/Python-PowerScript](https://github.com/SaleemLww/Python-PowerScript)
-- **Issues**: Report bugs and request features
+- **Documentation**: [Complete Guide](https://github.com/SaleemLww/Python-PowerScript#readme)
+- **Issues**: [Report bugs and request features](https://github.com/SaleemLww/Python-PowerScript/issues)
 - **Contributions**: PRs welcome for enhancements
 - **License**: MIT License - free for all use cases
 

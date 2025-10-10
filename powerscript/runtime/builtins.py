@@ -351,6 +351,580 @@ class RegExp:
         return bool(re.search(pattern, text, flags))
 
 
+class String:
+    """String utilities with Python string methods"""
+    
+    @staticmethod
+    def capitalize(s: str) -> str:
+        """Capitalize first character and lowercase the rest"""
+        return s.capitalize()
+    
+    @staticmethod
+    def casefold(s: str) -> str:
+        """Return casefolded string for case-insensitive comparisons"""
+        return s.casefold()
+    
+    @staticmethod
+    def center(s: str, width: int, fillchar: str = ' ') -> str:
+        """Center string in a field of given width"""
+        return s.center(width, fillchar)
+    
+    @staticmethod
+    def count(s: str, sub: str, start: int = 0, end: int = None) -> int:
+        """Count non-overlapping occurrences of substring"""
+        return s.count(sub, start, end)
+    
+    @staticmethod
+    def encode(s: str, encoding: str = 'utf-8', errors: str = 'strict') -> bytes:
+        """Encode string using specified encoding"""
+        return s.encode(encoding, errors)
+    
+    @staticmethod
+    def endswith(s: str, suffix, start: int = 0, end: int = None) -> bool:
+        """Check if string ends with specified suffix"""
+        return s.endswith(suffix, start, end)
+    
+    @staticmethod
+    def expandtabs(s: str, tabsize: int = 8) -> str:
+        """Replace tabs with spaces"""
+        return s.expandtabs(tabsize)
+    
+    @staticmethod
+    def find(s: str, sub: str, start: int = 0, end: int = None) -> int:
+        """Find first occurrence of substring"""
+        return s.find(sub, start, end)
+    
+    @staticmethod
+    def format(s: str, *args, **kwargs) -> str:
+        """Format string with given arguments"""
+        return s.format(*args, **kwargs)
+    
+    @staticmethod
+    def format_map(s: str, mapping) -> str:
+        """Format string using mapping"""
+        return s.format_map(mapping)
+    
+    @staticmethod
+    def index(s: str, sub: str, start: int = 0, end: int = None) -> int:
+        """Find first occurrence of substring (raises ValueError if not found)"""
+        return s.index(sub, start, end)
+    
+    @staticmethod
+    def isalnum(s: str) -> bool:
+        """Check if all characters are alphanumeric"""
+        return s.isalnum()
+    
+    @staticmethod
+    def isalpha(s: str) -> bool:
+        """Check if all characters are alphabetic"""
+        return s.isalpha()
+    
+    @staticmethod
+    def isascii(s: str) -> bool:
+        """Check if all characters are ASCII"""
+        return s.isascii()
+    
+    @staticmethod
+    def isdecimal(s: str) -> bool:
+        """Check if all characters are decimal"""
+        return s.isdecimal()
+    
+    @staticmethod
+    def isdigit(s: str) -> bool:
+        """Check if all characters are digits"""
+        return s.isdigit()
+    
+    @staticmethod
+    def isidentifier(s: str) -> bool:
+        """Check if string is a valid identifier"""
+        return s.isidentifier()
+    
+    @staticmethod
+    def islower(s: str) -> bool:
+        """Check if all cased characters are lowercase"""
+        return s.islower()
+    
+    @staticmethod
+    def isnumeric(s: str) -> bool:
+        """Check if all characters are numeric"""
+        return s.isnumeric()
+    
+    @staticmethod
+    def isprintable(s: str) -> bool:
+        """Check if all characters are printable"""
+        return s.isprintable()
+    
+    @staticmethod
+    def isspace(s: str) -> bool:
+        """Check if all characters are whitespace"""
+        return s.isspace()
+    
+    @staticmethod
+    def istitle(s: str) -> bool:
+        """Check if string is titlecased"""
+        return s.istitle()
+    
+    @staticmethod
+    def isupper(s: str) -> bool:
+        """Check if all cased characters are uppercase"""
+        return s.isupper()
+    
+    @staticmethod
+    def join(s: str, iterable) -> str:
+        """Join elements of iterable with string as separator"""
+        return s.join(iterable)
+    
+    @staticmethod
+    def ljust(s: str, width: int, fillchar: str = ' ') -> str:
+        """Left-justify string in a field of given width"""
+        return s.ljust(width, fillchar)
+    
+    @staticmethod
+    def lower(s: str) -> str:
+        """Convert to lowercase"""
+        return s.lower()
+    
+    @staticmethod
+    def lstrip(s: str, chars: str = None) -> str:
+        """Remove leading whitespace or characters"""
+        return s.lstrip(chars)
+    
+    @staticmethod
+    def maketrans(x, y=None, z=None):
+        """Create translation table for use with translate()"""
+        return str.maketrans(x, y, z)
+    
+    @staticmethod
+    def partition(s: str, sep: str):
+        """Partition string at first occurrence of separator"""
+        return s.partition(sep)
+    
+    @staticmethod
+    def removeprefix(s: str, prefix: str) -> str:
+        """Remove prefix from string (Python 3.9+)"""
+        if hasattr(str, 'removeprefix'):
+            return s.removeprefix(prefix)
+        return s[len(prefix):] if s.startswith(prefix) else s
+    
+    @staticmethod
+    def removesuffix(s: str, suffix: str) -> str:
+        """Remove suffix from string (Python 3.9+)"""
+        if hasattr(str, 'removesuffix'):
+            return s.removesuffix(suffix)
+        return s[:-len(suffix)] if s.endswith(suffix) else s
+    
+    @staticmethod
+    def replace(s: str, old: str, new: str, count: int = -1) -> str:
+        """Replace occurrences of substring"""
+        return s.replace(old, new, count)
+    
+    @staticmethod
+    def rfind(s: str, sub: str, start: int = 0, end: int = None) -> int:
+        """Find last occurrence of substring"""
+        return s.rfind(sub, start, end)
+    
+    @staticmethod
+    def rindex(s: str, sub: str, start: int = 0, end: int = None) -> int:
+        """Find last occurrence of substring (raises ValueError if not found)"""
+        return s.rindex(sub, start, end)
+    
+    @staticmethod
+    def rjust(s: str, width: int, fillchar: str = ' ') -> str:
+        """Right-justify string in a field of given width"""
+        return s.rjust(width, fillchar)
+    
+    @staticmethod
+    def rpartition(s: str, sep: str):
+        """Partition string at last occurrence of separator"""
+        return s.rpartition(sep)
+    
+    @staticmethod
+    def rsplit(s: str, sep: str = None, maxsplit: int = -1):
+        """Split string from the right"""
+        return s.rsplit(sep, maxsplit)
+    
+    @staticmethod
+    def rstrip(s: str, chars: str = None) -> str:
+        """Remove trailing whitespace or characters"""
+        return s.rstrip(chars)
+    
+    @staticmethod
+    def split(s: str, sep: str = None, maxsplit: int = -1):
+        """Split string into list"""
+        return s.split(sep, maxsplit)
+    
+    @staticmethod
+    def splitlines(s: str, keepends: bool = False):
+        """Split string at line boundaries"""
+        return s.splitlines(keepends)
+    
+    @staticmethod
+    def startswith(s: str, prefix, start: int = 0, end: int = None) -> bool:
+        """Check if string starts with specified prefix"""
+        return s.startswith(prefix, start, end)
+    
+    @staticmethod
+    def strip(s: str, chars: str = None) -> str:
+        """Remove leading and trailing whitespace or characters"""
+        return s.strip(chars)
+    
+    @staticmethod
+    def swapcase(s: str) -> str:
+        """Swap case of all cased characters"""
+        return s.swapcase()
+    
+    @staticmethod
+    def title(s: str) -> str:
+        """Convert to titlecase"""
+        return s.title()
+    
+    @staticmethod
+    def translate(s: str, table) -> str:
+        """Apply translation table to string"""
+        return s.translate(table)
+    
+    @staticmethod
+    def upper(s: str) -> str:
+        """Convert to uppercase"""
+        return s.upper()
+    
+    @staticmethod
+    def zfill(s: str, width: int) -> str:
+        """Pad numeric string with zeros on the left"""
+        return s.zfill(width)
+
+
+class Array:
+    """Array/List utilities with Python list methods"""
+    
+    @staticmethod
+    def append(arr: list, item) -> None:
+        """Add item to end of array"""
+        arr.append(item)
+    
+    @staticmethod
+    def clear(arr: list) -> None:
+        """Remove all items from array"""
+        arr.clear()
+    
+    @staticmethod
+    def copy(arr: list) -> list:
+        """Return shallow copy of array"""
+        return arr.copy()
+    
+    @staticmethod
+    def count(arr: list, item) -> int:
+        """Count occurrences of item in array"""
+        return arr.count(item)
+    
+    @staticmethod
+    def extend(arr: list, iterable) -> None:
+        """Extend array with items from iterable"""
+        arr.extend(iterable)
+    
+    @staticmethod
+    def index(arr: list, item, start: int = 0, end: int = None) -> int:
+        """Find first index of item"""
+        return arr.index(item, start, end)
+    
+    @staticmethod
+    def insert(arr: list, index: int, item) -> None:
+        """Insert item at specified index"""
+        arr.insert(index, item)
+    
+    @staticmethod
+    def pop(arr: list, index: int = -1):
+        """Remove and return item at index (default last)"""
+        return arr.pop(index)
+    
+    @staticmethod
+    def remove(arr: list, item) -> None:
+        """Remove first occurrence of item"""
+        arr.remove(item)
+    
+    @staticmethod
+    def reverse(arr: list) -> None:
+        """Reverse array in place"""
+        arr.reverse()
+    
+    @staticmethod
+    def sort(arr: list, key=None, reverse: bool = False) -> None:
+        """Sort array in place"""
+        arr.sort(key=key, reverse=reverse)
+    
+    # Additional utility methods
+    @staticmethod
+    def join(arr: list, separator: str = ',') -> str:
+        """Join array elements into string"""
+        return separator.join(str(x) for x in arr)
+    
+    @staticmethod
+    def slice(arr: list, start: int = 0, end: int = None, step: int = 1) -> list:
+        """Return slice of array"""
+        return arr[start:end:step]
+    
+    @staticmethod
+    def includes(arr: list, item) -> bool:
+        """Check if array contains item"""
+        return item in arr
+    
+    @staticmethod
+    def indexOf(arr: list, item) -> int:
+        """Find index of item (-1 if not found)"""
+        try:
+            return arr.index(item)
+        except ValueError:
+            return -1
+    
+    @staticmethod
+    def lastIndexOf(arr: list, item) -> int:
+        """Find last index of item (-1 if not found)"""
+        try:
+            for i in range(len(arr) - 1, -1, -1):
+                if arr[i] == item:
+                    return i
+            return -1
+        except:
+            return -1
+    
+    @staticmethod
+    def push(arr: list, *items) -> int:
+        """Add items to end and return new length"""
+        for item in items:
+            arr.append(item)
+        return len(arr)
+    
+    @staticmethod
+    def unshift(arr: list, *items) -> int:
+        """Add items to beginning and return new length"""
+        for i, item in enumerate(items):
+            arr.insert(i, item)
+        return len(arr)
+    
+    @staticmethod
+    def shift(arr: list):
+        """Remove and return first item"""
+        return arr.pop(0) if arr else None
+    
+    @staticmethod
+    def splice(arr: list, start: int, delete_count: int = None, *items) -> list:
+        """Remove elements and optionally insert new ones"""
+        if delete_count is None:
+            delete_count = len(arr) - start
+        
+        # Get removed items
+        removed = arr[start:start + delete_count]
+        
+        # Remove items
+        del arr[start:start + delete_count]
+        
+        # Insert new items
+        for i, item in enumerate(items):
+            arr.insert(start + i, item)
+        
+        return removed
+
+
+class Dict:
+    """Dictionary utilities with Python dict methods"""
+    
+    @staticmethod
+    def clear(d: dict) -> None:
+        """Remove all items from dictionary"""
+        d.clear()
+    
+    @staticmethod
+    def copy(d: dict) -> dict:
+        """Return shallow copy of dictionary"""
+        return d.copy()
+    
+    @staticmethod
+    def fromkeys(keys, value=None) -> dict:
+        """Create dictionary from keys with same value"""
+        return dict.fromkeys(keys, value)
+    
+    @staticmethod
+    def get(d: dict, key, default=None):
+        """Get value for key, return default if not found"""
+        return d.get(key, default)
+    
+    @staticmethod
+    def items(d: dict):
+        """Return dictionary items as (key, value) pairs"""
+        return d.items()
+    
+    @staticmethod
+    def keys(d: dict):
+        """Return dictionary keys"""
+        return d.keys()
+    
+    @staticmethod
+    def pop(d: dict, key, default=None):
+        """Remove key and return its value"""
+        return d.pop(key, default)
+    
+    @staticmethod
+    def popitem(d: dict):
+        """Remove and return last (key, value) pair"""
+        return d.popitem()
+    
+    @staticmethod
+    def setdefault(d: dict, key, default=None):
+        """Get key value, set to default if not exists"""
+        return d.setdefault(key, default)
+    
+    @staticmethod
+    def update(d: dict, other=None, **kwargs) -> None:
+        """Update dictionary with another dict or kwargs"""
+        if other:
+            d.update(other)
+        if kwargs:
+            d.update(kwargs)
+    
+    @staticmethod
+    def values(d: dict):
+        """Return dictionary values"""
+        return d.values()
+    
+    # Additional utility methods
+    @staticmethod
+    def has_key(d: dict, key) -> bool:
+        """Check if dictionary has key"""
+        return key in d
+    
+    @staticmethod
+    def merge(d1: dict, d2: dict) -> dict:
+        """Merge two dictionaries into new one"""
+        result = d1.copy()
+        result.update(d2)
+        return result
+    
+    @staticmethod
+    def filter_keys(d: dict, predicate) -> dict:
+        """Filter dictionary by key predicate"""
+        return {k: v for k, v in d.items() if predicate(k)}
+    
+    @staticmethod
+    def filter_values(d: dict, predicate) -> dict:
+        """Filter dictionary by value predicate"""
+        return {k: v for k, v in d.items() if predicate(v)}
+    
+    @staticmethod
+    def map_values(d: dict, func) -> dict:
+        """Map function over dictionary values"""
+        return {k: func(v) for k, v in d.items()}
+    
+    @staticmethod
+    def map_keys(d: dict, func) -> dict:
+        """Map function over dictionary keys"""
+        return {func(k): v for k, v in d.items()}
+
+
+class Set:
+    """Set utilities with Python set methods"""
+    
+    @staticmethod
+    def add(s: set, item) -> None:
+        """Add item to set"""
+        s.add(item)
+    
+    @staticmethod
+    def clear(s: set) -> None:
+        """Remove all items from set"""
+        s.clear()
+    
+    @staticmethod
+    def copy(s: set) -> set:
+        """Return shallow copy of set"""
+        return s.copy()
+    
+    @staticmethod
+    def difference(s: set, *others) -> set:
+        """Return set difference"""
+        return s.difference(*others)
+    
+    @staticmethod
+    def difference_update(s: set, *others) -> None:
+        """Update set with difference"""
+        s.difference_update(*others)
+    
+    @staticmethod
+    def discard(s: set, item) -> None:
+        """Remove item from set if present"""
+        s.discard(item)
+    
+    @staticmethod
+    def intersection(s: set, *others) -> set:
+        """Return set intersection"""
+        return s.intersection(*others)
+    
+    @staticmethod
+    def intersection_update(s: set, *others) -> None:
+        """Update set with intersection"""
+        s.intersection_update(*others)
+    
+    @staticmethod
+    def isdisjoint(s: set, other) -> bool:
+        """Check if sets have no common elements"""
+        return s.isdisjoint(other)
+    
+    @staticmethod
+    def issubset(s: set, other) -> bool:
+        """Check if set is subset of other"""
+        return s.issubset(other)
+    
+    @staticmethod
+    def issuperset(s: set, other) -> bool:
+        """Check if set is superset of other"""
+        return s.issuperset(other)
+    
+    @staticmethod
+    def pop(s: set):
+        """Remove and return arbitrary item"""
+        return s.pop()
+    
+    @staticmethod
+    def remove(s: set, item) -> None:
+        """Remove item from set (raises KeyError if not found)"""
+        s.remove(item)
+    
+    @staticmethod
+    def symmetric_difference(s: set, other) -> set:
+        """Return symmetric difference"""
+        return s.symmetric_difference(other)
+    
+    @staticmethod
+    def symmetric_difference_update(s: set, other) -> None:
+        """Update set with symmetric difference"""
+        s.symmetric_difference_update(other)
+    
+    @staticmethod
+    def union(s: set, *others) -> set:
+        """Return set union"""
+        return s.union(*others)
+    
+    @staticmethod
+    def update(s: set, *others) -> None:
+        """Update set with union"""
+        s.update(*others)
+    
+    # Additional utility methods
+    @staticmethod
+    def contains(s: set, item) -> bool:
+        """Check if set contains item"""
+        return item in s
+    
+    @staticmethod
+    def size(s: set) -> int:
+        """Get size of set"""
+        return len(s)
+    
+    @staticmethod
+    def to_list(s: set) -> list:
+        """Convert set to list"""
+        return list(s)
+
+
 # Built-in functions that can be called directly
 def print(*args, sep: str = ' ', end: str = '\n'):
     """Print to console"""
@@ -366,7 +940,7 @@ def len(obj) -> int:
 
 def str(obj) -> str:
     """Convert to string"""
-    return obj.__str__() if hasattr(obj, '__str__') else repr(obj)
+    return __builtins__['str'](obj)
 
 def int(obj):
     """Convert to integer"""
@@ -379,6 +953,262 @@ def float(obj):
 def bool(obj):
     """Convert to boolean"""
     return __builtins__['bool'](obj)
+
+def assert_func(condition, message="Assertion failed"):
+    """Assert function for testing"""
+    if not condition:
+        raise AssertionError(message)
+    return True
+
+def type_func(obj):
+    """Get type of object"""
+    return type(obj)
+
+def isinstance_func(obj, class_or_tuple):
+    """Check if object is instance of class"""
+    return isinstance(obj, class_or_tuple)
+
+def hasattr_func(obj, name):
+    """Check if object has attribute"""
+    return hasattr(obj, name)
+
+def getattr_func(obj, name, default=None):
+    """Get attribute from object"""
+    return getattr(obj, name, default)
+
+def setattr_func(obj, name, value):
+    """Set attribute on object"""
+    setattr(obj, name, value)
+
+def delattr_func(obj, name):
+    """Delete attribute from object"""
+    delattr(obj, name)
+
+def dir_func(obj=None):
+    """Get object attributes"""
+    return dir(obj)
+
+def vars_func(obj=None):
+    """Get object variables"""
+    return vars(obj) if obj else vars()
+
+def id_func(obj):
+    """Get object identity"""
+    return id(obj)
+
+def hash_func(obj):
+    """Get object hash"""
+    return hash(obj)
+
+def repr_func(obj):
+    """Get object representation"""
+    return repr(obj)
+
+def abs_func(x):
+    """Get absolute value"""
+    return abs(x)
+
+def all_func(iterable):
+    """Check if all elements are true"""
+    return all(iterable)
+
+def any_func(iterable):
+    """Check if any element is true"""
+    return any(iterable)
+
+def min_func(*args, **kwargs):
+    """Get minimum value"""
+    return min(*args, **kwargs)
+
+def max_func(*args, **kwargs):
+    """Get maximum value"""
+    return max(*args, **kwargs)
+
+def sum_func(iterable, start=0):
+    """Sum iterable values"""
+    return sum(iterable, start)
+
+def sorted_func(iterable, key=None, reverse=False):
+    """Sort iterable"""
+    return sorted(iterable, key=key, reverse=reverse)
+
+def reversed_func(seq):
+    """Reverse sequence"""
+    return list(reversed(seq))
+
+def enumerate_func(iterable, start=0):
+    """Enumerate iterable"""
+    return list(enumerate(iterable, start))
+
+def zip_func(*iterables):
+    """Zip iterables"""
+    return list(zip(*iterables))
+
+def map_func(function, *iterables):
+    """Map function over iterables"""
+    return list(map(function, *iterables))
+
+def filter_func(function, iterable):
+    """Filter iterable"""
+    return list(filter(function, iterable))
+
+def range_func(*args):
+    """Create range"""
+    return list(range(*args))
+
+def list_func(iterable=None):
+    """Create list"""
+    return list(iterable) if iterable is not None else []
+
+def tuple_func(iterable=None):
+    """Create tuple"""
+    return tuple(iterable) if iterable is not None else ()
+
+def set_func(iterable=None):
+    """Create set"""
+    return set(iterable) if iterable is not None else set()
+
+def dict_func(*args, **kwargs):
+    """Create dictionary"""
+    return dict(*args, **kwargs)
+
+def frozenset_func(iterable=None):
+    """Create frozenset"""
+    return frozenset(iterable) if iterable is not None else frozenset()
+
+def bytearray_func(*args):
+    """Create bytearray"""
+    return bytearray(*args)
+
+def bytes_func(*args):
+    """Create bytes"""
+    return bytes(*args)
+
+def memoryview_func(obj):
+    """Create memoryview"""
+    return memoryview(obj)
+
+def slice_func(*args):
+    """Create slice"""
+    return slice(*args)
+
+def complex_func(real=0, imag=0):
+    """Create complex number"""
+    return complex(real, imag)
+
+def round_func(number, ndigits=None):
+    """Round number"""
+    return round(number, ndigits)
+
+def pow_func(base, exp, mod=None):
+    """Power function"""
+    return pow(base, exp, mod)
+
+def divmod_func(a, b):
+    """Divmod function"""
+    return divmod(a, b)
+
+def bin_func(x):
+    """Convert to binary"""
+    return bin(x)
+
+def oct_func(x):
+    """Convert to octal"""
+    return oct(x)
+
+def hex_func(x):
+    """Convert to hexadecimal"""
+    return hex(x)
+
+def ord_func(c):
+    """Get character code"""
+    return ord(c)
+
+def chr_func(i):
+    """Get character from code"""
+    return chr(i)
+
+def ascii_func(obj):
+    """Get ASCII representation"""
+    return ascii(obj)
+
+def format_func(value, format_spec=''):
+    """Format value"""
+    return format(value, format_spec)
+
+def eval_func(expression, globals=None, locals=None):
+    """Evaluate expression"""
+    return eval(expression, globals, locals)
+
+def exec_func(code, globals=None, locals=None):
+    """Execute code"""
+    return exec(code, globals, locals)
+
+def compile_func(source, filename, mode, flags=0, dont_inherit=False, optimize=-1):
+    """Compile source"""
+    return compile(source, filename, mode, flags, dont_inherit, optimize)
+
+def open_func(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None):
+    """Open file"""
+    return open(file, mode, buffering, encoding, errors, newline, closefd, opener)
+
+def callable_func(obj):
+    """Check if object is callable"""
+    return callable(obj)
+
+def classmethod_func(func):
+    """Convert function to class method"""
+    return classmethod(func)
+
+def globals_func():
+    """Get global symbol table"""
+    return globals()
+
+def help_func(obj=None):
+    """Built-in help system"""
+    if obj is None:
+        print("Welcome to PowerScript help system!")
+        print("Use help(object) to get help on any object.")
+    else:
+        help(obj)
+
+def issubclass_func(class_or_tuple, classinfo):
+    """Check subclass relationship"""
+    return issubclass(class_or_tuple, classinfo)
+
+def iter_func(iterable, sentinel=None):
+    """Create iterator"""
+    if sentinel is None:
+        return iter(iterable)
+    else:
+        return iter(iterable, sentinel)
+
+def locals_func():
+    """Get local symbol table"""
+    return locals()
+
+def next_func(iterator, default=None):
+    """Get next item from iterator"""
+    if default is None:
+        return next(iterator)
+    else:
+        return next(iterator, default)
+
+def object_func():
+    """Create new object"""
+    return object()
+
+def property_func(fget=None, fset=None, fdel=None, doc=None):
+    """Create property"""
+    return property(fget, fset, fdel, doc)
+
+def staticmethod_func(func):
+    """Convert function to static method"""
+    return staticmethod(func)
+
+def super_func(*args, **kwargs):
+    """Access parent class"""
+    return super(*args, **kwargs)
 
 
 # Global built-in objects
@@ -420,12 +1250,15 @@ BUILT_IN_GLOBALS = {
     'DateTime': DateTime,
     'JSON': JSON,
     'RegExp': RegExp,
+    'String': String,
+    'Array': Array,
+    'Dict': Dict,
+    'Set': Set,
     'FileStream': FileStream,
     'FileError': FileError,
     
-    # Functions
+    # Core Python built-in functions
     'console': _console,
-    'range': range,
     'print': print,
     'input': input,
     'len': len,
@@ -433,13 +1266,255 @@ BUILT_IN_GLOBALS = {
     'int': int,
     'float': float,
     'bool': bool,
+    'assert': assert_func,
+    'type': type_func,
+    'isinstance': isinstance_func,
+    'hasattr': hasattr_func,
+    'getattr': getattr_func,
+    'setattr': setattr_func,
+    'delattr': delattr_func,
+    'dir': dir_func,
+    'vars': vars_func,
+    'id': id_func,
+    'hash': hash_func,
+    'repr': repr_func,
+    'abs': abs_func,
+    'all': all_func,
+    'any': any_func,
+    'min': min_func,
+    'max': max_func,
+    'sum': sum_func,
+    'sorted': sorted_func,
+    'reversed': reversed_func,
+    'enumerate': enumerate_func,
+    'zip': zip_func,
+    'map': map_func,
+    'filter': filter_func,
+    'range': range_func,
+    'list': list_func,
+    'tuple': tuple_func,
+    'set': set_func,
+    'dict': dict_func,
+    'frozenset': frozenset_func,
+    'bytearray': bytearray_func,
+    'bytes': bytes_func,
+    'memoryview': memoryview_func,
+    'slice': slice_func,
+    'complex': complex_func,
+    'round': round_func,
+    'pow': pow_func,
+    'divmod': divmod_func,
+    'bin': bin_func,
+    'oct': oct_func,
+    'hex': hex_func,
+    'ord': ord_func,
+    'chr': chr_func,
+    'ascii': ascii_func,
+    'format': format_func,
+    'eval': eval_func,
+    'exec': exec_func,
+    'compile': compile_func,
+    'open': open_func,
+    'callable': callable_func,
+    'classmethod': classmethod_func,
+    'globals': globals_func,
+    'help': help_func,
+    'issubclass': issubclass_func,
+    'iter': iter_func,
+    'locals': locals_func,
+    'next': next_func,
+    'object': object_func,
+    'property': property_func,
+    'staticmethod': staticmethod_func,
+    'super': super_func,
+    
+    # Legacy range function (keeping for compatibility)  
+    'range': range,
     
     # Constants
     'PI': math.pi,
     'E': math.e,
     'Infinity': float('inf'),
     'NaN': float('nan'),
+    
+    # Standard Library Modules (Phase 4 - Standard Library Access)
+    'sys': sys,
+    'math': math,
+    'random': random,
+    'time': time,
+    'datetime': datetime,
+    'json': json,
+    're': re,
+    'os': __import__('os'),
+    'collections': __import__('collections'),
+    'itertools': __import__('itertools'),
+    'functools': __import__('functools'),
+    'operator': __import__('operator'),
+    'pathlib': __import__('pathlib'),
+    'urllib': __import__('urllib'),
+    'http': __import__('http'),
+    'socket': __import__('socket'),
+    'threading': __import__('threading'),
+    'multiprocessing': __import__('multiprocessing'),
+    'subprocess': __import__('subprocess'),
+    'uuid': __import__('uuid'),
+    'hashlib': __import__('hashlib'),
+    'base64': __import__('base64'),
+    'csv': __import__('csv'),
+    'xml': __import__('xml'),
+    'sqlite3': __import__('sqlite3'),
+    'pickle': __import__('pickle'),
+    'copy': __import__('copy'),
+    'weakref': __import__('weakref'),
+    'gc': __import__('gc'),
+    'inspect': __import__('inspect'),
+    'logging': __import__('logging'),
+    'warnings': __import__('warnings'),
+    'tempfile': __import__('tempfile'),
+    'shutil': __import__('shutil'),
+    'glob': __import__('glob'),
+    'fnmatch': __import__('fnmatch'),
+    'stat': __import__('stat'),
+    'platform': __import__('platform'),
+    'getpass': __import__('getpass'),
+    'argparse': __import__('argparse'),
+    'configparser': __import__('configparser'),
 }
+
+# Python package import system
+class PackageImporter:
+    """Allows PowerScript to import and use Python packages"""
+    
+    @staticmethod
+    def import_package(package_name: str, alias: str = None):
+        """Import a Python package for use in PowerScript"""
+        try:
+            if '.' in package_name:
+                # Handle submodule imports like numpy.random
+                parts = package_name.split('.')
+                module = __import__(package_name, fromlist=[parts[-1]])
+            else:
+                module = __import__(package_name)
+            
+            name = alias if alias else package_name.split('.')[-1]
+            return {name: module}
+        except ImportError as e:
+            raise ImportError(f"Cannot import package '{package_name}': {str(e)}")
+    
+    @staticmethod
+    def import_from(package_name: str, *items, alias_dict=None):
+        """Import specific items from a Python package"""
+        try:
+            module = __import__(package_name, fromlist=items)
+            result = {}
+            
+            for item in items:
+                if hasattr(module, item):
+                    attr = getattr(module, item)
+                    name = alias_dict.get(item, item) if alias_dict else item
+                    result[name] = attr
+                else:
+                    raise AttributeError(f"Module '{package_name}' has no attribute '{item}'")
+            
+            return result
+        except ImportError as e:
+            raise ImportError(f"Cannot import from package '{package_name}': {str(e)}")
+
+# Package importer functions
+def ps_import(package_name: str, alias: str = None):
+    """Import a Python package"""
+    return PackageImporter.import_package(package_name, alias)
+
+def ps_from_import(package_name: str, *items, **aliases):
+    """Import specific items from a Python package"""
+    return PackageImporter.import_from(package_name, *items, alias_dict=aliases)
+
+# Add package import functions to built-ins
+BUILT_IN_GLOBALS.update({
+    'ps_import': ps_import,
+    'ps_from_import': ps_from_import,
+    'PackageImporter': PackageImporter,
+})
+
+# Commonly used Python packages - auto-imported for convenience
+try:
+    import sys
+    import os
+    import re
+    import json
+    import math
+    import random
+    import datetime
+    import time
+    import collections
+    import itertools
+    import functools
+    import operator
+    import urllib.parse
+    import urllib.request
+    import base64
+    import hashlib
+    import uuid
+    import threading
+    import multiprocessing
+    import asyncio
+    import pathlib
+    
+    # Add common packages to built-ins
+    BUILT_IN_GLOBALS.update({
+        'sys': sys,
+        'os': os,
+        're': re,
+        'json': json,
+        'math': math,
+        'random': random,
+        'datetime': datetime,
+        'time': time,
+        'collections': collections,
+        'itertools': itertools,
+        'functools': functools,
+        'operator': operator,
+        'urllib': urllib,
+        'base64': base64,
+        'hashlib': hashlib,
+        'uuid': uuid,
+        'threading': threading,
+        'multiprocessing': multiprocessing,
+        'asyncio': asyncio,
+        'pathlib': pathlib,
+    })
+    
+except ImportError:
+    # Some packages might not be available in all Python installations
+    pass
+
+# Try to import popular third-party packages if available
+try:
+    import numpy as np
+    BUILT_IN_GLOBALS['numpy'] = np
+    BUILT_IN_GLOBALS['np'] = np
+except ImportError:
+    pass
+
+try:
+    import pandas as pd
+    BUILT_IN_GLOBALS['pandas'] = pd
+    BUILT_IN_GLOBALS['pd'] = pd
+except ImportError:
+    pass
+
+try:
+    import requests
+    BUILT_IN_GLOBALS['requests'] = requests
+except ImportError:
+    pass
+
+try:
+    import matplotlib.pyplot as plt
+    BUILT_IN_GLOBALS['matplotlib'] = plt
+    BUILT_IN_GLOBALS['plt'] = plt
+except ImportError:
+    pass
 
 # Export all built-ins to module globals
 globals().update(BUILT_IN_GLOBALS)

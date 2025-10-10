@@ -37,9 +37,9 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 setup(
-    name="powerscript",
+    name="tps",
     version="1.0.0",
-    description="A fully structured development language that transpiles to Python",
+    description="Typed PowerScript (TPS) - A fully structured development language that transpiles to Python",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Saleem Ahmad (Elite India Org Team)",
@@ -94,6 +94,13 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'tps=powerscript.cli.cli:main',
+            'ps=powerscript.cli.cli:ps_smart_command',
+            'tps-run=powerscript.cli.cli:run_command',
+            'tps-compile=powerscript.cli.cli:compile_command',
+            'tps-create=powerscript.cli.cli:create_command',
+            'tps-build=powerscript.cli.cli:smart_compile',
+            # Legacy commands for backward compatibility
             'powerscriptc=powerscript.cli.cli:main',
             'ps-run=powerscript.cli.cli:main', 
             'ps-create=powerscript.cli.cli:main',
@@ -108,7 +115,7 @@ setup(
             "docs/**/*",
         ],
     },
-    keywords="powerscript python transpiler compiler language ai",
+    keywords="tps powerscript typed python transpiler compiler language ai",
     project_urls={
         "Bug Reports": "https://github.com/powerscript/powerscript/issues",
         "Source": "https://github.com/powerscript/powerscript",

@@ -1,9 +1,9 @@
 [project]
-name = "powerscript"
-version = "0.1.0"
+name = "tps"
+version = "1.0.0"
 main = "src/main.ps"
-description = "A fully structured development language that transpiles to Python"
-author = "PowerScript Team"
+description = "Typed PowerScript (TPS) - A fully structured development language that transpiles to Python"
+author = "Saleem Ahmad (Elite India)"
 
 [compiler]
 output_dir = "build"

@@ -716,12 +716,14 @@ class Parser:
         """Parse assignment expression"""
         expr = self._arrow_function()
         
-        if self._match(TokenType.ASSIGN, TokenType.PLUS_ASSIGN, TokenType.MINUS_ASSIGN):
+        if self._match(TokenType.ASSIGN, TokenType.PLUS_ASSIGN, TokenType.MINUS_ASSIGN,
+                      TokenType.MULTIPLY_ASSIGN, TokenType.DIVIDE_ASSIGN, 
+                      TokenType.MODULO_ASSIGN, TokenType.POWER_ASSIGN):
             operator = self._previous()
             value = self._assignment()
             
             if isinstance(expr, IdentifierNode):
-                return AssignmentNode(expr, value, operator.location)
+                return AssignmentNode(expr, value, operator.location, operator.value)
             
             self._error("Invalid assignment target")
         
@@ -785,9 +787,42 @@ class Parser:
     
     def _and(self) -> ExpressionNode:
         """Parse logical AND expression"""
-        expr = self._equality()
+        expr = self._bitwise_or()
         
         while self._match(TokenType.AND):
+            operator = self._previous()
+            right = self._bitwise_or()
+            expr = BinaryOpNode(expr, operator.value, right, operator.location)
+        
+        return expr
+    
+    def _bitwise_or(self) -> ExpressionNode:
+        """Parse bitwise OR expression"""
+        expr = self._bitwise_xor()
+        
+        while self._match(TokenType.BIT_OR):
+            operator = self._previous()
+            right = self._bitwise_xor()
+            expr = BinaryOpNode(expr, operator.value, right, operator.location)
+        
+        return expr
+    
+    def _bitwise_xor(self) -> ExpressionNode:
+        """Parse bitwise XOR expression"""
+        expr = self._bitwise_and()
+        
+        while self._match(TokenType.BIT_XOR):
+            operator = self._previous()
+            right = self._bitwise_and()
+            expr = BinaryOpNode(expr, operator.value, right, operator.location)
+        
+        return expr
+    
+    def _bitwise_and(self) -> ExpressionNode:
+        """Parse bitwise AND expression"""
+        expr = self._equality()
+        
+        while self._match(TokenType.BIT_AND):
             operator = self._previous()
             right = self._equality()
             expr = BinaryOpNode(expr, operator.value, right, operator.location)
@@ -807,10 +842,21 @@ class Parser:
     
     def _comparison(self) -> ExpressionNode:
         """Parse comparison expression"""
-        expr = self._term()
+        expr = self._shift()
         
         while self._match(TokenType.GREATER_THAN, TokenType.GREATER_EQUAL, 
                           TokenType.LESS_THAN, TokenType.LESS_EQUAL):
+            operator = self._previous()
+            right = self._shift()
+            expr = BinaryOpNode(expr, operator.value, right, operator.location)
+        
+        return expr
+    
+    def _shift(self) -> ExpressionNode:
+        """Parse shift expression (<< >>)"""
+        expr = self._term()
+        
+        while self._match(TokenType.LEFT_SHIFT, TokenType.RIGHT_SHIFT):
             operator = self._previous()
             right = self._term()
             expr = BinaryOpNode(expr, operator.value, right, operator.location)
@@ -841,7 +887,7 @@ class Parser:
     
     def _unary(self) -> ExpressionNode:
         """Parse unary expression"""
-        if self._match(TokenType.NOT, TokenType.MINUS, TokenType.PLUS):
+        if self._match(TokenType.NOT, TokenType.MINUS, TokenType.PLUS, TokenType.BIT_NOT):
             operator = self._previous()
             right = self._unary()
             return UnaryOpNode(operator.value, right, operator.location)
@@ -898,11 +944,33 @@ class Parser:
         
         if self._match(TokenType.NUMBER):
             value = self._previous().value
-            # Convert to int or float
-            if '.' in value:
-                return LiteralNode(float(value), "number", self._previous().location)
-            else:
-                return LiteralNode(int(value), "number", self._previous().location)
+            location = self._previous().location
+            
+            # Handle different number formats
+            try:
+                if value.startswith('0x') or value.startswith('0X'):
+                    # Hexadecimal
+                    parsed_value = int(value, 16)
+                elif value.startswith('0b') or value.startswith('0B'):
+                    # Binary
+                    parsed_value = int(value, 2)
+                elif value.startswith('0o') or value.startswith('0O'):
+                    # Octal
+                    parsed_value = int(value, 8)
+                elif 'e' in value.lower() or 'E' in value:
+                    # Scientific notation
+                    parsed_value = float(value)
+                elif '.' in value:
+                    # Regular float
+                    parsed_value = float(value)
+                else:
+                    # Regular integer
+                    parsed_value = int(value)
+                    
+                return LiteralNode(parsed_value, "number", location)
+            except ValueError:
+                # If conversion fails, keep as string and let transpiler handle it
+                return LiteralNode(value, "number", location)
         
         if self._match(TokenType.STRING):
             value = self._previous().value
