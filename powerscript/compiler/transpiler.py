@@ -430,6 +430,79 @@ class Transpiler(ASTVisitor):
         
         return ast.For(target=target, iter=iter_expr, body=body, orelse=[])
     
+    def visit_try(self, node: TryNode) -> ast.Try:
+        """Visit try node"""
+        # Try body
+        body = []
+        for stmt in node.try_block.statements:
+            stmt_node = stmt.accept(self)
+            if stmt_node:
+                if isinstance(stmt_node, list):
+                    body.extend(stmt_node)
+                else:
+                    body.append(stmt_node)
+        
+        # Catch handlers
+        handlers = []
+        for catch_clause in node.catch_clauses:
+            handler = self._create_exception_handler(catch_clause)
+            handlers.append(handler)
+        
+        # Finally block
+        finalbody = []
+        if node.finally_block:
+            for stmt in node.finally_block.statements:
+                stmt_node = stmt.accept(self)
+                if stmt_node:
+                    if isinstance(stmt_node, list):
+                        finalbody.extend(stmt_node)
+                    else:
+                        finalbody.append(stmt_node)
+        
+        return ast.Try(body=body, handlers=handlers, orelse=[], finalbody=finalbody)
+    
+    def visit_catch(self, node: CatchNode) -> ast.ExceptHandler:
+        """Visit catch node - this is handled by visit_try"""
+        return self._create_exception_handler(node)
+    
+    def visit_throw(self, node: ThrowNode) -> ast.Raise:
+        """Visit throw node"""
+        exc = node.expression.accept(self)
+        return ast.Raise(exc=exc, cause=None)
+    
+    def _create_exception_handler(self, catch_node: CatchNode) -> ast.ExceptHandler:
+        """Create Python exception handler from catch node"""
+        # Exception type
+        exception_type = None
+        if catch_node.exception_type:
+            # Map PowerScript exception types to Python
+            type_map = {
+                'Error': 'Exception',
+                'TypeError': 'TypeError', 
+                'ValueError': 'ValueError',
+                'RuntimeError': 'RuntimeError'
+            }
+            python_type = type_map.get(catch_node.exception_type, catch_node.exception_type)
+            exception_type = ast.Name(id=python_type, ctx=ast.Load())
+        
+        # Exception name binding
+        name = catch_node.exception_name
+        
+        # Handler body
+        body = []
+        for stmt in catch_node.body.statements:
+            stmt_node = stmt.accept(self)
+            if stmt_node:
+                if isinstance(stmt_node, list):
+                    body.extend(stmt_node)
+                else:
+                    body.append(stmt_node)
+        
+        if not body:
+            body.append(ast.Pass())
+        
+        return ast.ExceptHandler(type=exception_type, name=name, body=body)
+    
     def _get_type_annotation(self, type_str: Optional[str]) -> Optional[ast.AST]:
         """Convert PowerScript type annotation to Python AST"""
         if not type_str or not self.strict_typing:

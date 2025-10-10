@@ -293,6 +293,10 @@ class Parser:
             return self._while_statement()
         elif self._match(TokenType.FOR):
             return self._for_statement()
+        elif self._match(TokenType.TRY):
+            return self._try_statement()
+        elif self._match(TokenType.THROW):
+            return self._throw_statement()
         elif self._match(TokenType.RETURN):
             return self._return_statement()
         elif self._match(TokenType.LEFT_BRACE):
@@ -346,6 +350,64 @@ class Parser:
         
         self._consume(TokenType.SEMICOLON, "Expected ';' after return value")
         return ReturnNode(value, location)
+    
+    def _try_statement(self) -> TryNode:
+        """Parse try-catch-finally statement"""
+        location = self._previous().location
+        
+        # Parse try block
+        self._consume(TokenType.LEFT_BRACE, "Expected '{' after 'try'")
+        try_block = self._block()
+        
+        # Parse catch clauses
+        catch_clauses = []
+        while self._match(TokenType.CATCH):
+            catch_clauses.append(self._catch_clause())
+        
+        # Parse optional finally block
+        finally_block = None
+        if self._match(TokenType.FINALLY):
+            self._consume(TokenType.LEFT_BRACE, "Expected '{' after 'finally'")
+            finally_block = self._block()
+        
+        # Must have at least catch or finally
+        if not catch_clauses and not finally_block:
+            self._error("Try statement must have at least one catch or finally clause")
+        
+        return TryNode(try_block, catch_clauses, finally_block, location)
+    
+    def _catch_clause(self) -> CatchNode:
+        """Parse catch clause"""
+        location = self._previous().location
+        
+        # Parse optional exception parameter
+        exception_name = None
+        exception_type = None
+        
+        if self._match(TokenType.LEFT_PAREN):
+            if self._match(TokenType.IDENTIFIER):
+                exception_name = self._previous().value
+                
+                # Optional type annotation
+                if self._match(TokenType.COLON):
+                    exception_type = self._parse_type()
+            
+            self._consume(TokenType.RIGHT_PAREN, "Expected ')' after catch parameter")
+        
+        # Parse catch body
+        self._consume(TokenType.LEFT_BRACE, "Expected '{' after catch clause")
+        body = self._block()
+        
+        return CatchNode(exception_name, exception_type, body, location)
+    
+    def _throw_statement(self) -> ThrowNode:
+        """Parse throw statement"""
+        location = self._previous().location
+        
+        expression = self._expression()
+        self._consume(TokenType.SEMICOLON, "Expected ';' after throw expression")
+        
+        return ThrowNode(expression, location)
     
     def _statement_as_block(self) -> BlockNode:
         """Convert statement to block if needed"""

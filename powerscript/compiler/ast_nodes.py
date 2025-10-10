@@ -27,6 +27,10 @@ class NodeType(Enum):
     IF = "if"
     WHILE = "while"
     FOR = "for"
+    TRY = "try"
+    CATCH = "catch"
+    FINALLY = "finally"
+    THROW = "throw"
 
 
 class AccessModifier(Enum):
@@ -285,6 +289,45 @@ class ForNode(ASTNode):
         return visitor.visit_for(self)
 
 
+class TryNode(ASTNode):
+    """Try-catch-finally statement node"""
+    
+    def __init__(self, try_block: BlockNode, catch_clauses: List['CatchNode'] = None, 
+                 finally_block: Optional[BlockNode] = None, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.TRY, location)
+        self.try_block = try_block
+        self.catch_clauses = catch_clauses or []
+        self.finally_block = finally_block
+    
+    def accept(self, visitor):
+        return visitor.visit_try(self)
+
+
+class CatchNode(ASTNode):
+    """Catch clause node"""
+    
+    def __init__(self, exception_name: Optional[str], exception_type: Optional[str], 
+                 body: BlockNode, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.CATCH, location)
+        self.exception_name = exception_name  # Variable name to bind exception to
+        self.exception_type = exception_type  # Optional type filter
+        self.body = body
+    
+    def accept(self, visitor):
+        return visitor.visit_catch(self)
+
+
+class ThrowNode(ASTNode):
+    """Throw statement node"""
+    
+    def __init__(self, expression: ExpressionNode, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.THROW, location)
+        self.expression = expression
+    
+    def accept(self, visitor):
+        return visitor.visit_throw(self)
+
+
 # Visitor interface
 class ASTVisitor(ABC):
     """Abstract base class for AST visitors"""
@@ -333,3 +376,12 @@ class ASTVisitor(ABC):
     
     @abstractmethod
     def visit_for(self, node: ForNode): pass
+    
+    @abstractmethod
+    def visit_try(self, node: TryNode): pass
+    
+    @abstractmethod
+    def visit_catch(self, node: CatchNode): pass
+    
+    @abstractmethod
+    def visit_throw(self, node: ThrowNode): pass
