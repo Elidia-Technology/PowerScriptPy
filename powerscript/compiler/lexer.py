@@ -42,6 +42,15 @@ class TokenType(Enum):
     FROM = auto()
     EXPORT = auto()
     DEFAULT = auto()
+    AS = auto()
+    
+    # New language features
+    LAMBDA = auto()
+    WITH = auto()
+    YIELD = auto()
+    GENERATOR = auto()
+    COMPREHENSION = auto()
+    ELLIPSIS = auto()
     
     # Access modifiers
     PUBLIC = auto()
@@ -52,6 +61,12 @@ class TokenType(Enum):
     TYPE = auto()
     INTERFACE = auto()
     ENUM = auto()
+    EXTENDS = auto()
+    KEYOF = auto()
+    TYPEOF = auto()
+    INFER = auto()
+    UNION = auto()
+    INTERSECTION = auto()
     
     # Operators
     PLUS = auto()           # +
@@ -175,6 +190,14 @@ class Lexer:
         'true': TokenType.BOOLEAN,
         'false': TokenType.BOOLEAN,
         'null': TokenType.NULL,
+        'lambda': TokenType.LAMBDA,
+        'with': TokenType.WITH,
+        'yield': TokenType.YIELD,
+        'as': TokenType.AS,
+        'extends': TokenType.EXTENDS,
+        'keyof': TokenType.KEYOF,
+        'typeof': TokenType.TYPEOF,
+        'infer': TokenType.INFER,
     }
     
     # Token patterns (order matters!)
@@ -199,6 +222,7 @@ class Lexer:
         (TokenType.OPTIONAL_CHAIN, re.compile(r'\?\.')),
         (TokenType.NULL_COALESCE, re.compile(r'\?\?')),
         (TokenType.SPREAD, re.compile(r'\.\.\.')),
+        (TokenType.ELLIPSIS, re.compile(r'\.\.\.')),
         
         # String literals
         (TokenType.STRING, re.compile(r'"(?:[^"\\]|\\.)*"')),

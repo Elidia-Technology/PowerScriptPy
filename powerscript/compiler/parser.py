@@ -299,6 +299,10 @@ class Parser:
             return self._throw_statement()
         elif self._match(TokenType.RETURN):
             return self._return_statement()
+        elif self._match(TokenType.WITH):
+            return self._with_statement()
+        elif self._match(TokenType.YIELD):
+            return self._yield_expression()
         elif self._match(TokenType.LEFT_BRACE):
             return BlockNode(self._block().statements, self._previous().location)
         else:
@@ -567,6 +571,12 @@ class Parser:
     
     def _primary(self) -> ExpressionNode:
         """Parse primary expression"""
+        if self._match(TokenType.LAMBDA):
+            return self._lambda_expression()
+        
+        if self._match(TokenType.ELLIPSIS):
+            return EllipsisNode(self._previous().location)
+        
         if self._match(TokenType.BOOLEAN):
             value = self._previous().value == "true"
             return LiteralNode(value, "boolean", self._previous().location)
@@ -597,6 +607,98 @@ class Parser:
             return expr
         
         raise self._error("Expected expression")
+    
+    def _lambda_expression(self) -> LambdaNode:
+        """Parse lambda expression: lambda x, y: x + y"""
+        location = self._previous().location
+        
+        # Parse parameters
+        parameters = []
+        if not self._check(TokenType.COLON):
+            if self._match(TokenType.IDENTIFIER):
+                param_name = self._previous().value
+                parameters.append(ParameterNode(param_name, "any", location=self._previous().location))
+                
+                while self._match(TokenType.COMMA):
+                    self._consume(TokenType.IDENTIFIER, "Expected parameter name")
+                    param_name = self._previous().value
+                    parameters.append(ParameterNode(param_name, "any", location=self._previous().location))
+        
+        self._consume(TokenType.COLON, "Expected ':' after lambda parameters")
+        body = self._expression()
+        
+        return LambdaNode(parameters, body, location)
+    
+    def _with_statement(self) -> WithNode:
+        """Parse with statement: with expr as var: body"""
+        location = self._previous().location
+        context_expr = self._expression()
+        
+        optional_vars = None
+        if self._match(TokenType.AS):
+            self._consume(TokenType.IDENTIFIER, "Expected variable name after 'as'")
+            optional_vars = IdentifierNode(self._previous().value, self._previous().location)
+        
+        self._consume(TokenType.COLON, "Expected ':' after with expression")
+        body = self._block_statement()
+        
+        return WithNode(context_expr, optional_vars, body, location)
+    
+    def _yield_expression(self) -> YieldNode:
+        """Parse yield expression: yield value"""
+        location = self._previous().location
+        value = None
+        
+        if not self._check(TokenType.SEMICOLON) and not self._check(TokenType.RIGHT_PAREN):
+            value = self._expression()
+        
+        return YieldNode(value, location)
+    
+    def _comprehension_expression(self) -> ComprehensionNode:
+        """Parse list/dict/set comprehensions: [expr for x in iterable if condition]"""
+        # This will be called when we detect comprehension syntax
+        # For now, we'll implement a basic version
+        location = self._peek().location
+        
+        # Parse the expression
+        expr = self._expression()
+        
+        self._consume(TokenType.FOR, "Expected 'for' in comprehension")
+        self._consume(TokenType.IDENTIFIER, "Expected target variable")
+        target = IdentifierNode(self._previous().value, self._previous().location)
+        
+        self._consume(TokenType.IN, "Expected 'in' after comprehension target")
+        iterable = self._expression()
+        
+        conditions = []
+        while self._match(TokenType.IF):
+            conditions.append(self._expression())
+        
+        return ComprehensionNode(expr, target, iterable, conditions, "list", location)
+    
+    def _slice_expression(self, object_expr: ExpressionNode) -> SliceNode:
+        """Parse slice expression: obj[start:end:step]"""
+        location = self._peek().location
+        
+        lower = None
+        upper = None
+        step = None
+        
+        # Parse lower bound
+        if not self._check(TokenType.COLON):
+            lower = self._expression()
+        
+        if self._match(TokenType.COLON):
+            # Parse upper bound
+            if not self._check(TokenType.COLON) and not self._check(TokenType.RIGHT_BRACKET):
+                upper = self._expression()
+            
+            # Parse step
+            if self._match(TokenType.COLON):
+                if not self._check(TokenType.RIGHT_BRACKET):
+                    step = self._expression()
+        
+        return SliceNode(object_expr, lower, upper, step, location)
     
     # Helper methods
     def _match(self, *types: TokenType) -> bool:

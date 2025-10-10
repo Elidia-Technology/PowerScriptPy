@@ -579,6 +579,101 @@ class Transpiler(ASTVisitor):
             decorators.append(ast.Name(id='beartype', ctx=ast.Load()))
         
         return decorators
+    
+    def visit_lambda(self, node: LambdaNode) -> ast.Lambda:
+        """Visit lambda node"""
+        args = []
+        for param in node.parameters:
+            args.append(ast.arg(arg=param.name, annotation=None))
+        
+        arguments = ast.arguments(
+            posonlyargs=[],
+            args=args,
+            vararg=None,
+            kwonlyargs=[],
+            kw_defaults=[],
+            kwarg=None,
+            defaults=[]
+        )
+        
+        body = node.body.accept(self)
+        return ast.Lambda(args=arguments, body=body)
+    
+    def visit_with(self, node: WithNode) -> ast.With:
+        """Visit with statement node"""
+        context_expr = node.context_expr.accept(self)
+        optional_vars = None
+        if node.optional_vars:
+            optional_vars = node.optional_vars.accept(self)
+        
+        with_item = ast.withitem(context_expr=context_expr, optional_vars=optional_vars)
+        
+        body = []
+        for stmt in node.body.statements:
+            stmt_node = stmt.accept(self)
+            if isinstance(stmt_node, list):
+                body.extend(stmt_node)
+            else:
+                body.append(stmt_node)
+        
+        return ast.With(items=[with_item], body=body)
+    
+    def visit_yield(self, node: YieldNode) -> ast.Yield:
+        """Visit yield node"""
+        value = None
+        if node.value:
+            value = node.value.accept(self)
+        return ast.Yield(value=value)
+    
+    def visit_comprehension(self, node: ComprehensionNode) -> Union[ast.ListComp, ast.DictComp, ast.SetComp]:
+        """Visit comprehension node"""
+        target = ast.Name(id=node.target.name, ctx=ast.Store())
+        iter_expr = node.iterable.accept(self)
+        
+        ifs = []
+        for condition in node.conditions:
+            ifs.append(condition.accept(self))
+        
+        comprehension = ast.comprehension(target=target, iter=iter_expr, ifs=ifs, is_async=0)
+        
+        if node.comp_type == "list":
+            elt = node.expr.accept(self)
+            return ast.ListComp(elt=elt, generators=[comprehension])
+        elif node.comp_type == "set":
+            elt = node.expr.accept(self)
+            return ast.SetComp(elt=elt, generators=[comprehension])
+        elif node.comp_type == "dict":
+            # For dict comprehensions, expr should contain key:value
+            # This is a simplified implementation
+            key = node.expr.accept(self)  # Should be the key part
+            value = node.expr.accept(self)  # Should be the value part
+            return ast.DictComp(key=key, value=value, generators=[comprehension])
+        
+        # Default to list comprehension
+        elt = node.expr.accept(self)
+        return ast.ListComp(elt=elt, generators=[comprehension])
+    
+    def visit_slice(self, node: SliceNode) -> ast.Subscript:
+        """Visit slice node"""
+        value = node.object_expr.accept(self)
+        
+        lower = None
+        upper = None
+        step = None
+        
+        if node.lower:
+            lower = node.lower.accept(self)
+        if node.upper:
+            upper = node.upper.accept(self)
+        if node.step:
+            step = node.step.accept(self)
+        
+        slice_obj = ast.Slice(lower=lower, upper=upper, step=step)
+        return ast.Subscript(value=value, slice=slice_obj, ctx=ast.Load())
+    
+    def visit_ellipsis(self, node: EllipsisNode) -> ast.Constant:
+        """Visit ellipsis node"""
+        return ast.Constant(value=...)
 
 
 def transpile_file(powerscript_source: str, filename: str = "") -> str:

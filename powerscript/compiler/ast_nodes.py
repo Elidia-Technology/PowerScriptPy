@@ -31,6 +31,18 @@ class NodeType(Enum):
     CATCH = "catch"
     FINALLY = "finally"
     THROW = "throw"
+    LAMBDA = "lambda"
+    WITH = "with"
+    YIELD = "yield"
+    COMPREHENSION = "comprehension"
+    GENERATOR = "generator"
+    SLICE = "slice"
+    ELLIPSIS = "ellipsis"
+    UNION_TYPE = "union_type"
+    INTERSECTION_TYPE = "intersection_type"
+    LITERAL_TYPE = "literal_type"
+    GENERIC_CONSTRAINT = "generic_constraint"
+    TYPE_ALIAS = "type_alias"
 
 
 class AccessModifier(Enum):
@@ -328,6 +340,88 @@ class ThrowNode(ASTNode):
         return visitor.visit_throw(self)
 
 
+class LambdaNode(ExpressionNode):
+    """Lambda expression node"""
+    
+    def __init__(self, parameters: List[ParameterNode], body: ExpressionNode, 
+                 location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.LAMBDA, location)
+        self.parameters = parameters or []
+        self.body = body
+    
+    def accept(self, visitor):
+        return visitor.visit_lambda(self)
+
+
+class WithNode(ASTNode):
+    """Context manager (with statement) node"""
+    
+    def __init__(self, context_expr: ExpressionNode, optional_vars: Optional[IdentifierNode],
+                 body: BlockNode, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.WITH, location)
+        self.context_expr = context_expr
+        self.optional_vars = optional_vars
+        self.body = body
+    
+    def accept(self, visitor):
+        return visitor.visit_with(self)
+
+
+class YieldNode(ExpressionNode):
+    """Yield expression node for generators"""
+    
+    def __init__(self, value: Optional[ExpressionNode] = None, 
+                 location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.YIELD, location)
+        self.value = value
+    
+    def accept(self, visitor):
+        return visitor.visit_yield(self)
+
+
+class ComprehensionNode(ExpressionNode):
+    """List/Dict/Set comprehension node"""
+    
+    def __init__(self, expr: ExpressionNode, target: IdentifierNode, 
+                 iterable: ExpressionNode, conditions: List[ExpressionNode] = None,
+                 comp_type: str = "list", location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.COMPREHENSION, location)
+        self.expr = expr
+        self.target = target
+        self.iterable = iterable
+        self.conditions = conditions or []
+        self.comp_type = comp_type  # "list", "dict", "set"
+    
+    def accept(self, visitor):
+        return visitor.visit_comprehension(self)
+
+
+class SliceNode(ExpressionNode):
+    """Slice expression node (obj[start:end:step])"""
+    
+    def __init__(self, object_expr: ExpressionNode, lower: Optional[ExpressionNode] = None,
+                 upper: Optional[ExpressionNode] = None, step: Optional[ExpressionNode] = None,
+                 location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.SLICE, location)
+        self.object_expr = object_expr
+        self.lower = lower
+        self.upper = upper
+        self.step = step
+    
+    def accept(self, visitor):
+        return visitor.visit_slice(self)
+
+
+class EllipsisNode(ExpressionNode):
+    """Ellipsis (...) node"""
+    
+    def __init__(self, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.ELLIPSIS, location)
+    
+    def accept(self, visitor):
+        return visitor.visit_ellipsis(self)
+
+
 # Visitor interface
 class ASTVisitor(ABC):
     """Abstract base class for AST visitors"""
@@ -385,3 +479,21 @@ class ASTVisitor(ABC):
     
     @abstractmethod
     def visit_throw(self, node: ThrowNode): pass
+    
+    @abstractmethod
+    def visit_lambda(self, node: LambdaNode): pass
+    
+    @abstractmethod
+    def visit_with(self, node: WithNode): pass
+    
+    @abstractmethod
+    def visit_yield(self, node: YieldNode): pass
+    
+    @abstractmethod
+    def visit_comprehension(self, node: ComprehensionNode): pass
+    
+    @abstractmethod
+    def visit_slice(self, node: SliceNode): pass
+    
+    @abstractmethod
+    def visit_ellipsis(self, node: EllipsisNode): pass
