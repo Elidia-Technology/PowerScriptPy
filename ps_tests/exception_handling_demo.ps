@@ -16,15 +16,15 @@ class DatabaseConnection {
                 throw new RuntimeError("Invalid connection string");
             }
             this.isConnected = true;
-            print("Connected to database");
+            console.log("Connected to database");
         } catch (error: RuntimeError) {
-            print("Runtime error: " + error.message);
+            console.log("Runtime error: " + error.message);
             throw error; // Re-throw
         } catch (error) {
-            print("Unknown error: " + error);
+            console.log("Unknown error: " + error);
             this.isConnected = false;
         } finally {
-            print("Connection attempt completed");
+            console.log("Connection attempt completed");
         }
     }
     
@@ -38,13 +38,13 @@ class DatabaseConnection {
             let result = await this.executeQuery(sql);
             return result;
         } catch (error: TypeError) {
-            print("Type error in query: " + error.message);
+            console.log("Type error in query: " + error.message);
             return [];
         } catch (error: ValueError) {
-            print("Value error: " + error.message);
+            console.log("Value error: " + error.message);
             return [];
         } finally {
-            print("Query execution finished");
+            console.log("Query execution finished");
         }
     }
     
@@ -68,17 +68,17 @@ async function demonstrateErrorHandling(): Promise<void> {
         
         // Test method exceptions
         let results = await db.query("SELECT * FROM users");
-        print("Query results: " + results.length);
+        console.log("Query results: " + results.length);
         
         // Test empty query exception
         let emptyResults = await db.query("");
         
     } catch (error: Error) {
-        print("Application error: " + error.message);
+        console.log("Application error: " + error.message);
     } catch (error) {
-        print("Unexpected error: " + error);
+        console.log("Unexpected error: " + error);
     } finally {
-        print("Error handling demonstration completed");
+        console.log("Error handling demonstration completed");
     }
 }
 
@@ -118,16 +118,16 @@ function validateUser(user: any): void {
             throw new ValidationError("age", user.age);
         }
         
-        print("User validation passed");
+        console.log("User validation passed");
         
     } catch (error: ValidationError) {
-        print(`Validation Error - ${error.field}: ${error.message}`);
+        console.log(`Validation Error - ${error.field}: ${error.message}`);
         throw error; // Re-throw for caller to handle
     } catch (error: CustomError) {
-        print(`Custom Error [${error.code}]: ${error.message}`);
+        console.log(`Custom Error [${error.code}]: ${error.message}`);
         throw error;
     } catch (error) {
-        print("Unexpected validation error: " + error);
+        console.log("Unexpected validation error: " + error);
         throw new Error("Validation failed due to unexpected error");
     }
 }
@@ -142,7 +142,7 @@ async function main(): Promise<void> {
         validateUser(invalidUser);
         
     } catch (error) {
-        print("Main execution error: " + error);
+        console.log("Main execution error: " + error);
     }
 }
 

@@ -64,7 +64,7 @@ class Dog : Animal {
     
     // Method using protected member from parent
     public function celebrate(): void {
-        print(`${this.name} the ${this.breed} is celebrating!`);
+        console.log(`${this.name} the ${this.breed} is celebrating!`);
         this.setAge(this.getAge() + 1); // Using protected method
     }
 }
@@ -146,32 +146,32 @@ class MathUtils {
 
 // Main function demonstrating usage
 function main(): void {
-    print("=== Animal Examples ===");
+    console.log("=== Animal Examples ===");
     
     // Create animals
     let dog: Dog = new Dog("Buddy", "Golden Retriever", 3);
     let cat: Cat = new Cat("Whiskers", 2, true);
     
     // Basic information
-    print(dog.introduce());
-    print(cat.introduce());
+    console.log(dog.introduce());
+    console.log(cat.introduce());
     
     // Sounds
-    print(`Dog says: ${dog.makeSound()}`);
-    print(`Cat says: ${cat.makeSound()}`);
+    console.log(`Dog says: ${dog.makeSound()}`);
+    console.log(`Cat says: ${cat.makeSound()}`);
     
     // Specific behaviors
-    print(dog.wagTail());
-    print(cat.hunt());
+    console.log(dog.wagTail());
+    console.log(cat.hunt());
     
     // Access modifier demonstration
-    print(`Dog's breed: ${dog.getBreed()}`);
-    print(`Cat is indoor: ${cat.isIndoor()}`);
+    console.log(`Dog's breed: ${dog.getBreed()}`);
+    console.log(`Cat is indoor: ${cat.isIndoor()}`);
     
     // Method using protected access
     dog.celebrate();
     
-    print("\n=== Generic Container Example ===");
+    console.log("\n=== Generic Container Example ===");
     
     // Generic container with strings
     let stringContainer: Container<string> = new Container<string>();
@@ -179,9 +179,9 @@ function main(): void {
     stringContainer.add("World");
     stringContainer.add("PowerScript");
     
-    print(`Container size: ${stringContainer.size()}`);
-    print(`First item: ${stringContainer.get(0) ?? "none"}`);
-    print(`All items: ${stringContainer.getAll().join(", ")}`);
+    console.log(`Container size: ${stringContainer.size()}`);
+    console.log(`First item: ${stringContainer.get(0) ?? "none"}`);
+    console.log(`All items: ${stringContainer.getAll().join(", ")}`);
     
     // Generic container with numbers
     let numberContainer: Container<number> = new Container<number>();
@@ -189,15 +189,15 @@ function main(): void {
     numberContainer.add(20);
     numberContainer.add(30);
     
-    print(`Number container: ${numberContainer.getAll().join(", ")}`);
+    console.log(`Number container: ${numberContainer.getAll().join(", ")}`);
     
-    print("\n=== Static Methods Example ===");
+    console.log("\n=== Static Methods Example ===");
     
     let numbers: Array<number> = [5, 2, 8, 1, 9];
-    print(`Numbers: ${numbers.join(", ")}`);
-    print(`Max: ${MathUtils.max(5, 10)}`);
-    print(`Min: ${MathUtils.min(5, 10)}`);
-    print(`Average: ${MathUtils.average(numbers)}`);
+    console.log(`Numbers: ${numbers.join(", ")}`);
+    console.log(`Max: ${MathUtils.max(5, 10)}`);
+    console.log(`Min: ${MathUtils.min(5, 10)}`);
+    console.log(`Average: ${MathUtils.average(numbers)}`);
 }
 
 main();

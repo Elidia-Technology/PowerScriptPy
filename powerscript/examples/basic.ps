@@ -37,31 +37,31 @@ function first<T>(array: Array<T>): T? {
 function processNumbers(numbers: Array<number>): void {
     for (let num of numbers) {
         if (num % 2 === 0) {
-            print(`${num} is even`);
+            console.log(`${num} is even`);
         } else {
-            print(`${num} is odd`);
+            console.log(`${num} is odd`);
         }
     }
 }
 
 // Main function
 function main(): void {
-    print(greet(name));
-    print(`Version: ${version}`);
-    print(`Active: ${isActive}`);
+    console.log(greet(name));
+    console.log(`Version: ${version}`);
+    console.log(`Active: ${isActive}`);
     
     let sum: number = add(10, 20);
-    print(`Sum: ${sum}`);
+    console.log(`Sum: ${sum}`);
     
-    print(introduce("Alice"));
-    print(introduce("Bob", 30));
+    console.log(introduce("Alice"));
+    console.log(introduce("Bob", 30));
     
     let stringResult: string = identity<string>("Hello");
     let numberResult: number = identity<number>(42);
-    print(`Identity results: ${stringResult}, ${numberResult}`);
+    console.log(`Identity results: ${stringResult}, ${numberResult}`);
     
     let firstFruit: string? = first<string>(fruits);
-    print(`First fruit: ${firstFruit ?? "none"}`);
+    console.log(`First fruit: ${firstFruit ?? "none"}`);
     
     processNumbers(numbers);
 }
