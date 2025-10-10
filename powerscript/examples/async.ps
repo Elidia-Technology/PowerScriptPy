@@ -1,0 +1,296 @@
+// Async Programming Example
+// Demonstrates async/await patterns and concurrent programming
+
+// Async utility functions
+async function delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function fetchData(url: string): Promise<string> {
+    print(`Fetching data from ${url}...`);
+    await delay(1000); // Simulate network delay
+    return `Data from ${url}`;
+}
+
+// Async class for API operations
+class APIClient {
+    private baseUrl: string;
+    private timeout: number;
+    
+    constructor(baseUrl: string, timeout: number = 5000) {
+        this.baseUrl = baseUrl;
+        this.timeout = timeout;
+    }
+    
+    public async function get(endpoint: string): Promise<any> {
+        let url: string = this.baseUrl + endpoint;
+        print(`GET ${url}`);
+        
+        await delay(500); // Simulate API call
+        
+        return {
+            status: 200,
+            data: `Response from ${endpoint}`,
+            timestamp: Date.now()
+        };
+    }
+    
+    public async function post(endpoint: string, data: any): Promise<any> {
+        let url: string = this.baseUrl + endpoint;
+        print(`POST ${url} with data:`, data);
+        
+        await delay(800); // Simulate API call
+        
+        return {
+            status: 201,
+            data: `Created resource at ${endpoint}`,
+            id: Math.floor(Math.random() * 1000)
+        };
+    }
+    
+    public async function batchRequest(endpoints: Array<string>): Promise<Array<any>> {
+        print(`Making batch request to ${endpoints.length} endpoints`);
+        
+        let promises: Array<Promise<any>> = endpoints.map(endpoint => this.get(endpoint));
+        let results: Array<any> = await Promise.all(promises);
+        
+        print("Batch request completed");
+        return results;
+    }
+    
+    public async function sequentialRequests(endpoints: Array<string>): Promise<Array<any>> {
+        print(`Making sequential requests to ${endpoints.length} endpoints`);
+        
+        let results: Array<any> = [];
+        for (let endpoint of endpoints) {
+            let result: any = await this.get(endpoint);
+            results.push(result);
+        }
+        
+        print("Sequential requests completed");
+        return results;
+    }
+}
+
+// Async data processor
+class DataProcessor {
+    private data: Array<any>;
+    
+    constructor() {
+        this.data = [];
+    }
+    
+    public async function loadData(sources: Array<string>): Promise<void> {
+        print("Loading data from sources...");
+        
+        let loadPromises: Array<Promise<string>> = sources.map(source => fetchData(source));
+        let results: Array<string> = await Promise.all(loadPromises);
+        
+        this.data = results.map((result, index) => ({
+            source: sources[index],
+            content: result,
+            loadedAt: Date.now()
+        }));
+        
+        print(`Loaded ${this.data.length} data items`);
+    }
+    
+    public async function processData(): Promise<Array<any>> {
+        print("Processing data...");
+        
+        let processedData: Array<any> = [];
+        
+        for (let item of this.data) {
+            await delay(200); // Simulate processing time
+            
+            let processed: any = {
+                ...item,
+                processed: true,
+                processedAt: Date.now(),
+                length: item.content.length
+            };
+            
+            processedData.push(processed);
+            print(`Processed item from ${item.source}`);
+        }
+        
+        return processedData;
+    }
+    
+    public async function transform<T>(transformer: (item: any) => Promise<T>): Promise<Array<T>> {
+        print("Transforming data...");
+        
+        let transformed: Array<T> = [];
+        for (let item of this.data) {
+            let result: T = await transformer(item);
+            transformed.push(result);
+        }
+        
+        return transformed;
+    }
+}
+
+// Async pipeline example
+class Pipeline {
+    private steps: Array<(data: any) => Promise<any>>;
+    
+    constructor() {
+        this.steps = [];
+    }
+    
+    public function addStep(step: (data: any) => Promise<any>): Pipeline {
+        this.steps.push(step);
+        return this; // Method chaining
+    }
+    
+    public async function execute(initialData: any): Promise<any> {
+        let currentData: any = initialData;
+        
+        for (let i = 0; i < this.steps.length; i++) {
+            print(`Executing pipeline step ${i + 1}/${this.steps.length}`);
+            currentData = await this.steps[i](currentData);
+        }
+        
+        return currentData;
+    }
+}
+
+// Async error handling
+class AsyncErrorHandler {
+    public static async function withRetry<T>(
+        operation: () => Promise<T>, 
+        maxRetries: number = 3
+    ): Promise<T> {
+        let lastError: Error;
+        
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                return await operation();
+            } catch (error) {
+                lastError = error;
+                print(`Attempt ${attempt} failed: ${error.message}`);
+                
+                if (attempt < maxRetries) {
+                    let delayMs: number = Math.pow(2, attempt) * 1000; // Exponential backoff
+                    print(`Retrying in ${delayMs}ms...`);
+                    await delay(delayMs);
+                }
+            }
+        }
+        
+        throw lastError;
+    }
+    
+    public static async function timeout<T>(
+        operation: Promise<T>, 
+        timeoutMs: number
+    ): Promise<T> {
+        let timeoutPromise: Promise<never> = new Promise((_, reject) => {
+            setTimeout(() => reject(new Error("Operation timed out")), timeoutMs);
+        });
+        
+        return Promise.race([operation, timeoutPromise]);
+    }
+}
+
+// Main async function
+async function main(): Promise<void> {
+    print("=== Async Programming Examples ===\n");
+    
+    try {
+        // Basic async operations
+        print("1. Basic Async Operations");
+        let data1: string = await fetchData("https://api.example.com/users");
+        let data2: string = await fetchData("https://api.example.com/posts");
+        print(`Received: ${data1}, ${data2}\n`);
+        
+        // Concurrent operations
+        print("2. Concurrent Operations");
+        let [userData, postData]: [string, string] = await Promise.all([
+            fetchData("https://api.example.com/users"),
+            fetchData("https://api.example.com/posts")
+        ]);
+        print(`Concurrent results: ${userData}, ${postData}\n`);
+        
+        // API Client usage
+        print("3. API Client Example");
+        let apiClient: APIClient = new APIClient("https://api.example.com");
+        
+        let userResponse: any = await apiClient.get("/users/1");
+        print("User response:", userResponse);
+        
+        let createResponse: any = await apiClient.post("/users", { name: "John", age: 30 });
+        print("Create response:", createResponse);
+        
+        // Batch requests
+        let batchResults: Array<any> = await apiClient.batchRequest(["/users", "/posts", "/comments"]);
+        print(`Batch results: ${batchResults.length} responses\n`);
+        
+        // Data processing
+        print("4. Data Processing Example");
+        let processor: DataProcessor = new DataProcessor();
+        await processor.loadData(["source1", "source2", "source3"]);
+        
+        let processedData: Array<any> = await processor.processData();
+        print(`Processed ${processedData.length} items\n`);
+        
+        // Data transformation
+        let transformedData: Array<string> = await processor.transform(async (item: any) => {
+            await delay(100);
+            return `Transformed: ${item.content}`;
+        });
+        print(`Transformed ${transformedData.length} items\n`);
+        
+        // Pipeline example
+        print("5. Pipeline Example");
+        let pipeline: Pipeline = new Pipeline()
+            .addStep(async (data: any) => {
+                await delay(300);
+                return { ...data, step1: "completed" };
+            })
+            .addStep(async (data: any) => {
+                await delay(200);
+                return { ...data, step2: "processed" };
+            })
+            .addStep(async (data: any) => {
+                await delay(100);
+                return { ...data, final: true };
+            });
+        
+        let pipelineResult: any = await pipeline.execute({ initial: "data" });
+        print("Pipeline result:", pipelineResult);
+        print();
+        
+        // Error handling with retry
+        print("6. Error Handling Example");
+        let retryResult: string = await AsyncErrorHandler.withRetry(async () => {
+            if (Math.random() < 0.7) {
+                throw new Error("Random failure");
+            }
+            return "Success!";
+        }, 3);
+        print(`Retry result: ${retryResult}\n`);
+        
+        // Timeout example
+        print("7. Timeout Example");
+        try {
+            let timeoutResult: string = await AsyncErrorHandler.timeout(
+                delay(2000).then(() => "Completed"),
+                1500
+            );
+            print(`Timeout result: ${timeoutResult}`);
+        } catch (error) {
+            print(`Timeout error: ${error.message}`);
+        }
+        
+    } catch (error) {
+        print(`Error in main: ${error.message}`);
+    }
+    
+    print("\n=== Async Examples Complete ===");
+}
+
+// Run the async main function
+main().catch(error => {
+    print(`Unhandled error: ${error.message}`);
+});

@@ -1,0 +1,69 @@
+// Basic PowerScript Example
+// Demonstrates fundamental language features
+
+// Variable declarations with types
+let name: string = "PowerScript";
+let version: number = 0.1;
+let isActive: boolean = true;
+
+// Arrays and collections
+let numbers: Array<number> = [1, 2, 3, 4, 5];
+let fruits: Array<string> = ["apple", "banana", "orange"];
+
+// Functions with type annotations
+function greet(name: string): string {
+    return "Hello, " + name + "!";
+}
+
+function add(a: number, b: number): number {
+    return a + b;
+}
+
+// Optional parameters and default values
+function introduce(name: string, age: number = 25): string {
+    return `My name is ${name} and I am ${age} years old.`;
+}
+
+// Generic functions
+function identity<T>(value: T): T {
+    return value;
+}
+
+function first<T>(array: Array<T>): T? {
+    return array.length > 0 ? array[0] : null;
+}
+
+// Control flow
+function processNumbers(numbers: Array<number>): void {
+    for (let num of numbers) {
+        if (num % 2 === 0) {
+            print(`${num} is even`);
+        } else {
+            print(`${num} is odd`);
+        }
+    }
+}
+
+// Main function
+function main(): void {
+    print(greet(name));
+    print(`Version: ${version}`);
+    print(`Active: ${isActive}`);
+    
+    let sum: number = add(10, 20);
+    print(`Sum: ${sum}`);
+    
+    print(introduce("Alice"));
+    print(introduce("Bob", 30));
+    
+    let stringResult: string = identity<string>("Hello");
+    let numberResult: number = identity<number>(42);
+    print(`Identity results: ${stringResult}, ${numberResult}`);
+    
+    let firstFruit: string? = first<string>(fruits);
+    print(`First fruit: ${firstFruit ?? "none"}`);
+    
+    processNumbers(numbers);
+}
+
+main();
