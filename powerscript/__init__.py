@@ -35,7 +35,7 @@ This package provides:
 - VS Code extension integration
 """
 
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 __author__ = "PowerScript Team"
 
 from .compiler import Lexer, Parser, Transpiler

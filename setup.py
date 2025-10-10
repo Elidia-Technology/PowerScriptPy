@@ -38,7 +38,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="powerscript",
-    version="0.1.0",
+    version="1.0.0",
     description="A fully structured development language that transpiles to Python",
     long_description=long_description,
     long_description_content_type="text/markdown",
