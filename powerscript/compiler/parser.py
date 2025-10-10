@@ -114,7 +114,7 @@ class Parser:
         self._consume(TokenType.LEFT_BRACE, "Expected '{' after constructor parameters")
         body = self._block()
         
-        constructor = FunctionNode("__init__", parameters, None, False, access_modifier, True, self._previous().location)
+        constructor = FunctionNode("__init__", parameters, None, False, access_modifier, True, False, self._previous().location)
         constructor.body = body
         return constructor
     
@@ -141,7 +141,7 @@ class Parser:
         self._consume(TokenType.LEFT_BRACE, "Expected '{' after method signature")
         body = self._block()
         
-        method = FunctionNode(name, parameters, return_type, is_async, access_modifier, False, name_token.location)
+        method = FunctionNode(name, parameters, return_type, is_async, access_modifier, False, False, name_token.location)
         method.generic_params = generic_params
         method.body = body
         return method
@@ -176,6 +176,9 @@ class Parser:
         if is_async:
             self._consume(TokenType.FUNCTION, "Expected 'function' after 'async'")
         
+        # Check for generator function (function*)
+        is_generator = self._match(TokenType.MULTIPLY)
+        
         name_token = self._consume(TokenType.IDENTIFIER, "Expected function name")
         name = name_token.value
         
@@ -194,7 +197,7 @@ class Parser:
         self._consume(TokenType.LEFT_BRACE, "Expected '{' after function signature")
         body = self._block()
         
-        function = FunctionNode(name, parameters, return_type, is_async, AccessModifier.PUBLIC, False, name_token.location)
+        function = FunctionNode(name, parameters, return_type, is_async, AccessModifier.PUBLIC, False, is_generator, name_token.location)
         function.generic_params = generic_params
         function.body = body
         return function
@@ -376,7 +379,7 @@ class Parser:
         elif self._match(TokenType.WITH):
             return self._with_statement()
         elif self._match(TokenType.YIELD):
-            return self._yield_expression()
+            return self._yield_statement()
         elif self._match(TokenType.LEFT_BRACE):
             return BlockNode(self._block().statements, self._previous().location)
         else:
@@ -672,6 +675,9 @@ class Parser:
             value = value[1:-1]
             return LiteralNode(value, "string", self._previous().location)
         
+        if self._match(TokenType.F_STRING):
+            return self._f_string()
+        
         if self._match(TokenType.IDENTIFIER):
             return IdentifierNode(self._previous().value, self._previous().location)
         
@@ -679,6 +685,12 @@ class Parser:
             expr = self._expression()
             self._consume(TokenType.RIGHT_PAREN, "Expected ')' after expression")
             return expr
+        
+        if self._match(TokenType.LEFT_BRACKET):
+            return self._array_or_list_comprehension()
+        
+        if self._match(TokenType.LEFT_BRACE):
+            return self._object_or_comprehension()
         
         raise self._error("Expected expression")
     
@@ -704,34 +716,163 @@ class Parser:
         return LambdaNode(parameters, body, location)
     
     def _with_statement(self) -> WithNode:
-        """Parse with statement: with expr as var: body"""
+        """Parse with statement: with expr as var { body }"""
         location = self._previous().location
         context_expr = self._expression()
         
         optional_vars = None
         if self._match(TokenType.AS):
-            self._consume(TokenType.IDENTIFIER, "Expected variable name after 'as'")
-            optional_vars = IdentifierNode(self._previous().value, self._previous().location)
+            var_token = self._consume(TokenType.IDENTIFIER, "Expected variable name after 'as'")
+            optional_vars = IdentifierNode(var_token.value, var_token.location)
         
-        self._consume(TokenType.COLON, "Expected ':' after with expression")
-        body = self._block_statement()
+        self._consume(TokenType.LEFT_BRACE, "Expected '{' after with expression")
+        body = self._block()
         
         return WithNode(context_expr, optional_vars, body, location)
     
-    def _yield_expression(self) -> YieldNode:
-        """Parse yield expression: yield value"""
+    def _yield_statement(self) -> YieldNode:
+        """Parse yield statement: yield value; or yield from iterable;"""
         location = self._previous().location
         value = None
+        is_yield_from = False
         
-        if not self._check(TokenType.SEMICOLON) and not self._check(TokenType.RIGHT_PAREN):
+        # Check for 'yield from'
+        if self._match(TokenType.FROM):
+            is_yield_from = True
+            value = self._expression()
+        elif not self._check(TokenType.SEMICOLON):
             value = self._expression()
         
-        return YieldNode(value, location)
+        self._consume(TokenType.SEMICOLON, "Expected ';' after yield statement")
+        return YieldNode(value, is_yield_from, location)
+    
+    def _yield_expression(self) -> YieldNode:
+        """Parse yield expression: yield value or yield from iterable (without semicolon)"""
+        location = self._peek().location  # Use peek since we haven't consumed YIELD yet
+        value = None
+        is_yield_from = False
+        
+        # Check for 'yield from'
+        if self._match(TokenType.FROM):
+            is_yield_from = True
+            value = self._expression()
+        elif not self._check(TokenType.SEMICOLON) and not self._check(TokenType.RIGHT_PAREN) and not self._check(TokenType.RIGHT_BRACE) and not self._is_at_end():
+            value = self._expression()
+        
+        return YieldNode(value, is_yield_from, location)
+    
+    def _array_or_list_comprehension(self) -> Union[ArrayLiteralNode, ComprehensionNode]:
+        """Parse array literal or list comprehension: [1, 2, 3] or [x for x in list]"""
+        location = self._previous().location
+        
+        # Empty array
+        if self._match(TokenType.RIGHT_BRACKET):
+            return ArrayLiteralNode([], location)
+        
+        # Parse first expression
+        expr = self._expression()
+        
+        # Check if this is a comprehension (look for 'for' keyword)
+        if self._match(TokenType.FOR):
+            # This is a list comprehension: [expr for x in iterable]
+            target_token = self._consume(TokenType.IDENTIFIER, "Expected variable name in comprehension")
+            target = IdentifierNode(target_token.value, target_token.location)
+            
+            self._consume(TokenType.IN, "Expected 'in' after comprehension variable")
+            iterable = self._expression()
+            
+            # Optional conditions
+            conditions = []
+            while self._match(TokenType.IF):
+                conditions.append(self._expression())
+            
+            self._consume(TokenType.RIGHT_BRACKET, "Expected ']' after list comprehension")
+            return ComprehensionNode(expr, target, iterable, conditions, "list", location)
+        else:
+            # This is an array literal: [1, 2, 3]
+            elements = [expr]
+            while self._match(TokenType.COMMA):
+                if self._check(TokenType.RIGHT_BRACKET):  # Trailing comma
+                    break
+                elements.append(self._expression())
+            
+            self._consume(TokenType.RIGHT_BRACKET, "Expected ']' after array elements")
+            return ArrayLiteralNode(elements, location)
+    
+    def _object_or_comprehension(self) -> Union[ObjectLiteralNode, ComprehensionNode]:
+        """Parse object literal, set comprehension, or dict comprehension"""
+        location = self._previous().location
+        
+        # Empty object/set
+        if self._match(TokenType.RIGHT_BRACE):
+            return ObjectLiteralNode([], location)
+        
+        # Parse first expression or key:value pair
+        first_expr = self._expression()
+        
+        # Check for dict comprehension: {key: value for x in iterable}
+        if self._match(TokenType.COLON):
+            value_expr = self._expression()
+            
+            if self._match(TokenType.FOR):
+                # Dict comprehension: {key: value for x in iterable}
+                target_token = self._consume(TokenType.IDENTIFIER, "Expected variable name in comprehension")
+                target = IdentifierNode(target_token.value, target_token.location)
+                
+                self._consume(TokenType.IN, "Expected 'in' after comprehension variable")
+                iterable = self._expression()
+                
+                conditions = []
+                while self._match(TokenType.IF):
+                    conditions.append(self._expression())
+                
+                self._consume(TokenType.RIGHT_BRACE, "Expected '}' after dict comprehension")
+                # For dict comprehension, we need to store both key and value
+                # For now, create a simple key-value pair structure
+                return ComprehensionNode(first_expr, target, iterable, conditions, "dict", location)
+            else:
+                # Regular object literal: {key: value, ...}
+                properties = [(first_expr, value_expr)]
+                while self._match(TokenType.COMMA):
+                    if self._check(TokenType.RIGHT_BRACE):  # Trailing comma
+                        break
+                    key = self._expression()
+                    self._consume(TokenType.COLON, "Expected ':' after object key")
+                    value = self._expression()
+                    properties.append((key, value))
+                
+                self._consume(TokenType.RIGHT_BRACE, "Expected '}' after object literal")
+                return ObjectLiteralNode(properties, location)
+        
+        # Check for set comprehension: {expr for x in iterable}
+        elif self._match(TokenType.FOR):
+            # Set comprehension: {expr for x in iterable}
+            target_token = self._consume(TokenType.IDENTIFIER, "Expected variable name in comprehension")
+            target = IdentifierNode(target_token.value, target_token.location)
+            
+            self._consume(TokenType.IN, "Expected 'in' after comprehension variable")
+            iterable = self._expression()
+            
+            conditions = []
+            while self._match(TokenType.IF):
+                conditions.append(self._expression())
+            
+            self._consume(TokenType.RIGHT_BRACE, "Expected '}' after set comprehension")
+            return ComprehensionNode(first_expr, target, iterable, conditions, "set", location)
+        else:
+            # Set literal: {1, 2, 3}
+            elements = [first_expr]
+            while self._match(TokenType.COMMA):
+                if self._check(TokenType.RIGHT_BRACE):  # Trailing comma
+                    break
+                elements.append(self._expression())
+            
+            self._consume(TokenType.RIGHT_BRACE, "Expected '}' after set literal")
+            return SetLiteralNode(elements, location)
     
     def _comprehension_expression(self) -> ComprehensionNode:
         """Parse list/dict/set comprehensions: [expr for x in iterable if condition]"""
-        # This will be called when we detect comprehension syntax
-        # For now, we'll implement a basic version
+        # This method is now replaced by _array_or_list_comprehension and _object_or_comprehension
         location = self._peek().location
         
         # Parse the expression
@@ -774,6 +915,44 @@ class Parser:
         
         return SliceNode(object_expr, lower, upper, step, location)
     
+    def _f_string(self) -> FStringNode:
+        """Parse f-string with expression interpolation: f"Hello {name}!" """
+        import re
+        
+        location = self._previous().location
+        value = self._previous().value
+        # Remove f" or f' and closing quote
+        if value.startswith('f"'):
+            content = value[2:-1]
+        else:  # f'...'
+            content = value[2:-1]
+        
+        expressions = []
+        
+        # Simple regex to find {expr} patterns
+        # This is a basic implementation - a full implementation would need proper parsing
+        expr_pattern = r'\{([^}]+)\}'
+        matches = list(re.finditer(expr_pattern, content))
+        
+        for match in matches:
+            expr_str = match.group(1)
+            # Create a mini-parser for the expression
+            try:
+                # Parse the expression string as PowerScript code
+                from .lexer import Lexer
+                lexer = Lexer()
+                expr_tokens = lexer.tokenize(expr_str)
+                # Create a sub-parser for the expression
+                sub_parser = Parser(expr_tokens)
+                sub_parser.current = 0
+                expr_ast = sub_parser._expression()
+                expressions.append(expr_ast)
+            except Exception:
+                # If parsing fails, treat as identifier
+                expressions.append(IdentifierNode(expr_str, location))
+        
+        return FStringNode(value, expressions, location)
+
     # Helper methods
     def _match(self, *types: TokenType) -> bool:
         """Check if current token matches any of the given types"""

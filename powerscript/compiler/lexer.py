@@ -14,6 +14,7 @@ class TokenType(Enum):
     # Literals
     IDENTIFIER = auto()
     STRING = auto()
+    F_STRING = auto()
     NUMBER = auto()
     BOOLEAN = auto()
     NULL = auto()
@@ -48,6 +49,7 @@ class TokenType(Enum):
     LAMBDA = auto()
     WITH = auto()
     YIELD = auto()
+    YIELD_FROM = auto()
     GENERATOR = auto()
     COMPREHENSION = auto()
     ELLIPSIS = auto()
@@ -225,6 +227,8 @@ class Lexer:
         (TokenType.ELLIPSIS, re.compile(r'\.\.\.')),
         
         # String literals
+        (TokenType.F_STRING, re.compile(r'f"(?:[^"\\]|\\.)*"')),  # F-string with double quotes
+        (TokenType.F_STRING, re.compile(r"f'(?:[^'\\]|\\.)*'")),  # F-string with single quotes
         (TokenType.STRING, re.compile(r'"(?:[^"\\]|\\.)*"')),
         (TokenType.STRING, re.compile(r"'(?:[^'\\]|\\.)*'")),
         (TokenType.STRING, re.compile(r'`(?:[^`\\]|\\.)*`')),  # Template strings

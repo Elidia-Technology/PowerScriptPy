@@ -1,0 +1,74 @@
+// PowerScript Generators and Yield Test
+
+// Simple generator function
+function* simpleGenerator() {
+    console.log("Generator starting");
+    yield 1;
+    yield 2;
+    yield 3;
+    console.log("Generator ending");
+}
+
+// Generator with parameters and return value
+function* countUp(start: number, end: number) {
+    for (let i = start; i <= end; i++) {
+        yield i;
+    }
+    return "Done counting";
+}
+
+// Generator that yields from another generator
+function* fibonacci(n: number) {
+    let a = 0, b = 1;
+    for (let i = 0; i < n; i++) {
+        yield a;
+        let temp = a + b;
+        a = b;
+        b = temp;
+    }
+}
+
+function* fibonacciWrapper(n: number) {
+    console.log("Starting Fibonacci sequence");
+    yield from fibonacci(n);
+    console.log("Fibonacci sequence completed");
+}
+
+// Generator with conditional yields
+function* evenNumbers(max: number) {
+    for (let i = 0; i <= max; i++) {
+        if (i % 2 === 0) {
+            yield i;
+        }
+    }
+}
+
+// Testing generators
+console.log("=== PowerScript Generators Test ===");
+
+// Test simple generator
+let gen1 = simpleGenerator();
+console.log("gen1.next():", gen1.next());
+console.log("gen1.next():", gen1.next());
+console.log("gen1.next():", gen1.next());
+console.log("gen1.next():", gen1.next());
+
+// Test generator with parameters
+let gen2 = countUp(5, 8);
+for (let value of gen2) {
+    console.log("Count:", value);
+}
+
+// Test yield from
+let gen3 = fibonacciWrapper(5);
+for (let fib of gen3) {
+    console.log("Fibonacci:", fib);
+}
+
+// Test conditional generator
+let gen4 = evenNumbers(10);
+for (let even of gen4) {
+    console.log("Even:", even);
+}
+
+console.log("=== Generators Test Completed! ===");

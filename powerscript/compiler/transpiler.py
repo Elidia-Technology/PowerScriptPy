@@ -314,6 +314,69 @@ class Transpiler(ASTVisitor):
         """Visit literal node"""
         return ast.Constant(value=node.value)
     
+    def visit_array_literal(self, node: ArrayLiteralNode) -> ast.List:
+        """Visit array literal node"""
+        elements = [elem.accept(self) for elem in node.elements]
+        return ast.List(elts=elements, ctx=ast.Load())
+    
+    def visit_object_literal(self, node: ObjectLiteralNode) -> ast.Dict:
+        """Visit object literal node"""
+        keys = []
+        values = []
+        for key_node, value_node in node.properties:
+            keys.append(key_node.accept(self))
+            values.append(value_node.accept(self))
+        return ast.Dict(keys=keys, values=values)
+    
+    def visit_set_literal(self, node: SetLiteralNode) -> ast.Set:
+        """Visit set literal node"""
+        elements = [elem.accept(self) for elem in node.elements]
+        return ast.Set(elts=elements)
+    
+    def visit_f_string(self, node: FStringNode) -> ast.JoinedStr:
+        """Visit f-string node and convert to Python f-string"""
+        import re
+        
+        # Parse the f-string content to create values list
+        values = []
+        
+        if node.value.startswith('f"'):
+            content = node.value[2:-1]  # Remove f" and "
+        else:  # f'...'
+            content = node.value[2:-1]  # Remove f' and '
+        
+        # Split content by {expr} patterns
+        expr_pattern = r'\{([^}]+)\}'
+        last_end = 0
+        
+        for match in re.finditer(expr_pattern, content):
+            # Add text before the expression
+            if match.start() > last_end:
+                text = content[last_end:match.start()]
+                if text:
+                    values.append(ast.Constant(value=text))
+            
+            # Add the expression
+            expr_idx = 0
+            if expr_idx < len(node.expressions):
+                formatted_value = ast.FormattedValue(
+                    value=node.expressions[expr_idx].accept(self),
+                    conversion=-1,  # No conversion
+                    format_spec=None
+                )
+                values.append(formatted_value)
+                expr_idx += 1
+            
+            last_end = match.end()
+        
+        # Add remaining text
+        if last_end < len(content):
+            remaining = content[last_end:]
+            if remaining:
+                values.append(ast.Constant(value=remaining))
+        
+        return ast.JoinedStr(values=values)
+    
     def visit_call(self, node: CallNode) -> ast.Call:
         """Visit call node"""
         func = node.callee.accept(self)
@@ -624,12 +687,16 @@ class Transpiler(ASTVisitor):
         
         return ast.With(items=[with_item], body=body)
     
-    def visit_yield(self, node: YieldNode) -> ast.Yield:
+    def visit_yield(self, node: YieldNode) -> Union[ast.Yield, ast.YieldFrom]:
         """Visit yield node"""
         value = None
         if node.value:
             value = node.value.accept(self)
-        return ast.Yield(value=value)
+            
+        if node.is_yield_from:
+            return ast.YieldFrom(value=value)
+        else:
+            return ast.Yield(value=value)
     
     def visit_comprehension(self, node: ComprehensionNode) -> Union[ast.ListComp, ast.DictComp, ast.SetComp]:
         """Visit comprehension node"""

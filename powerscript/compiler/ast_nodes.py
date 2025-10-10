@@ -3,7 +3,7 @@ Abstract Syntax Tree Node definitions for PowerScript
 """
 
 from abc import ABC, abstractmethod
-from typing import List, Optional, Dict, Any, Union
+from typing import List, Optional, Dict, Any, Union, Tuple
 from dataclasses import dataclass
 from enum import Enum
 
@@ -19,6 +19,9 @@ class NodeType(Enum):
     PARAMETER = "parameter"
     IDENTIFIER = "identifier"
     LITERAL = "literal"
+    ARRAY_LITERAL = "array_literal"
+    OBJECT_LITERAL = "object_literal"
+    SET_LITERAL = "set_literal"
     CALL = "call"
     ASSIGNMENT = "assignment"
     BINARY_OP = "binary_op"
@@ -38,6 +41,7 @@ class NodeType(Enum):
     GENERATOR = "generator"
     SLICE = "slice"
     ELLIPSIS = "ellipsis"
+    F_STRING = "f_string"
     UNION_TYPE = "union_type"
     INTERSECTION_TYPE = "intersection_type"
     LITERAL_TYPE = "literal_type"
@@ -107,7 +111,8 @@ class FunctionNode(ASTNode):
     def __init__(self, name: str, parameters: List['ParameterNode'] = None,
                  return_type: Optional[str] = None, is_async: bool = False,
                  access_modifier: AccessModifier = AccessModifier.PUBLIC,
-                 is_constructor: bool = False, location: Optional[SourceLocation] = None):
+                 is_constructor: bool = False, is_generator: bool = False,
+                 location: Optional[SourceLocation] = None):
         super().__init__(NodeType.CONSTRUCTOR if is_constructor else NodeType.FUNCTION, location)
         self.name = name
         self.parameters = parameters or []
@@ -115,6 +120,7 @@ class FunctionNode(ASTNode):
         self.is_async = is_async
         self.access_modifier = access_modifier
         self.is_constructor = is_constructor
+        self.is_generator = is_generator
         self.body: Optional['BlockNode'] = None
         self.generic_params: List[str] = []
     
@@ -183,6 +189,52 @@ class LiteralNode(ExpressionNode):
     
     def accept(self, visitor):
         return visitor.visit_literal(self)
+
+
+class ArrayLiteralNode(ExpressionNode):
+    """AST node for array literals [1, 2, 3]"""
+    
+    def __init__(self, elements: List[ExpressionNode], location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.ARRAY_LITERAL, location)
+        self.elements = elements
+    
+    def accept(self, visitor):
+        return visitor.visit_array_literal(self)
+
+
+class ObjectLiteralNode(ExpressionNode):
+    """AST node for object literals {key: value, ...}"""
+    
+    def __init__(self, properties: List[Tuple[ExpressionNode, ExpressionNode]], 
+                 location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.OBJECT_LITERAL, location)
+        self.properties = properties  # List of (key, value) pairs
+    
+    def accept(self, visitor):
+        return visitor.visit_object_literal(self)
+
+
+class SetLiteralNode(ExpressionNode):
+    """AST node for set literals {1, 2, 3}"""
+    
+    def __init__(self, elements: List[ExpressionNode], location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.SET_LITERAL, location)
+        self.elements = elements
+    
+    def accept(self, visitor):
+        return visitor.visit_set_literal(self)
+
+
+class FStringNode(ExpressionNode):
+    """AST node for f-string literals f"Hello {name}!" """
+    
+    def __init__(self, value: str, expressions: List[ExpressionNode] = None, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.F_STRING, location)
+        self.value = value  # Original f-string with placeholders
+        self.expressions = expressions or []  # Parsed expressions from {expr}
+    
+    def accept(self, visitor):
+        return visitor.visit_f_string(self)
 
 
 class CallNode(ExpressionNode):
@@ -371,9 +423,11 @@ class YieldNode(ExpressionNode):
     """Yield expression node for generators"""
     
     def __init__(self, value: Optional[ExpressionNode] = None, 
+                 is_yield_from: bool = False,
                  location: Optional[SourceLocation] = None):
         super().__init__(NodeType.YIELD, location)
         self.value = value
+        self.is_yield_from = is_yield_from
     
     def accept(self, visitor):
         return visitor.visit_yield(self)
@@ -502,6 +556,15 @@ class ASTVisitor(ABC):
     
     @abstractmethod
     def visit_literal(self, node: LiteralNode): pass
+    
+    @abstractmethod
+    def visit_array_literal(self, node: ArrayLiteralNode): pass
+    
+    @abstractmethod
+    def visit_object_literal(self, node: ObjectLiteralNode): pass
+    
+    @abstractmethod
+    def visit_set_literal(self, node: SetLiteralNode): pass
     
     @abstractmethod
     def visit_call(self, node: CallNode): pass
