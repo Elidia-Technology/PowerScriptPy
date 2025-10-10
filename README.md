@@ -34,6 +34,15 @@ PowerScript is a complete, modern programming language framework designed for AI
 - **✅ Generic Types**: Type-safe generic programming
 - **✅ Runtime Validation**: beartype integration for type safety
 
+### 🔥 Modern JavaScript-Style Features (NEW!)
+- **✅ F-String Interpolation**: `f"Hello {name}!"` - Python-style string formatting
+- **✅ Template Literals**: `` `Hello ${name}!` `` - JavaScript-style multi-line templates
+- **✅ Switch/Case Statements**: Pattern matching with multiple case values
+- **✅ Arrow Functions**: `x => x * 2` and `(a, b) => a + b` concise syntax
+- **✅ Import/Export System**: Modern ES6-style module imports and exports
+- **✅ Default Parameters**: `function test(x = 5)` - function parameter defaults
+- **✅ Break/Continue**: Flow control in loops and switch statements
+
 ### 🤖 AI/ML Ecosystem
 - **✅ 8 AI/ML Examples**: TensorFlow, PyTorch, transformers, computer vision
 - **✅ Data Processing**: NumPy, Pandas integration templates
@@ -133,7 +142,176 @@ async function main(): void {
 main();
 ```
 
-## 📚 Language Guide
+## � Modern Language Features Showcase
+
+### ✨ String Interpolation & Templates
+
+```powerscript
+// F-String interpolation (Python-style)
+const name = "PowerScript"
+const version = "2.0"
+const greeting = f"Welcome to {name} v{version}!"
+
+// Template literals with multi-line support (JavaScript-style)
+const template = `Hello ${name}!
+This is a multi-line template
+with embedded expressions: ${2 + 3} = 5
+Current time: ${Date.now()}`
+
+// Both compile to efficient Python string formatting
+```
+
+### 🔄 Switch/Case Pattern Matching
+
+```powerscript
+// Switch with multiple case values
+function getLetterGrade(score: number): string {
+    switch (score) {
+        case 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100:
+            return "A"
+        case 80, 81, 82, 83, 84, 85, 86, 87, 88, 89:
+            return "B" 
+        case 70, 71, 72, 73, 74, 75, 76, 77, 78, 79:
+            return "C"
+        case 60, 61, 62, 63, 64, 65, 66, 67, 68, 69:
+            return "D"
+        default:
+            return "F"
+    }
+}
+
+// Switch with string matching
+function processCommand(cmd: string): string {
+    switch (cmd) {
+        case "start", "begin", "init":
+            return "Starting process..."
+        case "stop", "end", "quit":
+            return "Stopping process..."
+        case "pause", "wait":
+            return "Pausing process..."
+        default:
+            return "Unknown command"
+    }
+}
+```
+
+### ➡️ Arrow Functions & Functional Programming
+
+```powerscript
+// Simple arrow functions
+const double = x => x * 2
+const square = x => x * x
+const add = (a, b) => a + b
+
+// Using with array methods
+const numbers = [1, 2, 3, 4, 5]
+const doubled = numbers.map(x => x * 2)              // [2, 4, 6, 8, 10]
+const evens = numbers.filter(x => x % 2 === 0)       // [2, 4]
+const sum = numbers.reduce((acc, x) => acc + x, 0)   // 15
+
+// Multi-line arrow functions
+const complexCalculation = (data) => {
+    const processed = data.map(x => x * 2)
+    const filtered = processed.filter(x => x > 5)
+    return filtered.reduce((acc, x) => acc + x, 0)
+}
+```
+
+### 📦 Modern Import/Export System
+
+```powerscript
+// math_utils.ps - Export utilities
+export const PI = 3.14159
+export const E = 2.71828
+
+export function calculateArea(radius: number): number {
+    return PI * radius * radius
+}
+
+export function factorial(n: number): number {
+    return n <= 1 ? 1 : n * factorial(n - 1)
+}
+
+// main.ps - Import and use
+import { PI, calculateArea, factorial } from "./math_utils"
+import { DataProcessor, calculateStats } from "./data_utils" 
+
+const area = calculateArea(5)
+const fact = factorial(5)
+const result = f"Area: {area}, Factorial: {fact}"
+```
+
+### 🎛️ Default Parameters & Enhanced Functions
+
+```powerscript
+// Functions with default parameters
+function createUser(name: string, age: number = 18, role: string = "user"): object {
+    return {
+        name: name,
+        age: age, 
+        role: role,
+        created: Date.now()
+    }
+}
+
+// Call with different parameter combinations
+const user1 = createUser("Alice")                    // Uses defaults: age=18, role="user"
+const user2 = createUser("Bob", 25)                  // Uses default: role="user"  
+const user3 = createUser("Charlie", 30, "admin")     // All parameters specified
+
+// Combining with arrow functions
+const greetUser = (name: string, greeting: string = "Hello") => {
+    return f"{greeting}, {name}! Welcome to PowerScript!"
+}
+
+// Using in higher-order functions
+const processData = (data: Array<number>, multiplier: number = 2) => {
+    return data.map(x => x * multiplier)
+}
+```
+
+### 🔄 Flow Control Enhancements
+
+```powerscript
+// Break and continue in loops
+function findPrimes(limit: number): Array<number> {
+    const primes = []
+    
+    for (let num = 2; num <= limit; num++) {
+        let isPrime = true
+        
+        for (let i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i === 0) {
+                isPrime = false
+                break  // Exit inner loop early
+            }
+        }
+        
+        if (isPrime) {
+            primes.push(num)
+        }
+    }
+    
+    return primes
+}
+
+// Switch with break statements  
+function processInput(input: string): string {
+    switch (input.toLowerCase()) {
+        case "hello", "hi", "hey":
+            console.log("Greeting detected")
+            break
+        case "bye", "goodbye", "see you":
+            console.log("Farewell detected") 
+            break
+        default:
+            console.log("Unknown input")
+            break
+    }
+}
+```
+
+## �📚 Language Guide
 
 ### Type System
 
@@ -485,7 +663,16 @@ black powerscript/
 - [x] Project Templates (AI/ML/Web/CLI scaffolding)
 - [x] Performance Optimization (Efficient transpilation)
 
-**🚀 Total Implementation: 40+ files, 2000+ lines of core functionality**
+### ✅ Phase 6: Modern Language Features (COMPLETE) 🔥
+- [x] F-String Interpolation (`f"Hello {name}!"`)
+- [x] Template Literals (`` `Multi-line ${expr}` ``)  
+- [x] Switch/Case Statements (Multiple case values)
+- [x] Arrow Functions (`x => x * 2`, `(a,b) => a + b`)
+- [x] Import/Export System (ES6-style modules)
+- [x] Default Parameters (`function test(x = 5)`)
+- [x] Enhanced Flow Control (break/continue)
+
+**🚀 Total Implementation: 45+ files, 2500+ lines of core functionality**
 
 ## 📄 License
 
@@ -528,14 +715,15 @@ code .  # VS Code with PowerScript extension
 
 ## 📊 Framework Statistics
 
-- **📦 Total Files**: 40+ implementation files
-- **💻 Code Lines**: 2000+ lines of core functionality  
+- **📦 Total Files**: 45+ implementation files
+- **💻 Code Lines**: 2500+ lines of core functionality  
 - **🛠️ CLI Tools**: 4 production-ready commands
 - **🎨 VS Code**: Complete IDE integration
+- **🔥 Modern Features**: F-strings, Switch/Case, Arrow Functions, Import/Export
 - **🤖 AI Examples**: 8 ML/AI project templates
-- **📚 Documentation**: 5 comprehensive guides
+- **📚 Documentation**: 5 comprehensive guides + Feature showcase
 - **✅ Test Coverage**: Unit + integration tests
-- **🚀 Status**: Production Ready!
+- **🚀 Status**: Production Ready with Modern Language Features!
 
 ## 🤝 Repository & Community
 
@@ -544,4 +732,4 @@ code .  # VS Code with PowerScript extension
 - **Contributions**: PRs welcome for enhancements
 - **License**: MIT License - free for all use cases
 
-**PowerScript: Where Python meets modern language design! 🐍✨**
+**PowerScript: Where Python meets modern language design with ES6+ features! 🐍✨🚀**
