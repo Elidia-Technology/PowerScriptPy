@@ -49,6 +49,8 @@ class Parser:
                     self._error("Expected 'function' after 'async'")
             elif self._match(TokenType.LET, TokenType.CONST):
                 return self._variable_declaration()
+            elif self._match(TokenType.TYPE):
+                return self._type_alias_declaration()
             else:
                 return self._statement()
         except ParseError as e:
@@ -134,7 +136,7 @@ class Parser:
         # Return type
         return_type = None
         if self._match(TokenType.COLON):
-            return_type = self._type_annotation()
+            return_type = self._type_expression()
         
         self._consume(TokenType.LEFT_BRACE, "Expected '{' after method signature")
         body = self._block()
@@ -169,8 +171,10 @@ class Parser:
     
     def _function_declaration(self, is_async: bool = False) -> FunctionNode:
         """Parse function declaration"""
-        if not is_async:
-            self._consume(TokenType.FUNCTION, "Expected 'function'")
+        # Note: 'function' token has already been consumed by _declaration()
+        # unless this is an async function
+        if is_async:
+            self._consume(TokenType.FUNCTION, "Expected 'function' after 'async'")
         
         name_token = self._consume(TokenType.IDENTIFIER, "Expected function name")
         name = name_token.value
@@ -185,7 +189,7 @@ class Parser:
         # Return type
         return_type = None
         if self._match(TokenType.COLON):
-            return_type = self._type_annotation()
+            return_type = self._type_expression()
         
         self._consume(TokenType.LEFT_BRACE, "Expected '{' after function signature")
         body = self._block()
@@ -239,7 +243,7 @@ class Parser:
         # Type annotation
         param_type = None
         if self._match(TokenType.COLON):
-            param_type = self._type_annotation()
+            param_type = self._type_expression()
         
         # Default value
         default_value = None
@@ -284,6 +288,74 @@ class Parser:
             type_name += "?"
         
         return type_name
+    
+    def _type_alias_declaration(self) -> TypeAliasNode:
+        """Parse type alias declaration: type MyType = string | number"""
+        location = self._previous().location
+        
+        name_token = self._consume(TokenType.IDENTIFIER, "Expected type alias name")
+        name = name_token.value
+        
+        self._consume(TokenType.ASSIGN, "Expected '=' after type alias name")
+        
+        type_expr = self._type_expression()
+        
+        self._consume(TokenType.SEMICOLON, "Expected ';' after type alias")
+        
+        return TypeAliasNode(name, type_expr, location)
+    
+    def _type_expression(self) -> ExpressionNode:
+        """Parse type expression (with union, intersection, etc.)"""
+        return self._union_type()
+    
+    def _union_type(self) -> ExpressionNode:
+        """Parse union type: A | B | C"""
+        expr = self._intersection_type()
+        
+        types = [expr]
+        while self._match(TokenType.BIT_OR):  # Using | for union types
+            types.append(self._intersection_type())
+        
+        if len(types) == 1:
+            return types[0]
+        else:
+            return UnionTypeNode(types, expr.location)
+    
+    def _intersection_type(self) -> ExpressionNode:
+        """Parse intersection type: A & B & C"""
+        expr = self._primary_type()
+        
+        types = [expr]
+        while self._match(TokenType.BIT_AND):  # Using & for intersection types
+            types.append(self._primary_type())
+        
+        if len(types) == 1:
+            return types[0]
+        else:
+            return IntersectionTypeNode(types, expr.location)
+    
+    def _primary_type(self) -> ExpressionNode:
+        """Parse primary type expression"""
+        if self._match(TokenType.IDENTIFIER):
+            return IdentifierNode(self._previous().value, self._previous().location)
+        
+        if self._match(TokenType.STRING, TokenType.NUMBER, TokenType.BOOLEAN):
+            value = self._previous().value
+            if self._previous().type == TokenType.BOOLEAN:
+                value = value == "true"
+            elif self._previous().type == TokenType.NUMBER:
+                value = float(value) if '.' in value else int(value)
+            else:
+                # Remove quotes from string
+                value = value[1:-1]
+            return LiteralTypeNode(value, self._previous().location)
+        
+        if self._match(TokenType.LEFT_PAREN):
+            expr = self._type_expression()
+            self._consume(TokenType.RIGHT_PAREN, "Expected ')' after type expression")
+            return expr
+        
+        raise self._error("Expected type expression")
     
     def _statement(self) -> ASTNode:
         """Parse statement"""

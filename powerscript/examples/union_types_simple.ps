@@ -1,0 +1,25 @@
+// PowerScript Union Type Test (Simplified)
+
+// Type aliases
+type StringOrNumber = string | number;
+type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
+
+// Function with union type parameter
+function displayValue(value: string | number | boolean) {
+    console.log("Value:", value);
+}
+
+// Function using type alias
+function processData(value: StringOrNumber, method: HttpMethod) {
+    console.log("Processing:", value, "with method:", method);
+}
+
+// Test calls
+displayValue("Hello");
+displayValue(42);
+displayValue(true);
+
+processData(100, "GET");
+processData("test", "POST");
+
+console.log("Union types test completed!");

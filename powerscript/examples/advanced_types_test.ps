@@ -1,0 +1,90 @@
+// PowerScript Advanced Type System Test
+// Tests union types, literal types, type aliases, and generic constraints
+
+// =====================================================
+// TYPE ALIASES
+// =====================================================
+
+// Basic type alias
+type StringOrNumber = string | number;
+
+// Literal type alias
+type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
+
+// Complex type alias
+type UserRole = "admin" | "user" | "guest";
+
+// Function using type aliases
+function processData(value: StringOrNumber, method: HttpMethod) {
+    console.log("Processing:", value, "with method:", method);
+}
+
+// =====================================================
+// UNION TYPES
+// =====================================================
+
+// Function with union type parameter
+function displayValue(value: string | number | boolean) {
+    if (typeof value === "string") {
+        console.log("String value:", value);
+    } else if (typeof value === "number") {
+        console.log("Number value:", value);
+    } else {
+        console.log("Boolean value:", value);
+    }
+}
+
+// =====================================================
+// LITERAL TYPES
+// =====================================================
+
+// Function accepting only specific string literals
+function setTheme(theme: "light" | "dark" | "auto") {
+    console.log("Setting theme to:", theme);
+}
+
+// Function accepting specific number literals
+function setOpacity(opacity: 0 | 0.5 | 1) {
+    console.log("Setting opacity to:", opacity);
+}
+
+// =====================================================
+// TESTING THE TYPE SYSTEM
+// =====================================================
+
+// Test basic type alias usage
+let userAge: StringOrNumber = 25;
+let userName: StringOrNumber = "Alice";
+
+console.log("User age:", userAge);
+console.log("User name:", userName);
+
+// Test function calls with typed parameters
+processData(42, "GET");
+processData("hello", "POST");
+
+displayValue("Hello World");
+displayValue(123);
+displayValue(true);
+
+setTheme("dark");
+setOpacity(0.5);
+
+// =====================================================
+// GENERIC CONSTRAINTS (when implemented)
+// =====================================================
+
+/*
+// Generic function with constraint
+function extend<T extends object>(obj: T, extension: object): T {
+    return { ...obj, ...extension };
+}
+
+// Generic interface with constraint
+interface Repository<T extends { id: string }> {
+    findById(id: string): T;
+    save(entity: T): void;
+}
+*/
+
+console.log("Advanced type system test completed!");

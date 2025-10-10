@@ -422,6 +422,65 @@ class EllipsisNode(ExpressionNode):
         return visitor.visit_ellipsis(self)
 
 
+class UnionTypeNode(ExpressionNode):
+    """Union type node (A | B)"""
+    
+    def __init__(self, types: List[ExpressionNode], location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.UNION_TYPE, location)
+        self.types = types
+    
+    def accept(self, visitor):
+        return visitor.visit_union_type(self)
+
+
+class IntersectionTypeNode(ExpressionNode):
+    """Intersection type node (A & B)"""
+    
+    def __init__(self, types: List[ExpressionNode], location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.INTERSECTION_TYPE, location)
+        self.types = types
+    
+    def accept(self, visitor):
+        return visitor.visit_intersection_type(self)
+
+
+class LiteralTypeNode(ExpressionNode):
+    """Literal type node (e.g., "hello" | 42 | true)"""
+    
+    def __init__(self, value: Any, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.LITERAL_TYPE, location)
+        self.value = value
+    
+    def accept(self, visitor):
+        return visitor.visit_literal_type(self)
+
+
+class GenericConstraintNode(ExpressionNode):
+    """Generic constraint node (T extends U)"""
+    
+    def __init__(self, type_param: str, constraint: ExpressionNode, 
+                 location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.GENERIC_CONSTRAINT, location)
+        self.type_param = type_param
+        self.constraint = constraint
+    
+    def accept(self, visitor):
+        return visitor.visit_generic_constraint(self)
+
+
+class TypeAliasNode(ASTNode):
+    """Type alias node (type MyType = string | number)"""
+    
+    def __init__(self, name: str, type_expr: ExpressionNode, 
+                 location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.TYPE_ALIAS, location)
+        self.name = name
+        self.type_expr = type_expr
+    
+    def accept(self, visitor):
+        return visitor.visit_type_alias(self)
+
+
 # Visitor interface
 class ASTVisitor(ABC):
     """Abstract base class for AST visitors"""
@@ -497,3 +556,18 @@ class ASTVisitor(ABC):
     
     @abstractmethod
     def visit_ellipsis(self, node: EllipsisNode): pass
+    
+    @abstractmethod
+    def visit_union_type(self, node: UnionTypeNode): pass
+    
+    @abstractmethod
+    def visit_intersection_type(self, node: IntersectionTypeNode): pass
+    
+    @abstractmethod
+    def visit_literal_type(self, node: LiteralTypeNode): pass
+    
+    @abstractmethod
+    def visit_generic_constraint(self, node: GenericConstraintNode): pass
+    
+    @abstractmethod
+    def visit_type_alias(self, node: TypeAliasNode): pass

@@ -674,6 +674,55 @@ class Transpiler(ASTVisitor):
     def visit_ellipsis(self, node: EllipsisNode) -> ast.Constant:
         """Visit ellipsis node"""
         return ast.Constant(value=...)
+    
+    def visit_union_type(self, node: UnionTypeNode) -> ast.Subscript:
+        """Visit union type node (A | B becomes Union[A, B])"""
+        # Import Union from typing
+        self.type_imports.append('Union')
+        
+        # Create Union[...] subscript
+        union_name = ast.Name(id='Union', ctx=ast.Load())
+        
+        # Convert types to AST nodes
+        type_elts = []
+        for type_node in node.types:
+            if isinstance(type_node, IdentifierNode):
+                type_elts.append(ast.Name(id=type_node.name, ctx=ast.Load()))
+            else:
+                type_elts.append(type_node.accept(self))
+        
+        slice_value = ast.Tuple(elts=type_elts, ctx=ast.Load())
+        return ast.Subscript(value=union_name, slice=slice_value, ctx=ast.Load())
+    
+    def visit_intersection_type(self, node: IntersectionTypeNode) -> ast.Subscript:
+        """Visit intersection type node (A & B)"""
+        # For now, treat as Union since Python doesn't have intersection types natively
+        # In practice, this would require a custom type system or Protocol
+        return self.visit_union_type(UnionTypeNode(node.types, node.location))
+    
+    def visit_literal_type(self, node: LiteralTypeNode) -> ast.Subscript:
+        """Visit literal type node (Literal["hello"])"""
+        # Import Literal from typing
+        self.type_imports.append('Literal')
+        
+        literal_name = ast.Name(id='Literal', ctx=ast.Load())
+        value = ast.Constant(value=node.value)
+        
+        return ast.Subscript(value=literal_name, slice=value, ctx=ast.Load())
+    
+    def visit_generic_constraint(self, node: GenericConstraintNode) -> ast.Name:
+        """Visit generic constraint node (T extends U)"""
+        # For now, just return the type parameter name
+        # Full constraint checking would require a type checker
+        return ast.Name(id=node.type_param, ctx=ast.Load())
+    
+    def visit_type_alias(self, node: TypeAliasNode) -> ast.Assign:
+        """Visit type alias node (type MyType = string | number)"""
+        # Create assignment: MyType = Union[str, int]
+        target = ast.Name(id=node.name, ctx=ast.Store())
+        value = node.type_expr.accept(self)
+        
+        return ast.Assign(targets=[target], value=value)
 
 
 def transpile_file(powerscript_source: str, filename: str = "") -> str:
