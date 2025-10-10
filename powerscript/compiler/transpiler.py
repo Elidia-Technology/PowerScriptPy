@@ -284,9 +284,18 @@ class Transpiler(ASTVisitor):
     
     def visit_parameter(self, node: ParameterNode) -> ast.arg:
         """Visit parameter node"""
+        annotation = None
+        if node.param_type:
+            if isinstance(node.param_type, str):
+                # Handle legacy string-based type annotations
+                annotation = self._get_type_annotation(node.param_type)
+            else:
+                # Handle ExpressionNode-based type annotations (union types, etc.)
+                annotation = node.param_type.accept(self)
+        
         return ast.arg(
             arg=node.name,
-            annotation=self._get_type_annotation(node.param_type) if node.param_type else None
+            annotation=annotation
         )
     
     def visit_variable(self, node: VariableNode) -> ast.Assign:

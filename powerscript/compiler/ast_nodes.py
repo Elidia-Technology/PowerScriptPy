@@ -125,7 +125,7 @@ class FunctionNode(ASTNode):
 class ParameterNode(ASTNode):
     """AST node for function parameters"""
     
-    def __init__(self, name: str, param_type: Optional[str] = None,
+    def __init__(self, name: str, param_type: Optional['ExpressionNode'] = None,
                  default_value: Optional['ExpressionNode'] = None,
                  location: Optional[SourceLocation] = None):
         super().__init__(NodeType.PARAMETER, location)
