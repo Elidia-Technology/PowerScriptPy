@@ -44,6 +44,11 @@ class Transpiler(ASTVisitor):
                 if isinstance(python_node, list):
                     self.python_ast_nodes.extend(python_node)
                 else:
+                    # Wrap expressions in ast.Expr for statement context
+                    if isinstance(python_node, (ast.Call, ast.Name, ast.Constant, 
+                                               ast.BinOp, ast.UnaryOp, ast.Compare,
+                                               ast.BoolOp, ast.Attribute, ast.Subscript)):
+                        python_node = ast.Expr(value=python_node)
                     self.python_ast_nodes.append(python_node)
         
         # Add necessary imports at the beginning
