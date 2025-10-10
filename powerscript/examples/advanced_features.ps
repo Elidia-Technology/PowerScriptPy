@@ -1,0 +1,237 @@
+// PowerScript Advanced Features Demo
+// Demonstrates interfaces, abstract classes, enums, generics with constraints
+
+// Enum declaration
+enum Status {
+    PENDING,
+    PROCESSING, 
+    COMPLETED,
+    FAILED
+}
+
+enum Priority {
+    LOW = 1,
+    MEDIUM = 5,
+    HIGH = 10,
+    CRITICAL = 20
+}
+
+// Interface declarations
+interface Drawable {
+    draw(): void;
+    getArea(): number;
+}
+
+interface Movable {
+    move(x: number, y: number): void;
+    getPosition(): Point;
+}
+
+interface Comparable<T> {
+    compareTo(other: T): number;
+}
+
+// Generic constraints
+interface Container<T extends Comparable<T>> {
+    add(item: T): void;
+    findMax(): T;
+    sort(): void;
+}
+
+// Abstract class
+abstract class Shape implements Drawable {
+    protected x: number;
+    protected y: number;
+    
+    constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+    }
+    
+    // Abstract method - must be implemented by subclasses
+    abstract getArea(): number;
+    
+    // Concrete method - can be inherited
+    move(deltaX: number, deltaY: number): void {
+        this.x += deltaX;
+        this.y += deltaY;
+    }
+    
+    // Default implementation - can be overridden
+    draw(): void {
+        console.log(`Drawing shape at (${this.x}, ${this.y})`);
+    }
+}
+
+// Concrete implementation
+class Circle extends Shape {
+    private radius: number;
+    
+    constructor(x: number, y: number, radius: number) {
+        super(x, y);
+        this.radius = radius;
+    }
+    
+    getArea(): number {
+        return Math.PI * this.radius * this.radius;
+    }
+    
+    draw(): void {
+        console.log(`Drawing circle at (${this.x}, ${this.y}) with radius ${this.radius}`);
+    }
+}
+
+class Rectangle extends Shape {
+    private width: number;
+    private height: number;
+    
+    constructor(x: number, y: number, width: number, height: number) {
+        super(x, y);
+        this.width = width;
+        this.height = height;
+    }
+    
+    getArea(): number {
+        return this.width * this.height;
+    }
+}
+
+// Generic class with constraints
+class SortedList<T extends Comparable<T>> implements Container<T> {
+    private items: T[] = [];
+    
+    add(item: T): void {
+        // Insert in sorted order
+        let inserted = false;
+        for (let i = 0; i < this.items.length; i++) {
+            if (this.items[i].compareTo(item) > 0) {
+                this.items.splice(i, 0, item);
+                inserted = true;
+                break;
+            }
+        }
+        if (!inserted) {
+            this.items.push(item);
+        }
+    }
+    
+    findMax(): T {
+        if (this.items.length === 0) {
+            throw new Error("List is empty");
+        }
+        return this.items[this.items.length - 1];
+    }
+    
+    sort(): void {
+        // Already sorted due to insertion method
+        console.log("List is already sorted");
+    }
+    
+    toArray(): T[] {
+        return [...this.items];
+    }
+}
+
+// Pattern matching example
+class TaskProcessor {
+    processTask(task: Task): string {
+        return match task.status {
+            Status.PENDING => "Task is waiting to be processed",
+            Status.PROCESSING => "Task is currently being processed", 
+            Status.COMPLETED => "Task has been completed successfully",
+            Status.FAILED => "Task processing failed",
+            _ => "Unknown task status"
+        };
+    }
+    
+    processPriority(priority: Priority): string {
+        return match priority {
+            Priority.LOW => "Low priority - process when convenient",
+            Priority.MEDIUM => "Medium priority - process in normal queue",
+            Priority.HIGH => "High priority - expedite processing",
+            Priority.CRITICAL when (getCurrentHour() > 17) => "Critical after hours - alert on-call",
+            Priority.CRITICAL => "Critical priority - immediate processing",
+            _ => "Invalid priority level"
+        };
+    }
+}
+
+// Decorator examples
+@deprecated("Use processTaskAsync instead")
+@logged
+function processTask(task: Task): void {
+    console.log(`Processing task: ${task.id}`);
+}
+
+@retry(maxAttempts: 3, delay: 1000)
+@timeout(30000)
+async function processTaskAsync(task: Task): Promise<void> {
+    // Async task processing
+    await new Promise(resolve => setTimeout(resolve, 100));
+    console.log(`Async processing completed for task: ${task.id}`);
+}
+
+// Usage example
+class Task implements Comparable<Task> {
+    public id: string;
+    public status: Status;
+    public priority: Priority;
+    public createdAt: Date;
+    
+    constructor(id: string, priority: Priority = Priority.MEDIUM) {
+        this.id = id;
+        this.status = Status.PENDING;
+        this.priority = priority;
+        this.createdAt = new Date();
+    }
+    
+    compareTo(other: Task): number {
+        // Compare by priority first, then by creation time
+        if (this.priority !== other.priority) {
+            return this.priority - other.priority;
+        }
+        return this.createdAt.getTime() - other.createdAt.getTime();
+    }
+}
+
+// Main execution
+function main(): void {
+    // Enum usage
+    let currentStatus: Status = Status.PENDING;
+    console.log(`Current status: ${currentStatus}`);
+    
+    // Interface and abstract class usage
+    let shapes: Drawable[] = [
+        new Circle(10, 20, 5),
+        new Rectangle(0, 0, 10, 15)
+    ];
+    
+    for (let shape of shapes) {
+        shape.draw();
+        console.log(`Area: ${shape.getArea()}`);
+    }
+    
+    // Generic with constraints
+    let taskQueue = new SortedList<Task>();
+    taskQueue.add(new Task("task1", Priority.LOW));
+    taskQueue.add(new Task("task2", Priority.HIGH)); 
+    taskQueue.add(new Task("task3", Priority.MEDIUM));
+    
+    console.log("Tasks in priority order:");
+    for (let task of taskQueue.toArray()) {
+        console.log(`${task.id}: ${task.priority}`);
+    }
+    
+    // Pattern matching
+    let processor = new TaskProcessor();
+    let testTask = new Task("test", Priority.CRITICAL);
+    console.log(processor.processTask(testTask));
+    console.log(processor.processPriority(testTask.priority));
+}
+
+// Helper functions
+function getCurrentHour(): number {
+    return new Date().getHours();
+}
+
+export { Status, Priority, Shape, Circle, Rectangle, Task, TaskProcessor };

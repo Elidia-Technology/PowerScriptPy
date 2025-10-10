@@ -1,0 +1,115 @@
+#!/usr/bin/env python3
+"""
+PowerScript Runner CLI - ps-run
+Transpiles and runs PowerScript files on-the-fly
+"""
+
+import sys
+import os
+import argparse
+import tempfile
+from pathlib import Path
+
+# Add powerscript to path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from powerscript.compiler.lexer import Lexer
+from powerscript.compiler.parser import Parser
+from powerscript.compiler.transpiler import Transpiler
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="PowerScript Runner - Transpile and execute PowerScript files",
+        prog="ps-run"
+    )
+    
+    parser.add_argument(
+        "file",
+        help="PowerScript file to run"
+    )
+    
+    parser.add_argument(
+        "--keep-temp",
+        action="store_true",
+        help="Keep temporary Python file after execution"
+    )
+    
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Verbose output"
+    )
+    
+    args = parser.parse_args()
+    
+    if not os.path.exists(args.file):
+        print(f"❌ File not found: {args.file}")
+        sys.exit(1)
+    
+    if not args.file.endswith('.ps'):
+        print(f"❌ File must have .ps extension: {args.file}")
+        sys.exit(1)
+    
+    try:
+        # Read PowerScript source
+        with open(args.file, 'r') as f:
+            source = f.read()
+        
+        if args.verbose:
+            print(f"📖 Reading {args.file}")
+        
+        # Transpile to Python
+        lexer = Lexer(source, args.file)
+        tokens = lexer.tokenize()
+        
+        if args.verbose:
+            print(f"🔍 Lexed {len(tokens)} tokens")
+        
+        parser_instance = Parser(lexer)
+        ast = parser_instance.parse()
+        
+        if args.verbose:
+            print(f"🌳 Parsed {len(ast)} AST nodes")
+        
+        transpiler = Transpiler()
+        python_code = transpiler.transpile_to_code(ast)
+        
+        if args.verbose:
+            print("🔄 Transpiled to Python")
+        
+        # Create temporary Python file
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as temp_file:
+            temp_file.write(python_code)
+            temp_python_file = temp_file.name
+        
+        if args.verbose:
+            print(f"📝 Created temporary file: {temp_python_file}")
+        
+        # Execute the Python file
+        if args.verbose:
+            print("🚀 Executing...")
+        
+        import subprocess
+        result = subprocess.run([sys.executable, temp_python_file], 
+                              capture_output=False, 
+                              text=True)
+        
+        # Cleanup
+        if not args.keep_temp:
+            os.unlink(temp_python_file)
+        elif args.verbose:
+            print(f"📄 Temporary file kept: {temp_python_file}")
+        
+        sys.exit(result.returncode)
+    
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        if args.verbose:
+            import traceback
+            traceback.print_exc()
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
