@@ -122,6 +122,15 @@ dmypy.json
 *.swo
 *~
 
+# Node.js / VS Code Extension
+node_modules/
+vscode-extension/node_modules/
+powerscript/vscode-extension/node_modules/
+*.vsix
+vscode-extension/out/
+vscode-extension/.vscode-test/
+vscode-extension/package-lock.json
+
 # OS
 .DS_Store
 .DS_Store?
