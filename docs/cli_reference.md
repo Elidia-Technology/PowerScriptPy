@@ -2,6 +2,8 @@
 
 Complete reference for PowerScript command-line tools.
 
+---
+
 ## 📦 Available Commands
 
 TPS provides 4 main CLI commands:
@@ -12,6 +14,8 @@ TPS provides 4 main CLI commands:
 | `tps-run` | Compile and execute | ✅ Stable |
 | `tps-create` | Create new projects | ✅ Stable |
 | `tps-check` | Type check without compiling | ✅ Stable |
+
+---
 
 ## 🔧 tps-compile
 
@@ -98,6 +102,8 @@ from powerscript.runtime import Console
 # Your compiled code here
 ```
 
+---
+
 ## 🚀 tps-run
 
 Compile and execute PowerScript files immediately.
@@ -165,6 +171,8 @@ tps-run app.ps -v
 | `2` | Runtime error |
 | `3` | File not found |
 
+---
+
 ## 🏗️ tps-create
 
 Create new PowerScript projects with boilerplate.
@@ -193,6 +201,7 @@ tps-create [OPTIONS] <project_name>
 ### Templates
 
 #### `basic` (Default)
+
 Simple project with one file:
 
 ```
@@ -212,6 +221,7 @@ function main(): void {
 ```
 
 #### `class` Template
+
 Object-oriented project:
 
 ```
@@ -226,6 +236,7 @@ my-project/
 ```
 
 #### `web` Template
+
 Web application structure:
 
 ```
@@ -287,30 +298,7 @@ target_version = "3.9"
 include_builtins = true
 ```
 
-**README.md:**
-```markdown
-# My Project
-
-PowerScript project created with tps-create.
-
-## Setup
-
-```bash
-pip install tps
-```
-
-## Build
-
-```bash
-tps-compile src/main.ps -d build/
-```
-
-## Run
-
-```bash
-tps-run src/main.ps
-```
-```
+---
 
 ## ✅ tps-check
 
@@ -404,6 +392,8 @@ Line 12: Undefined variable 'x'
 | `1` | Type errors found |
 | `2` | File not found |
 
+---
+
 ## 🔧 Global Options
 
 Available for all commands:
@@ -428,6 +418,8 @@ tps-compile --version
 tps-compile --help
 # Shows full command documentation
 ```
+
+---
 
 ## 📁 Configuration Files
 
@@ -472,6 +464,8 @@ __pycache__/
 *.pyc
 ```
 
+---
+
 ## 🔗 Command Chaining
 
 ### Build Pipeline
@@ -499,6 +493,8 @@ for file in src/*.ps; do
     tps-compile "$file" -d build/
 done
 ```
+
+---
 
 ## 🎯 Best Practices
 
@@ -534,6 +530,8 @@ for file in tests/*.ps; do
 done
 ```
 
+---
+
 ## 🐛 Debugging
 
 ### Verbose Output
@@ -554,6 +552,8 @@ tps-compile app.ps -v
 tps-check app.ps --strict
 ```
 
+---
+
 ## 📊 Performance Tips
 
 1. **Use `--no-cache` sparingly** - Caching speeds up repeated runs
@@ -561,16 +561,20 @@ tps-check app.ps --strict
 3. **Batch operations** - Compile multiple files in one command
 4. **Type check early** - Catch errors before compilation
 
+---
+
 ## 🔄 Coming Soon
 
 Future CLI enhancements:
 
-- `tps watch` - Auto-compile on file changes 🔄
-- `tps test` - Run test suite 🔄
-- `tps lint` - Code style checker 🔄
-- `tps format` - Auto-format code 🔄
-- `tps build` - Production builds 🔄
-- `tps init` - Interactive project setup 🔄
+- 🔄 `tps watch` - Auto-compile on file changes
+- 🔄 `tps test` - Run test suite
+- 🔄 `tps lint` - Code style checker
+- 🔄 `tps format` - Auto-format code
+- 🔄 `tps build` - Production builds
+- 🔄 `tps init` - Interactive project setup
+
+---
 
 ## 🆘 Troubleshooting
 
@@ -598,12 +602,14 @@ chmod +x $(which tps-compile)
 python -c "import powerscript; print(powerscript.__version__)"
 ```
 
+---
+
 ## 📚 See Also
 
 - **[Quick Start](quickstart.md)** - Basic usage examples
-- **[Language Reference](language_reference.md)** - PowerScript syntax
-- **[API Reference](api_reference.md)** - Built-in functions
+- **[VS Code Extension](vscode_extension.md)** - IDE integration
+- **[FAQ](faq.md)** - Common questions
 
 ---
 
-**Master the CLI? Build amazing things with [Tutorial](tutorial.md)! 🚀**
+**Master the CLI and build amazing things with PowerScript! 🚀**
