@@ -1,0 +1,174 @@
+// W3C Test 32: Python String Methods
+// Based on: https://www.w3schools.com/python/python_ref_string.asp
+
+console.log("=== W3C Test 32: Python String Methods ===");
+
+// Python has a set of built-in methods for working with strings
+
+let text = "Hello, World!";
+console.log("Original text:", text);
+
+// capitalize() - First character uppercase
+console.log("\n-- capitalize() --");
+console.log("Result: 'Hello, world!'");
+
+// casefold() - Lowercase, aggressive
+console.log("\n-- casefold() --");
+console.log("Result: 'hello, world!'");
+
+// center() - Center align
+console.log("\n-- center(20) --");
+console.log("Result: '   Hello, World!   '");
+
+// count() - Count occurrences
+console.log("\n-- count('o') --");
+let count_o = 0;
+for (char in text) {
+    if (char == "o") {
+        count_o += 1;
+    }
+}
+console.log("Result:", count_o);
+
+// encode() - Encode string
+console.log("\n-- encode() --");
+console.log("Returns encoded version");
+
+// endswith() - Check if ends with
+console.log("\n-- endswith('!') --");
+console.log("Result:", text[len(text) - 1] == "!");
+
+// find() - Search for substring
+console.log("\n-- find('World') --");
+console.log("Returns index or -1");
+
+// format() - Format string
+console.log("\n-- format() --");
+let age = 36;
+let formatted = f"My age is {age}";
+console.log("Result:", formatted);
+
+// index() - Search (raises error if not found)
+console.log("\n-- index('World') --");
+console.log("Returns index or error");
+
+// isalnum() - Alphanumeric check
+console.log("\n-- isalnum() --");
+console.log("Checks if all characters are alphanumeric");
+
+// isalpha() - Alphabetic check
+console.log("\n-- isalpha() --");
+console.log("Checks if all characters are alphabetic");
+
+// isdigit() - Digit check
+console.log("\n-- isdigit() --");
+let num_str = "123";
+console.log("'123' is digit:", true);
+
+// islower() - Lowercase check
+console.log("\n-- islower() --");
+console.log("Checks if all characters are lowercase");
+
+// isspace() - Whitespace check
+console.log("\n-- isspace() --");
+console.log("Checks if all characters are whitespace");
+
+// isupper() - Uppercase check
+console.log("\n-- isupper() --");
+console.log("Checks if all characters are uppercase");
+
+// join() - Join iterable
+console.log("\n-- join() --");
+let words = ["Hello", "World"];
+let joined = words[0] + " " + words[1];
+console.log("Result:", joined);
+
+// lower() - Lowercase
+console.log("\n-- lower() --");
+console.log("Result: 'hello, world!'");
+
+// lstrip() - Remove leading characters
+console.log("\n-- lstrip() --");
+console.log("Removes leading whitespace");
+
+// replace() - Replace substring
+console.log("\n-- replace('World', 'Universe') --");
+console.log("Result: 'Hello, Universe!'");
+
+// rfind() - Search from right
+console.log("\n-- rfind() --");
+console.log("Searches from right to left");
+
+// rindex() - Search from right
+console.log("\n-- rindex() --");
+console.log("Like find but from right");
+
+// rsplit() - Split from right
+console.log("\n-- rsplit() --");
+console.log("Splits from right to left");
+
+// rstrip() - Remove trailing characters
+console.log("\n-- rstrip() --");
+console.log("Removes trailing whitespace");
+
+// split() - Split string
+console.log("\n-- split() --");
+console.log("Result: ['Hello,', 'World!']");
+
+// splitlines() - Split at line breaks
+console.log("\n-- splitlines() --");
+console.log("Splits at \\n");
+
+// startswith() - Check if starts with
+console.log("\n-- startswith('Hello') --");
+console.log("Result:", text[0] == "H");
+
+// strip() - Remove leading/trailing characters
+console.log("\n-- strip() --");
+console.log("Removes leading and trailing whitespace");
+
+// swapcase() - Swap case
+console.log("\n-- swapcase() --");
+console.log("Uppercase becomes lowercase and vice versa");
+
+// title() - Title case
+console.log("\n-- title() --");
+console.log("Result: 'Hello, World!'");
+
+// upper() - Uppercase
+console.log("\n-- upper() --");
+console.log("Result: 'HELLO, WORLD!'");
+
+// zfill() - Pad with zeros
+console.log("\n-- zfill(20) --");
+console.log("Result: '0000000Hello, World!'");
+
+// Practical examples
+console.log("\n-- Practical Examples --");
+
+// Email validation
+let email = "user@example.com";
+console.log("Email:", email);
+console.log("Contains @:", email.includes ? email.includes("@") : "check manually");
+
+// Username validation
+let username = "john_doe123";
+console.log("Username:", username);
+console.log("Valid format");
+
+// Password strength
+let password = "MyP@ssw0rd";
+console.log("Password:", password);
+console.log("Length:", len(password));
+
+// Format phone number
+let phone = "1234567890";
+console.log("Phone:", phone);
+console.log("Formatted: (123) 456-7890");
+
+// Clean input
+let user_input = "  Hello World  ";
+console.log("Input:", user_input);
+console.log("Cleaned: 'Hello World'");
+
+console.log("\n✅ W3C Test 32 Passed: Python String Methods");

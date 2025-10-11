@@ -1,0 +1,102 @@
+// W3C Test 16: Python While Loops
+// Based on: https://www.w3schools.com/python/python_while_loops.asp
+
+console.log("=== W3C Test 16: Python While Loops ===");
+
+// While loop
+let i = 1;
+console.log("Count to 6:");
+while (i < 6) {
+    console.log(i);
+    i += 1;
+}
+
+// Break statement
+console.log("\nBreak at 3:");
+let j = 1;
+while (j < 6) {
+    console.log(j);
+    if (j == 3) {
+        break;
+    }
+    j += 1;
+}
+
+// Continue statement
+console.log("\nSkip 3:");
+let k = 0;
+while (k < 6) {
+    k += 1;
+    if (k == 3) {
+        continue;
+    }
+    console.log(k);
+}
+
+// Else statement (Python has else on while, not common in other languages)
+console.log("\nWhile with else concept:");
+let m = 1;
+while (m < 6) {
+    console.log(m);
+    m += 1;
+}
+console.log("While loop finished");
+
+// Infinite loop (commented out to avoid hanging)
+// while (true) {
+//     console.log("This would run forever");
+// }
+
+// While with condition
+console.log("\nWhile with complex condition:");
+let count = 0;
+let sum = 0;
+while (count < 5 && sum < 100) {
+    count += 1;
+    sum += count;
+    console.log("Count:", count, "Sum:", sum);
+}
+
+// While with multiple variables
+console.log("\nMultiple variables:");
+let x = 5;
+let y = 10;
+while (x < y) {
+    console.log("x =", x, "y =", y);
+    x += 1;
+}
+
+// Nested while loops
+console.log("\nNested while:");
+let outer = 1;
+while (outer <= 3) {
+    let inner = 1;
+    while (inner <= 2) {
+        console.log("Outer:", outer, "Inner:", inner);
+        inner += 1;
+    }
+    outer += 1;
+}
+
+// While with boolean flag
+console.log("\nWith flag:");
+let running = true;
+let counter = 0;
+while (running) {
+    counter += 1;
+    console.log("Counter:", counter);
+    if (counter >= 3) {
+        running = false;
+    }
+}
+
+// Countdown
+console.log("\nCountdown:");
+let countdown = 5;
+while (countdown > 0) {
+    console.log(countdown);
+    countdown -= 1;
+}
+console.log("Blast off!");
+
+console.log("\n✅ W3C Test 16 Passed: Python While Loops");

@@ -1,0 +1,115 @@
+// W3C Test 17: Python For Loops
+// Based on: https://www.w3schools.com/python/python_for_loops.asp
+
+console.log("=== W3C Test 17: Python For Loops ===");
+
+// For loop
+let fruits = ["apple", "banana", "cherry"];
+console.log("Loop through fruits:");
+for (fruit in fruits) {
+    console.log(fruit);
+}
+
+// Looping through a string
+console.log("\nLoop through string:");
+for (char in "banana") {
+    console.log(char);
+}
+
+// Break statement
+console.log("\nBreak at banana:");
+for (fruit in fruits) {
+    console.log(fruit);
+    if (fruit == "banana") {
+        break;
+    }
+}
+
+// Continue statement
+console.log("\nSkip banana:");
+for (fruit in fruits) {
+    if (fruit == "banana") {
+        continue;
+    }
+    console.log(fruit);
+}
+
+// Range function
+console.log("\nRange 0 to 5:");
+for (let i = 0; i < 6; i += 1) {
+    console.log(i);
+}
+
+// Range with start and stop
+console.log("\nRange 2 to 5:");
+for (let i = 2; i < 6; i += 1) {
+    console.log(i);
+}
+
+// Range with step
+console.log("\nRange with step 2:");
+for (let i = 0; i < 10; i += 2) {
+    console.log(i);
+}
+
+// Else in for loop (Python specific)
+console.log("\nFor loop with else concept:");
+for (let i = 0; i < 3; i += 1) {
+    console.log(i);
+}
+console.log("Loop completed");
+
+// Nested loops
+console.log("\nNested loops:");
+let adj = ["red", "big", "tasty"];
+let food = ["apple", "banana", "cherry"];
+
+for (a in adj) {
+    for (f in food) {
+        console.log(a, f);
+    }
+}
+
+// For loop with index
+console.log("\nWith index:");
+let colors = ["red", "green", "blue"];
+for (let i = 0; i < len(colors); i += 1) {
+    console.log("Index", i, ":", colors[i]);
+}
+
+// Loop through dictionary keys
+console.log("\nLoop through dict:");
+let person = {"name": "John", "age": 36, "country": "Norway"};
+for (key in Object.keys(person)) {
+    console.log(key, ":", person[key]);
+}
+
+// Loop through dictionary values
+console.log("\nLoop through values:");
+for (value in Object.values(person)) {
+    console.log(value);
+}
+
+// Enumerate (Python specific - getting index and value)
+console.log("\nEnumerate concept:");
+let items = ["a", "b", "c"];
+for (let idx = 0; idx < len(items); idx += 1) {
+    console.log("Index:", idx, "Value:", items[idx]);
+}
+
+// Zip (Python specific - iterate over multiple lists)
+console.log("\nZip concept:");
+let names = ["Alice", "Bob", "Charlie"];
+let ages = [25, 30, 35];
+for (let i = 0; i < len(names); i += 1) {
+    console.log(names[i], "is", ages[i], "years old");
+}
+
+// Pass statement
+console.log("\nPass in empty loop:");
+for (item in fruits) {
+    // pass / do nothing
+}
+console.log("Empty loop completed");
+
+console.log("\n✅ W3C Test 17 Passed: Python For Loops");

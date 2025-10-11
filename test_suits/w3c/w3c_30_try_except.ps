@@ -1,0 +1,201 @@
+// W3C Test 30: Python Try Except
+// Based on: https://www.w3schools.com/python/python_try_except.asp
+
+console.log("=== W3C Test 30: Python Try Except ===");
+
+// The try block lets you test a block of code for errors
+// The except block lets you handle the error
+// The else block executes if no errors
+// The finally block executes regardless of try/except result
+
+// Try Except
+console.log("\n-- Try Except --");
+console.log("try:");
+console.log("    print(x)");
+console.log("except:");
+console.log("    print('An exception occurred')");
+
+// Many Exceptions
+console.log("\n-- Multiple Exceptions --");
+console.log("try:");
+console.log("    print(x)");
+console.log("except NameError:");
+console.log("    print('Variable not defined')");
+console.log("except:");
+console.log("    print('Something else went wrong')");
+
+// Else
+console.log("\n-- Else Block --");
+console.log("try:");
+console.log("    print('Hello')");
+console.log("except:");
+console.log("    print('Error occurred')");
+console.log("else:");
+console.log("    print('No error occurred')");
+
+// Finally
+console.log("\n-- Finally Block --");
+console.log("try:");
+console.log("    print(x)");
+console.log("except:");
+console.log("    print('Error')");
+console.log("finally:");
+console.log("    print('Always executes')");
+
+// Raise an exception
+console.log("\n-- Raise Exception --");
+console.log("raise Exception('Sorry, something went wrong')");
+
+// PowerScript error handling
+console.log("\n-- Error Handling in PS --");
+
+// Try-catch simulation
+function safe_divide(a, b) {
+    try {
+        if (b == 0) {
+            throw "Division by zero error";
+        }
+        return a / b;
+    } catch (error) {
+        console.log("Error:", error);
+        return null;
+    } finally {
+        console.log("Division operation completed");
+    }
+}
+
+console.log("\nSafe division:");
+let result1 = safe_divide(10, 2);
+console.log("10 / 2 =", result1);
+
+let result2 = safe_divide(10, 0);
+console.log("10 / 0 =", result2);
+
+// Exception types
+console.log("\n-- Common Exception Types --");
+console.log("Exception - Base class for exceptions");
+console.log("AttributeError - Attribute reference fails");
+console.log("IOError - I/O operation fails");
+console.log("ImportError - Import statement fails");
+console.log("IndexError - Sequence index out of range");
+console.log("KeyError - Dictionary key not found");
+console.log("NameError - Variable not found");
+console.log("TypeError - Operation on inappropriate type");
+console.log("ValueError - Right type, inappropriate value");
+console.log("ZeroDivisionError - Division by zero");
+
+// Practical examples
+console.log("\n-- Practical Examples --");
+
+// File operations
+function read_file_safe(filename) {
+    console.log("Attempting to read:", filename);
+    try {
+        console.log("File read operation");
+        return "File contents";
+    } catch (error) {
+        console.log("File not found:", error);
+        return null;
+    }
+}
+
+read_file_safe("data.txt");
+
+// Parse number
+function parse_number(value) {
+    try {
+        let num = int(value);
+        return num;
+    } catch (error) {
+        console.log("Cannot parse:", value);
+        return 0;
+    }
+}
+
+console.log("\nParse numbers:");
+console.log("Parse '123':", parse_number("123"));
+console.log("Parse 'abc':", parse_number("abc"));
+
+// Array access
+function get_item(arr, index) {
+    try {
+        if (index < 0 || index >= len(arr)) {
+            throw "Index out of bounds";
+        }
+        return arr[index];
+    } catch (error) {
+        console.log("Error:", error);
+        return null;
+    }
+}
+
+let items = ["a", "b", "c"];
+console.log("\nArray access:");
+console.log("items[1]:", get_item(items, 1));
+console.log("items[5]:", get_item(items, 5));
+
+// Dictionary access
+function get_value(dict, key) {
+    try {
+        if (!(key in Object.keys(dict))) {
+            throw "Key not found";
+        }
+        return dict[key];
+    } catch (error) {
+        console.log("Error:", error);
+        return null;
+    }
+}
+
+let data = {"name": "John", "age": 30};
+console.log("\nDict access:");
+console.log("data['name']:", get_value(data, "name"));
+console.log("data['city']:", get_value(data, "city"));
+
+// Validation with exceptions
+function validate_age(age) {
+    try {
+        if (age < 0) {
+            throw "Age cannot be negative";
+        }
+        if (age > 150) {
+            throw "Age too high";
+        }
+        console.log("Valid age:", age);
+        return true;
+    } catch (error) {
+        console.log("Validation error:", error);
+        return false;
+    }
+}
+
+console.log("\nAge validation:");
+validate_age(25);
+validate_age(-5);
+validate_age(200);
+
+// Custom error handling
+function process_data(value) {
+    try {
+        console.log("Processing:", value);
+        if (value == null) {
+            throw "Value is null";
+        }
+        if (typeof value != "number") {
+            throw "Value must be number";
+        }
+        return value * 2;
+    } catch (error) {
+        console.log("Processing failed:", error);
+        return 0;
+    } finally {
+        console.log("Processing complete");
+    }
+}
+
+console.log("\nData processing:");
+process_data(10);
+process_data(null);
+process_data("text");
+
+console.log("\n✅ W3C Test 30 Passed: Python Try Except");

@@ -1,0 +1,125 @@
+// W3C Test 25: Python Modules
+// Based on: https://www.w3schools.com/python/python_modules.asp
+
+console.log("=== W3C Test 25: Python Modules ===");
+
+// A module is a file containing Python code
+// A module can define functions, classes, and variables
+
+// Create a module
+console.log("Create module (mymodule.py):");
+console.log("def greeting(name):");
+console.log("    print('Hello, ' + name)");
+
+// Use a module
+console.log("\nUse module:");
+console.log("import mymodule");
+console.log("mymodule.greeting('John')");
+
+// Variables in module
+console.log("\nModule with variables:");
+console.log("person1 = {");
+console.log("    'name': 'John',");
+console.log("    'age': 36,");
+console.log("    'country': 'Norway'");
+console.log("}");
+
+// Import and use variable
+console.log("\nimport mymodule");
+console.log("a = mymodule.person1['age']");
+
+// Naming a module
+console.log("\nNaming: Save file with .py extension");
+
+// Re-naming a module
+console.log("\nRe-naming:");
+console.log("import mymodule as mx");
+console.log("mx.greeting('John')");
+
+// Built-in modules
+console.log("\n-- Built-in Modules --");
+console.log("import platform");
+console.log("import datetime");
+console.log("import math");
+console.log("import random");
+console.log("import json");
+
+// Using dir() function
+console.log("\ndir() function:");
+console.log("Lists all function names in a module");
+console.log("dir(platform)");
+
+// Import from module
+console.log("\n-- Import Specific Parts --");
+console.log("from mymodule import person1");
+console.log("print(person1['age'])");
+
+// PowerScript module simulation
+console.log("\n-- Module Simulation in PS --");
+
+// Module-like object
+let mymodule = {
+    "greeting": function(name) {
+        console.log("Hello,", name);
+    },
+    "person1": {
+        "name": "John",
+        "age": 36,
+        "country": "Norway"
+    },
+    "PI": 3.14159
+};
+
+// Using the module
+console.log("\nUsing module:");
+mymodule["greeting"]("Alice");
+console.log("Person:", mymodule["person1"]["name"]);
+console.log("PI:", mymodule["PI"]);
+
+// Math module example
+console.log("\n-- Math Module Example --");
+let math = {
+    "sqrt": function(x) {
+        return x ** 0.5;
+    },
+    "pow": function(x, y) {
+        return x ** y;
+    },
+    "floor": function(x) {
+        return int(x);
+    },
+    "pi": 3.14159
+};
+
+console.log("sqrt(16):", math["sqrt"](16));
+console.log("pow(2, 3):", math["pow"](2, 3));
+console.log("pi:", math["pi"]);
+
+// Module search path
+console.log("\n-- Module Search Path --");
+console.log("1. Current directory");
+console.log("2. PYTHONPATH environment variable");
+console.log("3. Installation-dependent default");
+
+// Package concept
+console.log("\n-- Packages --");
+console.log("A package is a collection of modules");
+console.log("Structure:");
+console.log("mypackage/");
+console.log("    __init__.py");
+console.log("    module1.py");
+console.log("    module2.py");
+
+// Import from package
+console.log("\nimport mypackage.module1");
+console.log("from mypackage import module2");
+console.log("from mypackage.module1 import function1");
+
+// __name__ variable
+console.log("\n-- __name__ Variable --");
+console.log("if __name__ == '__main__':");
+console.log("    # Code runs only when executed directly");
+console.log("    print('Run as main')");
+
+console.log("\n✅ W3C Test 25 Passed: Python Modules");
+console.log("Note: Full module system may be added to PowerScript in the future");

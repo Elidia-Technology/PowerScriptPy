@@ -1,0 +1,186 @@
+// W3C Test 33: Python List Methods
+// Based on: https://www.w3schools.com/python/python_ref_list.asp
+
+console.log("=== W3C Test 33: Python List Methods ===");
+
+// Python has a set of built-in methods for working with lists
+
+let fruits = ["apple", "banana", "cherry"];
+console.log("Original list:", fruits);
+
+// append() - Add element at end
+console.log("\n-- append() --");
+fruits.append("orange");
+console.log("After append:", fruits);
+
+// clear() - Remove all elements
+console.log("\n-- clear() --");
+console.log("Would remove all elements");
+
+// copy() - Return copy
+console.log("\n-- copy() --");
+let fruits_copy = fruits;
+console.log("Copy:", fruits_copy);
+
+// count() - Return number of elements with value
+console.log("\n-- count('apple') --");
+let items = ["apple", "banana", "apple", "cherry", "apple"];
+let count = 0;
+for (item in items) {
+    if (item == "apple") {
+        count += 1;
+    }
+}
+console.log("Count of 'apple':", count);
+
+// extend() - Add elements from another list
+console.log("\n-- extend() --");
+let tropical = ["mango", "pineapple"];
+console.log("Would add:", tropical);
+
+// index() - Return index of first element with value
+console.log("\n-- index('banana') --");
+let idx = -1;
+for (let i = 0; i < len(fruits); i += 1) {
+    if (fruits[i] == "banana") {
+        idx = i;
+        break;
+    }
+}
+console.log("Index:", idx);
+
+// insert() - Add element at specified position
+console.log("\n-- insert(1, 'lemon') --");
+console.log("Would insert at index 1");
+
+// pop() - Remove element at position
+console.log("\n-- pop() --");
+console.log("Would remove last element");
+console.log("pop(1) would remove element at index 1");
+
+// remove() - Remove first item with specified value
+console.log("\n-- remove('banana') --");
+console.log("Would remove first 'banana'");
+
+// reverse() - Reverse order
+console.log("\n-- reverse() --");
+console.log("Would reverse list order");
+
+// sort() - Sort list
+console.log("\n-- sort() --");
+let numbers = [5, 2, 8, 1, 9];
+console.log("Numbers to sort:", numbers);
+console.log("Would sort in ascending order");
+console.log("sort(reverse=True) for descending");
+
+// List operations
+console.log("\n-- List Operations --");
+
+// Length
+console.log("len(fruits):", len(fruits));
+
+// Concatenation
+let list1 = [1, 2, 3];
+let list2 = [4, 5, 6];
+console.log("list1 + list2 would concatenate");
+
+// Multiplication
+console.log("[0] * 5 would create [0, 0, 0, 0, 0]");
+
+// Membership
+console.log("'apple' in fruits would check membership");
+
+// Iteration
+console.log("\nIterate through fruits:");
+for (fruit in fruits) {
+    console.log(" -", fruit);
+}
+
+// Practical examples
+console.log("\n-- Practical Examples --");
+
+// Shopping cart
+let cart = ["milk", "bread", "eggs"];
+console.log("Cart:", cart);
+
+cart.append("butter");
+console.log("Added butter:", cart);
+
+// Remove item
+console.log("Remove bread from cart");
+
+// Todo list
+let todos = ["Buy groceries", "Call mom", "Pay bills"];
+console.log("\nTodo list:");
+for (let i = 0; i < len(todos); i += 1) {
+    console.log(i + 1, "-", todos[i]);
+}
+
+// Scores
+let scores = [85, 92, 78, 95, 88];
+console.log("\nScores:", scores);
+
+// Calculate average
+let total = 0;
+for (score in scores) {
+    total += score;
+}
+let average = total / len(scores);
+console.log("Average:", average);
+
+// Find max
+let max_score = scores[0];
+for (score in scores) {
+    if (score > max_score) {
+        max_score = score;
+    }
+}
+console.log("Max score:", max_score);
+
+// Find min
+let min_score = scores[0];
+for (score in scores) {
+    if (score < min_score) {
+        min_score = score;
+    }
+}
+console.log("Min score:", min_score);
+
+// Stack operations (LIFO)
+console.log("\n-- Stack (LIFO) --");
+let stack = [];
+stack.append(1);
+stack.append(2);
+stack.append(3);
+console.log("Stack:", stack);
+console.log("Pop would remove last item");
+
+// Queue operations (FIFO)
+console.log("\n-- Queue (FIFO) --");
+let queue = [];
+queue.append(1);
+queue.append(2);
+queue.append(3);
+console.log("Queue:", queue);
+console.log("Pop(0) would remove first item");
+
+// List comprehension concept
+console.log("\n-- List Comprehension --");
+console.log("Python: [x*2 for x in numbers]");
+let doubled = [];
+for (num in numbers) {
+    doubled.append(num * 2);
+}
+console.log("Doubled:", doubled);
+
+// Filter concept
+console.log("\nPython: [x for x in numbers if x > 5]");
+let filtered = [];
+for (num in numbers) {
+    if (num > 5) {
+        filtered.append(num);
+    }
+}
+console.log("Filtered (> 5):", filtered);
+
+console.log("\n✅ W3C Test 33 Passed: Python List Methods");

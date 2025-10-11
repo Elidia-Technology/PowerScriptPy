@@ -1,0 +1,90 @@
+// W3C Test 13: Python Sets
+// Based on: https://www.w3schools.com/python/python_sets.asp
+
+console.log("=== W3C Test 13: Python Sets ===");
+
+// Set creation (in PS, represented as arrays)
+let myset = ["apple", "banana", "cherry"];
+console.log("Set:", myset);
+
+// Sets are unordered, unchangeable, and do not allow duplicates
+let fruits = ["apple", "banana", "cherry", "apple"];
+console.log("Set with duplicate:", fruits);
+console.log("(In Python, duplicates would be removed automatically)");
+
+// Get length
+console.log("Set length:", len(fruits));
+
+// Set items - data types
+let set1 = ["apple", "banana", "cherry"];
+let set2 = [1, 5, 7, 9, 3];
+let set3 = [true, false, true];
+console.log("String set:", set1);
+console.log("Number set:", set2);
+console.log("Boolean set:", set3);
+
+// Mixed data types
+let mixed = ["abc", 34, true, 40, "male"];
+console.log("Mixed set:", mixed);
+
+// Type checking
+console.log("Type:", typeof myset);
+
+// Access items (sets don't support indexing in Python)
+// Can loop through or check if value exists
+console.log("\nLoop through set:");
+for (item in myset) {
+    console.log(" -", item);
+}
+
+// Check if item exists
+// In Python: if "banana" in myset
+console.log("Checking existence in set");
+
+// Add items
+// myset.add("orange")
+console.log("Add would insert new item");
+
+// Add sets (union)
+// set1.update(set2)
+
+// Remove item
+// myset.remove("banana")
+console.log("Remove would delete item");
+
+// Discard item (won't raise error if not exists)
+// myset.discard("banana")
+
+// Pop item (removes random item)
+// myset.pop()
+
+// Clear set
+// myset.clear()
+
+// Delete set
+// del myset
+
+// Join sets
+let set_a = ["a", "b", "c"];
+let set_b = [1, 2, 3];
+// set_c = set_a.union(set_b)
+console.log("Sets to join:", set_a, set_b);
+
+// Set methods:
+// add() - adds element
+// clear() - removes all elements
+// copy() - returns copy
+// difference() - returns difference
+// difference_update() - removes items
+// discard() - removes specified item
+// intersection() - returns intersection
+// isdisjoint() - checks if no common items
+// issubset() - checks if subset
+// issuperset() - checks if superset
+// pop() - removes random item
+// remove() - removes specified item
+// symmetric_difference() - returns symmetric difference
+// union() - returns union
+// update() - updates set
+
+console.log("\n✅ W3C Test 13 Passed: Python Sets");

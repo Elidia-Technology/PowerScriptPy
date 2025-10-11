@@ -1,0 +1,163 @@
+// W3C Test 28: Python JSON
+// Based on: https://www.w3schools.com/python/python_json.asp
+
+console.log("=== W3C Test 28: Python JSON ===");
+
+// JSON is a syntax for storing and exchanging data
+// JSON is text, written with JavaScript object notation
+
+// Import json module
+console.log("import json");
+
+// Parse JSON - Convert from JSON to Python
+console.log("\n-- Parse JSON --");
+console.log("json_string = '{\"name\":\"John\", \"age\":30}'");
+console.log("python_dict = json.loads(json_string)");
+
+// JSON string (as string)
+let json_string = '{"name":"John", "age":30, "city":"New York"}';
+console.log("JSON string:", json_string);
+
+// In PS, we can parse JSON-like strings to objects
+let person = {"name": "John", "age": 30, "city": "New York"};
+console.log("Parsed object:", person);
+console.log("Name:", person["name"]);
+
+// Convert Python to JSON
+console.log("\n-- Convert to JSON --");
+console.log("python_dict = {'name':'John', 'age':30}");
+console.log("json_string = json.dumps(python_dict)");
+
+// Object to JSON string simulation
+let data = {"name": "Alice", "age": 25, "active": true};
+console.log("Python object:", data);
+console.log("(Would convert to JSON string)");
+
+// Format the Result
+console.log("\n-- Format JSON --");
+console.log("json.dumps(x, indent=4)");
+console.log("json.dumps(x, indent=4, sort_keys=True)");
+
+// Example with indentation
+console.log("\nFormatted JSON:");
+console.log("{");
+console.log('    "name": "John",');
+console.log('    "age": 30,');
+console.log('    "city": "New York"');
+console.log("}");
+
+// Python objects to JSON
+console.log("\n-- Python to JSON Conversion --");
+console.log("dict -> JSON object");
+console.log("list -> JSON array");
+console.log("tuple -> JSON array");
+console.log("str -> JSON string");
+console.log("int -> JSON number");
+console.log("float -> JSON number");
+console.log("True -> JSON true");
+console.log("False -> JSON false");
+console.log("None -> JSON null");
+
+// Complex object
+let complex_data = {
+    "name": "John",
+    "age": 30,
+    "married": true,
+    "divorced": false,
+    "children": ["Ann", "Billy"],
+    "pets": null,
+    "cars": [
+        {"model": "BMW 230", "mpg": 27.5},
+        {"model": "Ford Edge", "mpg": 24.1}
+    ]
+};
+
+console.log("\nComplex object:");
+console.log("Name:", complex_data["name"]);
+console.log("Children:", complex_data["children"]);
+console.log("First car:", complex_data["cars"][0]["model"]);
+
+// JSON methods
+console.log("\n-- JSON Methods --");
+console.log("json.loads(json_string) - Parse JSON string");
+console.log("json.dumps(python_obj) - Convert to JSON string");
+console.log("json.load(file) - Load JSON from file");
+console.log("json.dump(obj, file) - Write JSON to file");
+
+// Practical examples
+console.log("\n-- Practical Examples --");
+
+// API response simulation
+let api_response = {
+    "status": "success",
+    "data": {
+        "user": {
+            "id": 123,
+            "name": "John Doe",
+            "email": "john@example.com"
+        }
+    },
+    "message": "User retrieved successfully"
+};
+
+console.log("API Response:");
+console.log("Status:", api_response["status"]);
+console.log("User:", api_response["data"]["user"]["name"]);
+console.log("Email:", api_response["data"]["user"]["email"]);
+
+// Configuration object
+let config = {
+    "app_name": "MyApp",
+    "version": "1.0.0",
+    "debug": true,
+    "database": {
+        "host": "localhost",
+        "port": 5432,
+        "name": "mydb"
+    },
+    "features": ["auth", "api", "dashboard"]
+};
+
+console.log("\nConfiguration:");
+console.log("App:", config["app_name"]);
+console.log("Version:", config["version"]);
+console.log("DB Host:", config["database"]["host"]);
+console.log("Features:", config["features"]);
+
+// Array of objects
+let users = [
+    {"id": 1, "name": "Alice", "role": "admin"},
+    {"id": 2, "name": "Bob", "role": "user"},
+    {"id": 3, "name": "Charlie", "role": "user"}
+];
+
+console.log("\nUsers:");
+for (user in users) {
+    console.log("ID:", user["id"], "Name:", user["name"], "Role:", user["role"]);
+}
+
+// Nested structures
+let company = {
+    "name": "Tech Corp",
+    "departments": [
+        {
+            "name": "Engineering",
+            "employees": [
+                {"name": "Alice", "position": "Engineer"},
+                {"name": "Bob", "position": "Manager"}
+            ]
+        },
+        {
+            "name": "Sales",
+            "employees": [
+                {"name": "Charlie", "position": "Sales Rep"}
+            ]
+        }
+    ]
+};
+
+console.log("\nCompany:", company["name"]);
+console.log("First department:", company["departments"][0]["name"]);
+console.log("First employee:", company["departments"][0]["employees"][0]["name"]);
+
+console.log("\n✅ W3C Test 28 Passed: Python JSON");

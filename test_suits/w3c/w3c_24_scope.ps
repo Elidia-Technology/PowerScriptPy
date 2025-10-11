@@ -1,0 +1,150 @@
+// W3C Test 24: Python Scope
+// Based on: https://www.w3schools.com/python/python_scope.asp
+
+console.log("=== W3C Test 24: Python Scope ===");
+
+// A variable is only available from inside the region it is created
+// This is called scope
+
+// Local Scope
+console.log("\n-- Local Scope --");
+function myfunc() {
+    let x = 300;
+    console.log("Inside function:", x);
+}
+
+myfunc();
+
+// Function Inside Function
+console.log("\n-- Nested Functions --");
+function outer() {
+    let x = 300;
+    function inner() {
+        console.log("Inner function:", x);
+    }
+    inner();
+}
+
+outer();
+
+// Global Scope
+console.log("\n-- Global Scope --");
+let global_x = 300;
+
+function print_global() {
+    console.log("Global x:", global_x);
+}
+
+print_global();
+console.log("Outside function:", global_x);
+
+// Naming Variables
+console.log("\n-- Variable Naming --");
+// If you operate with the same variable name inside and outside
+// Python will treat them as two separate variables
+
+let name = "Global";
+
+function print_name() {
+    let name = "Local";
+    console.log("Inside:", name);
+}
+
+print_name();
+console.log("Outside:", name);
+
+// Global Keyword (Python specific)
+console.log("\n-- Global Keyword (Python) --");
+console.log("global x");
+console.log("Makes variable global from inside function");
+
+// Example without global keyword
+console.log("\nWithout global:");
+let count = 0;
+
+function increment_local() {
+    let count = 1; // This is a new local variable
+    console.log("Local count:", count);
+}
+
+increment_local();
+console.log("Global count:", count);
+
+// Nonlocal Keyword (Python specific)
+console.log("\n-- Nonlocal Keyword (Python) --");
+console.log("nonlocal x");
+console.log("Refers to variable in enclosing scope");
+
+console.log("\nExample:");
+console.log("def myfunc1():");
+console.log("    x = 'Jane'");
+console.log("    def myfunc2():");
+console.log("        nonlocal x");
+console.log("        x = 'hello'");
+console.log("    myfunc2()");
+console.log("    return x");
+
+// Scope Levels
+console.log("\n-- Scope Levels --");
+console.log("1. Local: Inside function");
+console.log("2. Enclosing: Inside enclosing function");
+console.log("3. Global: Top level of script");
+console.log("4. Built-in: Python built-in names");
+
+// LEGB Rule
+console.log("\nLEGB Rule:");
+console.log("Local -> Enclosing -> Global -> Built-in");
+
+// Practical Examples
+console.log("\n-- Practical Examples --");
+
+// Example 1: Counter
+let counter = 0;
+
+function increment() {
+    counter += 1; // Modifying global in PS
+    console.log("Counter:", counter);
+}
+
+increment();
+increment();
+increment();
+
+// Example 2: Configuration
+let config = {
+    "debug": true,
+    "version": "1.0"
+};
+
+function print_config() {
+    console.log("Config:", config);
+}
+
+print_config();
+
+// Example 3: Nested scope
+function outer_func() {
+    let outer_var = "Outer";
+    
+    function inner_func() {
+        let inner_var = "Inner";
+        console.log("Access outer:", outer_var);
+        console.log("Access inner:", inner_var);
+    }
+    
+    inner_func();
+    console.log("Outer can access:", outer_var);
+    // console.log("Outer cannot access:", inner_var); // Would error
+}
+
+outer_func();
+
+// Block Scope (let vs var in JavaScript)
+console.log("\n-- Block Scope --");
+if (true) {
+    let block_var = "Block";
+    console.log("Inside block:", block_var);
+}
+// console.log("Outside block:", block_var); // Would error with let
+
+console.log("\n✅ W3C Test 24 Passed: Python Scope");

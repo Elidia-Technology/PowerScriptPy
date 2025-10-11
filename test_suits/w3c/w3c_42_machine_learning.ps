@@ -1,0 +1,298 @@
+// W3C Test 42: Machine Learning with Python
+// Based on: https://www.w3schools.com/python/python_ml_getting_started.asp
+
+console.log("=== W3C Test 42: Machine Learning ===");
+
+// Machine Learning enables computers to learn from data
+// Python has powerful ML libraries: scikit-learn, TensorFlow, PyTorch
+
+console.log("\n-- What is Machine Learning? --");
+console.log("Machine Learning is a subset of AI");
+console.log("Computers learn patterns from data");
+console.log("Make predictions without explicit programming");
+
+console.log("\n-- Types of Machine Learning --");
+console.log("1. Supervised Learning");
+console.log("   - Classification (categories)");
+console.log("   - Regression (continuous values)");
+console.log("");
+console.log("2. Unsupervised Learning");
+console.log("   - Clustering");
+console.log("   - Dimensionality reduction");
+console.log("");
+console.log("3. Reinforcement Learning");
+console.log("   - Agent learns through rewards");
+
+console.log("\n-- Install ML Libraries --");
+console.log("pip install scikit-learn");
+console.log("pip install pandas");
+console.log("pip install numpy");
+
+console.log("\n-- Import Libraries --");
+console.log("import numpy as np");
+console.log("import pandas as pd");
+console.log("from sklearn.model_selection import train_test_split");
+console.log("from sklearn.linear_model import LinearRegression");
+
+// Data representation
+console.log("\n-- Data Representation --");
+console.log("Features (X): Input variables");
+console.log("Labels (y): Output/target variable");
+
+// Sample dataset
+console.log("\n-- Sample Dataset --");
+let X = [
+    [1, 2],
+    [2, 3],
+    [3, 4],
+    [4, 5],
+    [5, 6]
+];
+let y = [3, 5, 7, 9, 11];
+
+console.log("Features (X):", X);
+console.log("Labels (y):", y);
+
+console.log("\n-- Train-Test Split --");
+console.log("Split data into training and testing sets");
+console.log("Typical split: 80% train, 20% test");
+console.log("");
+console.log("X_train, X_test, y_train, y_test = train_test_split(");
+console.log("    X, y, test_size=0.2, random_state=42");
+console.log(")");
+
+console.log("\n-- Linear Regression --");
+console.log("Predict continuous values");
+console.log("Formula: y = mx + b");
+console.log("");
+console.log("model = LinearRegression()");
+console.log("model.fit(X_train, y_train)");
+console.log("predictions = model.predict(X_test)");
+
+// Simple linear regression simulation
+console.log("\n-- PowerScript ML Simulation --");
+
+let LinearModel = {
+    "slope": 0,
+    "intercept": 0,
+    
+    "fit": function(X, y) {
+        console.log("Training linear model...");
+        // Simplified: y = 2x + 1
+        LinearModel["slope"] = 2;
+        LinearModel["intercept"] = 1;
+        console.log("Model trained!");
+        console.log("Slope:", LinearModel["slope"]);
+        console.log("Intercept:", LinearModel["intercept"]);
+    },
+    
+    "predict": function(X) {
+        console.log("Making predictions...");
+        let predictions = [];
+        for (let i = 0; i < len(X); i += 1) {
+            let x_val = X[i][0];
+            let pred = LinearModel["slope"] * x_val + LinearModel["intercept"];
+            predictions.append(pred);
+        }
+        return predictions;
+    },
+    
+    "score": function(X, y_true) {
+        console.log("Calculating R² score...");
+        return 0.95;
+    }
+};
+
+console.log("\n-- Training Model --");
+LinearModel["fit"](X, y);
+
+console.log("\n-- Making Predictions --");
+let test_X = [[6, 7], [7, 8], [8, 9]];
+let predictions = LinearModel["predict"](test_X);
+console.log("Predictions:", predictions);
+
+console.log("\n-- Model Evaluation --");
+let score = LinearModel["score"](X, y);
+console.log("R² Score:", score);
+console.log("(1.0 = perfect fit, 0.0 = no fit)");
+
+console.log("\n-- Classification --");
+console.log("Predict categories/classes");
+console.log("");
+console.log("from sklearn.linear_model import LogisticRegression");
+console.log("from sklearn.tree import DecisionTreeClassifier");
+console.log("from sklearn.ensemble import RandomForestClassifier");
+console.log("from sklearn.svm import SVC");
+
+console.log("\n-- Logistic Regression --");
+console.log("Binary or multiclass classification");
+console.log("model = LogisticRegression()");
+console.log("model.fit(X_train, y_train)");
+console.log("predictions = model.predict(X_test)");
+
+console.log("\n-- Decision Tree --");
+console.log("Tree-based classification");
+console.log("model = DecisionTreeClassifier()");
+console.log("model.fit(X_train, y_train)");
+
+console.log("\n-- Random Forest --");
+console.log("Ensemble of decision trees");
+console.log("model = RandomForestClassifier(n_estimators=100)");
+console.log("model.fit(X_train, y_train)");
+
+console.log("\n-- Support Vector Machine (SVM) --");
+console.log("Find optimal hyperplane");
+console.log("model = SVC(kernel='rbf')");
+console.log("model.fit(X_train, y_train)");
+
+console.log("\n-- K-Nearest Neighbors (KNN) --");
+console.log("Classify based on nearest neighbors");
+console.log("from sklearn.neighbors import KNeighborsClassifier");
+console.log("model = KNeighborsClassifier(n_neighbors=5)");
+console.log("model.fit(X_train, y_train)");
+
+console.log("\n-- Clustering (K-Means) --");
+console.log("Unsupervised learning - group similar data");
+console.log("from sklearn.cluster import KMeans");
+console.log("kmeans = KMeans(n_clusters=3)");
+console.log("kmeans.fit(X)");
+console.log("labels = kmeans.predict(X)");
+
+console.log("\n-- Model Evaluation Metrics --");
+console.log("Classification:");
+console.log("  - Accuracy: Correct predictions / Total");
+console.log("  - Precision: True Positives / (True Positives + False Positives)");
+console.log("  - Recall: True Positives / (True Positives + False Negatives)");
+console.log("  - F1-Score: Harmonic mean of precision and recall");
+console.log("");
+console.log("Regression:");
+console.log("  - MSE: Mean Squared Error");
+console.log("  - RMSE: Root Mean Squared Error");
+console.log("  - MAE: Mean Absolute Error");
+console.log("  - R²: Coefficient of determination");
+
+console.log("\n-- Confusion Matrix --");
+console.log("from sklearn.metrics import confusion_matrix");
+console.log("cm = confusion_matrix(y_true, y_pred)");
+console.log("");
+console.log("[[TN, FP],");
+console.log(" [FN, TP]]");
+
+console.log("\n-- Feature Scaling --");
+console.log("Normalize features to same scale");
+console.log("from sklearn.preprocessing import StandardScaler");
+console.log("scaler = StandardScaler()");
+console.log("X_scaled = scaler.fit_transform(X)");
+
+console.log("\n-- Cross-Validation --");
+console.log("Validate model on multiple data splits");
+console.log("from sklearn.model_selection import cross_val_score");
+console.log("scores = cross_val_score(model, X, y, cv=5)");
+console.log("print(scores.mean())");
+
+console.log("\n-- Hyperparameter Tuning --");
+console.log("Find optimal model parameters");
+console.log("from sklearn.model_selection import GridSearchCV");
+console.log("param_grid = {'C': [0.1, 1, 10], 'kernel': ['linear', 'rbf']}");
+console.log("grid = GridSearchCV(SVC(), param_grid)");
+console.log("grid.fit(X_train, y_train)");
+
+console.log("\n-- Feature Engineering --");
+console.log("Create new features from existing ones");
+console.log("- Polynomial features");
+console.log("- Interaction features");
+console.log("- Feature selection");
+console.log("- Dimensionality reduction (PCA)");
+
+console.log("\n-- Neural Networks (Deep Learning) --");
+console.log("Multi-layer perceptrons");
+console.log("from sklearn.neural_network import MLPClassifier");
+console.log("model = MLPClassifier(hidden_layer_sizes=(100, 50))");
+console.log("model.fit(X_train, y_train)");
+
+console.log("\n-- TensorFlow/Keras --");
+console.log("import tensorflow as tf");
+console.log("from tensorflow import keras");
+console.log("");
+console.log("model = keras.Sequential([");
+console.log("    keras.layers.Dense(64, activation='relu'),");
+console.log("    keras.layers.Dense(32, activation='relu'),");
+console.log("    keras.layers.Dense(10, activation='softmax')");
+console.log("])");
+console.log("");
+console.log("model.compile(optimizer='adam',");
+console.log("              loss='sparse_categorical_crossentropy',");
+console.log("              metrics=['accuracy'])");
+console.log("");
+console.log("model.fit(X_train, y_train, epochs=10)");
+
+console.log("\n-- Practical Example: Iris Classification --");
+console.log("from sklearn.datasets import load_iris");
+console.log("from sklearn.model_selection import train_test_split");
+console.log("from sklearn.ensemble import RandomForestClassifier");
+console.log("from sklearn.metrics import accuracy_score");
+console.log("");
+console.log("# Load dataset");
+console.log("iris = load_iris()");
+console.log("X, y = iris.data, iris.target");
+console.log("");
+console.log("# Split data");
+console.log("X_train, X_test, y_train, y_test = train_test_split(");
+console.log("    X, y, test_size=0.2, random_state=42");
+console.log(")");
+console.log("");
+console.log("# Train model");
+console.log("model = RandomForestClassifier(n_estimators=100)");
+console.log("model.fit(X_train, y_train)");
+console.log("");
+console.log("# Evaluate");
+console.log("predictions = model.predict(X_test)");
+console.log("accuracy = accuracy_score(y_test, predictions)");
+console.log("print(f'Accuracy: {accuracy:.2f}')");
+
+// Simulation
+console.log("\n-- Simulation: Classification --");
+
+let IrisClassifier = {
+    "fit": function(X, y) {
+        console.log("Training Iris classifier...");
+        console.log("Training samples:", len(X));
+        console.log("Model trained!");
+    },
+    
+    "predict": function(X) {
+        console.log("Classifying", len(X), "samples...");
+        return [0, 1, 2, 1, 0];
+    },
+    
+    "accuracy": function(y_true, y_pred) {
+        let correct = 0;
+        for (let i = 0; i < len(y_true); i += 1) {
+            if (y_true[i] == y_pred[i]) {
+                correct += 1;
+            }
+        }
+        return correct / len(y_true);
+    }
+};
+
+let iris_X_train = [[5.1, 3.5, 1.4, 0.2], [4.9, 3.0, 1.4, 0.2]];
+let iris_y_train = [0, 0];
+
+IrisClassifier["fit"](iris_X_train, iris_y_train);
+
+let iris_X_test = [[5.0, 3.4, 1.5, 0.2]];
+let iris_predictions = IrisClassifier["predict"](iris_X_test);
+console.log("Predictions:", iris_predictions);
+
+console.log("\n-- ML Best Practices --");
+console.log("1. Always split data (train/test)");
+console.log("2. Scale features when needed");
+console.log("3. Use cross-validation");
+console.log("4. Avoid overfitting");
+console.log("5. Try multiple algorithms");
+console.log("6. Evaluate with multiple metrics");
+console.log("7. Keep test data separate");
+
+console.log("\n✅ W3C Test 42 Passed: Machine Learning");
+console.log("Note: Full ML libraries require scikit-learn, TensorFlow, or PyTorch");

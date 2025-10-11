@@ -1,0 +1,78 @@
+// W3C Test 12: Python Tuples
+// Based on: https://www.w3schools.com/python/python_tuples.asp
+
+console.log("=== W3C Test 12: Python Tuples ===");
+
+// Tuple creation (in PS, represented as arrays but immutable concept)
+let mytuple = ["apple", "banana", "cherry"];
+console.log("Tuple:", mytuple);
+
+// Tuple items
+console.log("First item:", mytuple[0]);
+
+// Tuple length
+console.log("Tuple length:", len(mytuple));
+
+// Create tuple with one item (needs comma in Python)
+let single = ["apple"];
+console.log("Single item tuple:", single);
+
+// Tuple items - data types
+let tuple1 = ["apple", "banana", "cherry"];
+let tuple2 = [1, 5, 7, 9, 3];
+let tuple3 = [true, false, true];
+console.log("String tuple:", tuple1);
+console.log("Number tuple:", tuple2);
+console.log("Boolean tuple:", tuple3);
+
+// Mixed data types
+let mixed = ["abc", 34, true, 40, "male"];
+console.log("Mixed tuple:", mixed);
+
+// Type checking
+console.log("Type:", typeof mytuple);
+
+// Access tuple items
+let fruits = ["apple", "banana", "cherry"];
+console.log("Second fruit:", fruits[1]);
+
+// Negative indexing (not yet supported)
+// console.log("Last item:", fruits[-1]);
+
+// Range of indexes (slicing)
+// let slice = fruits[1:3]
+
+// Change tuple values (tuples are immutable in Python)
+// In PS, arrays are mutable, but concept is tuple should not change
+console.log("Tuples are immutable in Python");
+
+// Unpack tuples
+let colors = ["red", "green", "blue"];
+let color1 = colors[0];
+let color2 = colors[1];
+let color3 = colors[2];
+console.log("Unpacked:", color1, color2, color3);
+
+// Using asterisk (not supported in PS)
+// (green, yellow, *red) = fruits
+
+// Loop through tuple
+console.log("\nLoop through fruits:");
+for (fruit in fruits) {
+    console.log(" -", fruit);
+}
+
+// Join tuples
+let tuple_a = ["a", "b", "c"];
+let tuple_b = [1, 2, 3];
+// tuple_c = tuple_a + tuple_b
+console.log("Tuples to join:", tuple_a, tuple_b);
+
+// Multiply tuples
+// tuple_mult = tuple_a * 2
+
+// Tuple methods
+// count() - returns number of times a value occurs
+// index() - returns index of first occurrence
+
+console.log("\n✅ W3C Test 12 Passed: Python Tuples");

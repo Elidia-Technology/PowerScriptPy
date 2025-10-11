@@ -1,0 +1,71 @@
+// W3C Test 06: Python Numbers
+// Based on: https://www.w3schools.com/python/python_numbers.asp
+
+console.log("=== W3C Test 06: Python Numbers ===");
+
+// Number types: int, float, complex
+let x = 1; // int
+let y = 2.8; // float
+// complex = 1j not supported in PS yet
+
+console.log("x:", x);
+console.log("y:", y);
+
+// Type checking
+console.log("Type of x:", typeof x);
+console.log("Type of y:", typeof y);
+
+// Int
+let int1 = 1;
+let int2 = 35656222554887711;
+let int3 = -3255522;
+
+console.log("Integers:", int1, int2, int3);
+
+// Float
+let float1 = 1.10;
+let float2 = 1.0;
+let float3 = -35.59;
+
+console.log("Floats:", float1, float2, float3);
+
+// Float with scientific notation
+let float4 = 35e3;
+let float5 = 12E4;
+let float6 = -87.7e100;
+
+console.log("Scientific:", float4, float5, float6);
+
+// Type conversion
+let a = 1; // int
+let b = 2.8; // float
+
+// Convert from int to float
+let c = float(a);
+console.log("Int to float:", c);
+
+// Convert from float to int
+let d = int(b);
+console.log("Float to int:", d);
+
+// Random number
+// import random
+// let rand = random.randint(1, 10)
+console.log("Random numbers require random module");
+
+// Number operations
+let sum = 5 + 3;
+let diff = 10 - 5;
+let prod = 4 * 5;
+let quot = 20 / 4;
+let mod = 17 % 5;
+let power = 2 ** 3;
+
+console.log("Sum:", sum);
+console.log("Difference:", diff);
+console.log("Product:", prod);
+console.log("Quotient:", quot);
+console.log("Modulus:", mod);
+console.log("Power:", power);
+
+console.log("\n✅ W3C Test 06 Passed: Python Numbers");

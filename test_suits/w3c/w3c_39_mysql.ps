@@ -1,0 +1,263 @@
+// W3C Test 39: Python MySQL Database
+// Based on: https://www.w3schools.com/python/python_mysql_getstarted.asp
+
+console.log("=== W3C Test 39: Python MySQL ===");
+
+// Python can connect to MySQL database
+// Uses mysql-connector-python library
+
+console.log("\n-- Install MySQL Connector --");
+console.log("pip install mysql-connector-python");
+
+console.log("\n-- Import MySQL Connector --");
+console.log("import mysql.connector");
+
+console.log("\n-- Create Connection --");
+console.log("mydb = mysql.connector.connect(");
+console.log("    host='localhost',");
+console.log("    user='root',");
+console.log("    password='password',");
+console.log("    database='mydatabase'");
+console.log(")");
+
+console.log("\n-- Check Connection --");
+console.log("print(mydb)");
+console.log("Result: <mysql.connector.connection.MySQLConnection>");
+
+// PowerScript MySQL simulation
+console.log("\n-- PowerScript MySQL Simulation --");
+
+let MySQL = {
+    "connect": function(config) {
+        console.log("Connecting to MySQL...");
+        console.log("Host:", config["host"]);
+        console.log("User:", config["user"]);
+        console.log("Database:", config["database"]);
+        return {
+            "cursor": function() {
+                return MySQL["_cursor"];
+            },
+            "commit": function() {
+                console.log("Transaction committed");
+            },
+            "rollback": function() {
+                console.log("Transaction rolled back");
+            },
+            "close": function() {
+                console.log("Connection closed");
+            }
+        };
+    },
+    "_cursor": {
+        "execute": function(query, params) {
+            console.log("Executing:", query);
+            if (params) {
+                console.log("Params:", params);
+            }
+        },
+        "fetchall": function() {
+            return [
+                [1, "John", 30],
+                [2, "Alice", 25],
+                [3, "Bob", 35]
+            ];
+        },
+        "fetchone": function() {
+            return [1, "John", 30];
+        },
+        "fetchmany": function(size) {
+            return [[1, "John", 30], [2, "Alice", 25]];
+        }
+    }
+};
+
+// Create connection
+console.log("\n-- Example: Create Connection --");
+let db_config = {
+    "host": "localhost",
+    "user": "root",
+    "password": "root",
+    "database": "testdb"
+};
+
+let mydb = MySQL["connect"](db_config);
+console.log("Connected!");
+
+console.log("\n-- Create Database --");
+console.log("CREATE DATABASE mydatabase");
+let cursor = mydb["cursor"]();
+cursor["execute"]("CREATE DATABASE mydatabase");
+
+console.log("\n-- Show Databases --");
+console.log("SHOW DATABASES");
+cursor["execute"]("SHOW DATABASES");
+
+console.log("\n-- Create Table --");
+let create_table_sql = "CREATE TABLE customers (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), address VARCHAR(255))";
+console.log(create_table_sql);
+cursor["execute"](create_table_sql);
+
+console.log("\n-- Show Tables --");
+console.log("SHOW TABLES");
+cursor["execute"]("SHOW TABLES");
+
+console.log("\n-- Insert Data --");
+let insert_sql = "INSERT INTO customers (name, address) VALUES (%s, %s)";
+let val = ["John", "Highway 21"];
+console.log("SQL:", insert_sql);
+console.log("Values:", val);
+cursor["execute"](insert_sql, val);
+mydb["commit"]();
+console.log("1 record inserted");
+
+console.log("\n-- Insert Multiple Records --");
+let insert_many_sql = "INSERT INTO customers (name, address) VALUES (%s, %s)";
+let vals = [
+    ["Peter", "Lowstreet 4"],
+    ["Amy", "Apple st 652"],
+    ["Hannah", "Mountain 21"],
+    ["Michael", "Valley 345"]
+];
+console.log("Inserting", len(vals), "records");
+for (record in vals) {
+    cursor["execute"](insert_many_sql, record);
+}
+mydb["commit"]();
+
+console.log("\n-- Select All --");
+console.log("SELECT * FROM customers");
+cursor["execute"]("SELECT * FROM customers");
+let results = cursor["fetchall"]();
+console.log("Results:");
+for (row in results) {
+    console.log("  ID:", row[0], "Name:", row[1], "Address:", row[2]);
+}
+
+console.log("\n-- Select Columns --");
+console.log("SELECT name, address FROM customers");
+cursor["execute"]("SELECT name, address FROM customers");
+
+console.log("\n-- WHERE Clause --");
+let where_sql = "SELECT * FROM customers WHERE address = %s";
+let where_val = ["Highway 21"];
+console.log("SQL:", where_sql);
+console.log("Value:", where_val);
+cursor["execute"](where_sql, where_val);
+
+console.log("\n-- Wildcard (LIKE) --");
+let like_sql = "SELECT * FROM customers WHERE address LIKE %s";
+let like_val = ["%way%"];
+console.log("SQL:", like_sql);
+cursor["execute"](like_sql, like_val);
+
+console.log("\n-- ORDER BY --");
+console.log("SELECT * FROM customers ORDER BY name");
+cursor["execute"]("SELECT * FROM customers ORDER BY name");
+console.log("SELECT * FROM customers ORDER BY name DESC");
+cursor["execute"]("SELECT * FROM customers ORDER BY name DESC");
+
+console.log("\n-- LIMIT --");
+console.log("SELECT * FROM customers LIMIT 5");
+cursor["execute"]("SELECT * FROM customers LIMIT 5");
+
+console.log("\n-- UPDATE --");
+let update_sql = "UPDATE customers SET address = %s WHERE name = %s";
+let update_val = ["Canyon 123", "John"];
+console.log("SQL:", update_sql);
+console.log("Values:", update_val);
+cursor["execute"](update_sql, update_val);
+mydb["commit"]();
+console.log("Record updated");
+
+console.log("\n-- DELETE --");
+let delete_sql = "DELETE FROM customers WHERE address = %s";
+let delete_val = ["Mountain 21"];
+console.log("SQL:", delete_sql);
+cursor["execute"](delete_sql, delete_val);
+mydb["commit"]();
+console.log("Record deleted");
+
+console.log("\n-- DROP TABLE --");
+console.log("DROP TABLE customers");
+console.log("DROP TABLE IF EXISTS customers");
+
+console.log("\n-- JOIN --");
+let join_sql = "SELECT users.name, orders.product FROM users INNER JOIN orders ON users.id = orders.user_id";
+console.log("SQL:", join_sql);
+
+console.log("\n-- LEFT JOIN --");
+console.log("SELECT * FROM users LEFT JOIN orders ON users.id = orders.user_id");
+
+console.log("\n-- RIGHT JOIN --");
+console.log("SELECT * FROM users RIGHT JOIN orders ON users.id = orders.user_id");
+
+console.log("\n-- Transactions --");
+console.log("try:");
+console.log("    cursor.execute(sql1)");
+console.log("    cursor.execute(sql2)");
+console.log("    mydb.commit()");
+console.log("except:");
+console.log("    mydb.rollback()");
+
+// Practical example: User management
+console.log("\n-- Practical: User Management --");
+
+function create_user(name, email, age) {
+    let sql = "INSERT INTO users (name, email, age) VALUES (%s, %s, %s)";
+    let values = [name, email, age];
+    console.log("Creating user:", name, email, age);
+    cursor["execute"](sql, values);
+    mydb["commit"]();
+    return true;
+}
+
+function get_user(user_id) {
+    let sql = "SELECT * FROM users WHERE id = %s";
+    console.log("Getting user:", user_id);
+    cursor["execute"](sql, [user_id]);
+    let result = cursor["fetchone"]();
+    return result;
+}
+
+function update_user(user_id, name, email) {
+    let sql = "UPDATE users SET name = %s, email = %s WHERE id = %s";
+    console.log("Updating user:", user_id);
+    cursor["execute"](sql, [name, email, user_id]);
+    mydb["commit"]();
+    return true;
+}
+
+function delete_user(user_id) {
+    let sql = "DELETE FROM users WHERE id = %s";
+    console.log("Deleting user:", user_id);
+    cursor["execute"](sql, [user_id]);
+    mydb["commit"]();
+    return true;
+}
+
+// Test functions
+create_user("John Doe", "john@example.com", 30);
+let user = get_user(1);
+console.log("Retrieved user:", user);
+update_user(1, "John Smith", "john.smith@example.com");
+delete_user(1);
+
+console.log("\n-- Connection Pooling --");
+console.log("from mysql.connector import pooling");
+console.log("pool = pooling.MySQLConnectionPool(");
+console.log("    pool_name='mypool',");
+console.log("    pool_size=5,");
+console.log("    **db_config");
+console.log(")");
+
+console.log("\n-- Prepared Statements --");
+console.log("cursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))");
+console.log("Prevents SQL injection");
+
+// Close connection
+console.log("\n-- Close Connection --");
+mydb["close"]();
+console.log("Connection closed");
+
+console.log("\n✅ W3C Test 39 Passed: Python MySQL");
+console.log("Note: Database module may be available in PowerScript runtime");

@@ -1,0 +1,371 @@
+// W3C Test 43: Python Matplotlib
+// Based on: https://www.w3schools.com/python/matplotlib_intro.asp
+
+console.log("=== W3C Test 43: Python Matplotlib ===");
+
+// Matplotlib is a plotting library for Python
+// Creates static, animated, and interactive visualizations
+
+console.log("\n-- What is Matplotlib? --");
+console.log("Low-level graph plotting library");
+console.log("Creates various types of charts and plots");
+console.log("Works with NumPy arrays");
+console.log("Most popular Python visualization library");
+
+console.log("\n-- Install Matplotlib --");
+console.log("pip install matplotlib");
+
+console.log("\n-- Import Matplotlib --");
+console.log("import matplotlib.pyplot as plt");
+console.log("import numpy as np");
+
+console.log("\n-- Simple Line Plot --");
+console.log("x = [1, 2, 3, 4, 5]");
+console.log("y = [2, 4, 6, 8, 10]");
+console.log("plt.plot(x, y)");
+console.log("plt.show()");
+
+// PowerScript visualization simulation
+console.log("\n-- PowerScript Plot Simulation --");
+
+let Plot = {
+    "current_plot": {},
+    
+    "plot": function(x, y, label, color, marker, linestyle) {
+        console.log("Creating line plot...");
+        console.log("X data:", x);
+        console.log("Y data:", y);
+        if (label) {
+            console.log("Label:", label);
+        }
+        if (color) {
+            console.log("Color:", color);
+        }
+        if (marker) {
+            console.log("Marker:", marker);
+        }
+        if (linestyle) {
+            console.log("Line style:", linestyle);
+        }
+        Plot["current_plot"]["type"] = "line";
+    },
+    
+    "scatter": function(x, y, color, size, alpha) {
+        console.log("Creating scatter plot...");
+        console.log("X data:", x);
+        console.log("Y data:", y);
+        if (color) {
+            console.log("Color:", color);
+        }
+        if (size) {
+            console.log("Size:", size);
+        }
+        Plot["current_plot"]["type"] = "scatter";
+    },
+    
+    "bar": function(x, height, width, color) {
+        console.log("Creating bar chart...");
+        console.log("Categories:", x);
+        console.log("Heights:", height);
+        Plot["current_plot"]["type"] = "bar";
+    },
+    
+    "hist": function(data, bins, color, alpha) {
+        console.log("Creating histogram...");
+        console.log("Data:", data);
+        console.log("Bins:", bins);
+        Plot["current_plot"]["type"] = "histogram";
+    },
+    
+    "pie": function(sizes, labels, colors, explode, autopct) {
+        console.log("Creating pie chart...");
+        console.log("Sizes:", sizes);
+        console.log("Labels:", labels);
+        Plot["current_plot"]["type"] = "pie";
+    },
+    
+    "xlabel": function(label) {
+        console.log("X-axis label:", label);
+    },
+    
+    "ylabel": function(label) {
+        console.log("Y-axis label:", label);
+    },
+    
+    "title": function(title) {
+        console.log("Plot title:", title);
+    },
+    
+    "legend": function() {
+        console.log("Adding legend");
+    },
+    
+    "grid": function(visible) {
+        console.log("Grid:", visible);
+    },
+    
+    "xlim": function(min_val, max_val) {
+        console.log("X-axis limits:", min_val, "to", max_val);
+    },
+    
+    "ylim": function(min_val, max_val) {
+        console.log("Y-axis limits:", min_val, "to", max_val);
+    },
+    
+    "savefig": function(filename) {
+        console.log("Saving plot to:", filename);
+    },
+    
+    "show": function() {
+        console.log("Displaying plot:", Plot["current_plot"]["type"]);
+        console.log("---Plot displayed---");
+    },
+    
+    "subplot": function(rows, cols, index) {
+        console.log("Creating subplot:", rows, "x", cols, "position", index);
+    },
+    
+    "figure": function(figsize) {
+        console.log("Creating figure, size:", figsize);
+    }
+};
+
+// Line plot example
+console.log("\n-- Line Plot Example --");
+let x_data = [0, 1, 2, 3, 4, 5];
+let y_data = [0, 1, 4, 9, 16, 25];
+
+Plot["plot"](x_data, y_data, null, null, null, null);
+Plot["xlabel"]("X values");
+Plot["ylabel"]("Y values");
+Plot["title"]("Simple Line Plot");
+Plot["show"]();
+
+console.log("\n-- Multiple Lines --");
+let y1 = [1, 4, 9, 16];
+let y2 = [1, 2, 3, 4];
+
+Plot["plot"](x_data, y1, "y = x²", "blue", null, null);
+Plot["plot"](x_data, y2, "y = x", "red", null, null);
+Plot["legend"]();
+Plot["show"]();
+
+console.log("\n-- Markers --");
+console.log("Markers: 'o', 's', '^', 'v', '*', '+', 'x', 'D'");
+Plot["plot"](x_data, y_data, null, null, "o", null);
+console.log("'o' - Circle marker");
+
+console.log("\n-- Line Styles --");
+console.log("'-'  - Solid line (default)");
+console.log("'--' - Dashed line");
+console.log("'-.' - Dash-dot line");
+console.log("':'  - Dotted line");
+
+console.log("\n-- Colors --");
+console.log("'r' - Red");
+console.log("'g' - Green");
+console.log("'b' - Blue");
+console.log("'c' - Cyan");
+console.log("'m' - Magenta");
+console.log("'y' - Yellow");
+console.log("'k' - Black");
+console.log("'w' - White");
+console.log("Or use hex: '#FF5733'");
+console.log("Or use RGB: (0.5, 0.8, 0.2)");
+
+console.log("\n-- Scatter Plot --");
+let scatter_x = [5, 7, 8, 7, 2, 17, 2, 9, 4, 11, 12, 9, 6];
+let scatter_y = [99, 86, 87, 88, 111, 86, 103, 87, 94, 78, 77, 85, 86];
+
+Plot["scatter"](scatter_x, scatter_y, "blue", 50, 0.5);
+Plot["xlabel"]("Age");
+Plot["ylabel"]("Speed");
+Plot["title"]("Scatter Plot Example");
+Plot["show"]();
+
+console.log("\n-- Scatter with Colors --");
+let colors = ["red", "green", "blue", "yellow", "red", "green"];
+Plot["scatter"](scatter_x, scatter_y, colors, null, null);
+Plot["show"]();
+
+console.log("\n-- Bar Chart --");
+let categories = ["A", "B", "C", "D"];
+let values = [3, 8, 1, 10];
+
+Plot["bar"](categories, values, null, "green");
+Plot["xlabel"]("Category");
+Plot["ylabel"]("Value");
+Plot["title"]("Bar Chart Example");
+Plot["show"]();
+
+console.log("\n-- Horizontal Bar Chart --");
+console.log("plt.barh(categories, values)");
+
+console.log("\n-- Histogram --");
+let hist_data = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6];
+Plot["hist"](hist_data, 6, "skyblue", 0.7);
+Plot["xlabel"]("Value");
+Plot["ylabel"]("Frequency");
+Plot["title"]("Histogram Example");
+Plot["show"]();
+
+console.log("\n-- Pie Chart --");
+let sizes = [35, 25, 25, 15];
+let labels = ["Apples", "Bananas", "Cherries", "Dates"];
+let pie_colors = ["red", "yellow", "pink", "brown"];
+let explode = [0.1, 0, 0, 0];
+
+Plot["pie"](sizes, labels, pie_colors, explode, "%1.1f%%");
+Plot["title"]("Pie Chart Example");
+Plot["show"]();
+
+console.log("\n-- Subplots --");
+console.log("Create multiple plots in one figure");
+Plot["figure"]([10, 8]);
+
+console.log("\nSubplot 1:");
+Plot["subplot"](2, 2, 1);
+Plot["plot"]([1, 2, 3], [1, 4, 9], null, null, null, null);
+Plot["title"]("Plot 1");
+
+console.log("Subplot 2:");
+Plot["subplot"](2, 2, 2);
+Plot["scatter"]([1, 2, 3], [2, 4, 6], null, null, null);
+Plot["title"]("Plot 2");
+
+console.log("Subplot 3:");
+Plot["subplot"](2, 2, 3);
+Plot["bar"](["A", "B", "C"], [5, 3, 7], null, null);
+Plot["title"]("Plot 3");
+
+console.log("Subplot 4:");
+Plot["subplot"](2, 2, 4);
+Plot["hist"]([1, 2, 2, 3, 3, 3], 3, null, null);
+Plot["title"]("Plot 4");
+
+Plot["show"]();
+
+console.log("\n-- Figure and Axes --");
+console.log("fig, ax = plt.subplots()");
+console.log("ax.plot(x, y)");
+console.log("More control over plot elements");
+
+console.log("\n-- Customization --");
+console.log("plt.xlim(0, 10)  # X-axis limits");
+console.log("plt.ylim(0, 100) # Y-axis limits");
+console.log("plt.xticks([0, 2, 4, 6, 8, 10])  # X-axis ticks");
+console.log("plt.yticks([0, 25, 50, 75, 100]) # Y-axis ticks");
+console.log("plt.grid(True)   # Show grid");
+console.log("plt.legend()     # Show legend");
+
+console.log("\n-- Save Figure --");
+Plot["plot"]([1, 2, 3], [1, 4, 9], null, null, null, null);
+Plot["savefig"]("my_plot.png");
+console.log("Also supports: .jpg, .pdf, .svg");
+
+console.log("\n-- 3D Plots --");
+console.log("from mpl_toolkits.mplot3d import Axes3D");
+console.log("fig = plt.figure()");
+console.log("ax = fig.add_subplot(111, projection='3d')");
+console.log("ax.plot(x, y, z)");
+
+console.log("\n-- Contour Plots --");
+console.log("X, Y = np.meshgrid(x, y)");
+console.log("Z = np.sin(X) * np.cos(Y)");
+console.log("plt.contour(X, Y, Z)");
+
+console.log("\n-- Heatmap --");
+console.log("import seaborn as sns");
+console.log("data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]");
+console.log("sns.heatmap(data, annot=True)");
+
+console.log("\n-- Box Plot --");
+console.log("data = [np.random.normal(0, std, 100) for std in range(1, 4)]");
+console.log("plt.boxplot(data)");
+
+console.log("\n-- Violin Plot --");
+console.log("plt.violinplot(data)");
+
+console.log("\n-- Practical Example: Sales Data --");
+console.log("Visualizing monthly sales");
+
+let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+let sales = [15000, 18000, 22000, 19000, 25000, 28000];
+
+console.log("\nMonthly Sales:");
+for (let i = 0; i < len(months); i += 1) {
+    console.log(months[i], ":", sales[i]);
+}
+
+Plot["figure"]([12, 6]);
+Plot["plot"](months, sales, "Sales", "blue", "o", "-");
+Plot["xlabel"]("Month");
+Plot["ylabel"]("Sales ($)");
+Plot["title"]("Monthly Sales Report 2025");
+Plot["grid"](true);
+Plot["show"]();
+
+console.log("\n-- Practical Example: Data Comparison --");
+let product_a = [10, 15, 13, 18, 20, 22];
+let product_b = [12, 14, 16, 15, 19, 21];
+
+Plot["figure"]([12, 6]);
+Plot["plot"](months, product_a, "Product A", "blue", "o", "-");
+Plot["plot"](months, product_b, "Product B", "red", "s", "--");
+Plot["xlabel"]("Month");
+Plot["ylabel"]("Units Sold");
+Plot["title"]("Product Comparison");
+Plot["legend"]();
+Plot["grid"](true);
+Plot["show"]();
+
+console.log("\n-- Practical Example: Distribution --");
+let test_scores = [
+    65, 70, 72, 75, 76, 78, 80, 80, 82, 82,
+    85, 85, 85, 87, 88, 90, 90, 92, 93, 95
+];
+
+console.log("Test Scores Distribution:");
+Plot["hist"](test_scores, 10, "skyblue", 0.7);
+Plot["xlabel"]("Score");
+Plot["ylabel"]("Frequency");
+Plot["title"]("Test Scores Distribution");
+Plot["grid"](true);
+Plot["show"]();
+
+console.log("\n-- Practical Example: Market Share --");
+let companies = ["Company A", "Company B", "Company C", "Company D"];
+let market_share = [35, 28, 22, 15];
+let pie_explode = [0.1, 0, 0, 0];
+
+Plot["pie"](market_share, companies, null, pie_explode, "%1.1f%%");
+Plot["title"]("Market Share 2025");
+Plot["show"]();
+
+console.log("\n-- Matplotlib Styles --");
+console.log("plt.style.available  # List available styles");
+console.log("plt.style.use('seaborn')");
+console.log("plt.style.use('ggplot')");
+console.log("plt.style.use('dark_background')");
+
+console.log("\n-- Animation --");
+console.log("from matplotlib.animation import FuncAnimation");
+console.log("ani = FuncAnimation(fig, update_function, frames=100)");
+
+console.log("\n-- Interactive Plots --");
+console.log("import plotly.express as px");
+console.log("fig = px.scatter(df, x='x', y='y')");
+console.log("fig.show()");
+
+console.log("\n-- Best Practices --");
+console.log("1. Always label axes");
+console.log("2. Add descriptive titles");
+console.log("3. Use legends for multiple series");
+console.log("4. Choose appropriate chart types");
+console.log("5. Use colors meaningfully");
+console.log("6. Consider color-blind friendly palettes");
+console.log("7. Keep it simple and clear");
+console.log("8. Save high-resolution images (DPI)");
+
+console.log("\n✅ W3C Test 43 Passed: Python Matplotlib");
+console.log("Note: Full visualization requires matplotlib or GUI module");

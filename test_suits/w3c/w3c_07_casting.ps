@@ -1,0 +1,44 @@
+// W3C Test 07: Python Casting
+// Based on: https://www.w3schools.com/python/python_casting.asp
+
+console.log("=== W3C Test 07: Python Casting ===");
+
+// Specify a Variable Type with Casting
+// Casting is when you convert from one type to another
+
+// Integers
+let x = int(1);   // x will be 1
+let y = int(2.8); // y will be 2
+let z = int("3"); // z will be 3
+
+console.log("Int casting:", x, y, z);
+
+// Floats
+let a = float(1);     // a will be 1.0
+let b = float(2.8);   // b will be 2.8
+let c = float("3");   // c will be 3.0
+let d = float("4.2"); // d will be 4.2
+
+console.log("Float casting:", a, b, c, d);
+
+// Strings
+let s1 = str("s1"); // s1 will be 's1'
+let s2 = str(2);    // s2 will be '2'
+let s3 = str(3.0);  // s3 will be '3.0'
+
+console.log("String casting:", s1, s2, s3);
+
+// Boolean
+let bool1 = bool(1);  // true
+let bool2 = bool(0);  // false
+let bool3 = bool(""); // false
+let bool4 = bool("text"); // true
+
+console.log("Boolean casting:", bool1, bool2, bool3, bool4);
+
+// Type checking after casting
+console.log("Type of x:", typeof x);
+console.log("Type of a:", typeof a);
+console.log("Type of s1:", typeof s1);
+
+console.log("\n✅ W3C Test 07 Passed: Python Casting");

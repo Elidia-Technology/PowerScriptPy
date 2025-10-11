@@ -1,0 +1,146 @@
+// W3C Test 27: Python Math
+// Based on: https://www.w3schools.com/python/python_math.asp
+
+console.log("=== W3C Test 27: Python Math ===");
+
+// Python has built-in math functions and math module
+
+// Built-in Math Functions
+console.log("\n-- Built-in Math Functions --");
+
+// min() and max()
+let x = min(5, 10, 25);
+let y = max(5, 10, 25);
+console.log("Min:", x);
+console.log("Max:", y);
+
+// abs() - absolute value
+let abs_val = abs(-7.25);
+console.log("Abs(-7.25):", abs_val);
+
+// pow() - power
+let power = pow(4, 3); // 4 * 4 * 4
+console.log("pow(4, 3):", power);
+
+// Math Module
+console.log("\n-- Math Module --");
+console.log("import math");
+
+// math.sqrt() - square root
+let sqrt_val = 64 ** 0.5;
+console.log("sqrt(64):", sqrt_val);
+
+// math.ceil() and math.floor()
+console.log("\nCeiling and Floor:");
+console.log("math.ceil(1.4) rounds up to 2");
+console.log("math.floor(1.4) rounds down to 1");
+
+let ceil_val = int(1.4) + 1;
+let floor_val = int(1.4);
+console.log("Ceil 1.4:", ceil_val);
+console.log("Floor 1.4:", floor_val);
+
+// math.pi - constant
+console.log("\nMath constants:");
+console.log("math.pi = 3.141592653589793");
+console.log("math.e = 2.718281828459045");
+
+let pi = 3.141592653589793;
+let e = 2.718281828459045;
+console.log("PI:", pi);
+console.log("E:", e);
+
+// More math functions
+console.log("\n-- More Math Functions --");
+
+// Trigonometric functions
+console.log("sin(), cos(), tan()");
+console.log("asin(), acos(), atan()");
+console.log("degrees(), radians()");
+
+// Exponential and logarithmic
+console.log("\nExponential and Logarithmic:");
+console.log("exp(x) - e^x");
+console.log("log(x) - natural log");
+console.log("log10(x) - base 10 log");
+console.log("log2(x) - base 2 log");
+
+// Rounding
+console.log("\nRounding:");
+console.log("round(x) - round to nearest");
+console.log("round(x, n) - round to n decimals");
+
+let rounded = int(5.76543);
+console.log("Rounded 5.76543:", rounded);
+
+// Other functions
+console.log("\n-- Other Functions --");
+console.log("factorial(x) - x!");
+console.log("gcd(a, b) - greatest common divisor");
+console.log("fabs(x) - absolute value (float)");
+console.log("fmod(x, y) - remainder of x/y");
+console.log("trunc(x) - truncate to integer");
+
+// Practical examples
+console.log("\n-- Practical Examples --");
+
+// Circle calculations
+let radius = 5;
+let circumference = 2 * pi * radius;
+let area = pi * radius ** 2;
+
+console.log("Circle with radius", radius);
+console.log("Circumference:", circumference);
+console.log("Area:", area);
+
+// Distance formula
+function distance(x1, y1, x2, y2) {
+    let dx = x2 - x1;
+    let dy = y2 - y1;
+    return (dx ** 2 + dy ** 2) ** 0.5;
+}
+
+let dist = distance(0, 0, 3, 4);
+console.log("Distance from (0,0) to (3,4):", dist);
+
+// Percentage calculations
+function percentage(value, total) {
+    return (value / total) * 100;
+}
+
+console.log("50 is", percentage(50, 200), "% of 200");
+
+// Average
+function average(numbers) {
+    let sum = 0;
+    for (num in numbers) {
+        sum += num;
+    }
+    return sum / len(numbers);
+}
+
+let nums = [10, 20, 30, 40, 50];
+console.log("Average of", nums, ":", average(nums));
+
+// Power of 2 check
+function is_power_of_two(n) {
+    if (n <= 0) {
+        return false;
+    }
+    return (n & (n - 1)) == 0;
+}
+
+console.log("Is 8 power of 2?", is_power_of_two(8));
+console.log("Is 10 power of 2?", is_power_of_two(10));
+
+// Fibonacci
+function fibonacci(n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+console.log("Fibonacci(7):", fibonacci(7));
+
+console.log("\n✅ W3C Test 27 Passed: Python Math");

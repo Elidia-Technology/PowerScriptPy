@@ -1,0 +1,145 @@
+// W3C Test 18: Python Functions
+// Based on: https://www.w3schools.com/python/python_functions.asp
+
+console.log("=== W3C Test 18: Python Functions ===");
+
+// Creating a function
+function my_function() {
+    console.log("Hello from a function");
+}
+
+// Calling a function
+my_function();
+
+// Arguments
+function greet(name) {
+    console.log("Hello,", name);
+}
+
+greet("Alice");
+greet("Bob");
+
+// Parameters or Arguments?
+// Parameters are variables in function definition
+// Arguments are values passed when calling function
+
+// Number of arguments
+function person_info(fname, lname) {
+    console.log("Name:", fname, lname);
+}
+
+person_info("John", "Doe");
+
+// Arbitrary arguments (*args in Python)
+// In PS, can use rest parameters or handle as array
+function print_names(...names) {
+    console.log("Names:", names);
+}
+
+print_names("Alice", "Bob", "Charlie");
+
+// Keyword arguments (Python specific)
+function child_info(child3, child2, child1) {
+    console.log("The youngest child is", child3);
+}
+
+child_info("Emil", "Tobias", "Linus");
+
+// Arbitrary keyword arguments (**kwargs in Python)
+// In PS, can use object parameter
+function print_info(info) {
+    console.log("Info:", info);
+}
+
+print_info({"name": "John", "age": 36});
+
+// Default parameter value
+function country_info(country = "Norway") {
+    console.log("I am from", country);
+}
+
+country_info("Sweden");
+country_info("India");
+country_info();
+
+// Passing a list as an argument
+function print_food(food) {
+    for (item in food) {
+        console.log(item);
+    }
+}
+
+let fruits = ["apple", "banana", "cherry"];
+print_food(fruits);
+
+// Return values
+function multiply(x, y = 5) {
+    return x * y;
+}
+
+let result = multiply(3);
+console.log("Result:", result);
+
+result = multiply(3, 4);
+console.log("Result:", result);
+
+// Return multiple values (Python uses tuples)
+function get_person() {
+    return {"name": "John", "age": 36};
+}
+
+let person = get_person();
+console.log("Person:", person);
+
+// Pass statement (empty function)
+function empty_function() {
+    // pass / do nothing
+}
+
+// Recursion
+function factorial(n) {
+    if (n == 1) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+
+console.log("Factorial of 5:", factorial(5));
+
+// Function with multiple return statements
+function check_positive(num) {
+    if (num > 0) {
+        return "Positive";
+    } else if (num < 0) {
+        return "Negative";
+    } else {
+        return "Zero";
+    }
+}
+
+console.log("10 is:", check_positive(10));
+console.log("-5 is:", check_positive(-5));
+console.log("0 is:", check_positive(0));
+
+// Function scope
+let global_var = "I am global";
+
+function test_scope() {
+    let local_var = "I am local";
+    console.log("Inside function:", global_var);
+    console.log("Inside function:", local_var);
+}
+
+test_scope();
+console.log("Outside function:", global_var);
+// console.log("Outside function:", local_var); // Would error
+
+// Function as variable
+let my_func = function(x) {
+    return x * 2;
+};
+
+console.log("Function as variable:", my_func(5));
+
+console.log("\n✅ W3C Test 18 Passed: Python Functions");

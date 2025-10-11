@@ -1,0 +1,111 @@
+// W3C Test 20: Python Arrays
+// Based on: https://www.w3schools.com/python/python_arrays.asp
+
+console.log("=== W3C Test 20: Python Arrays ===");
+
+// Note: Python doesn't have built-in array support
+// Python lists are used as arrays
+// For actual arrays, use the array module
+
+// Create an array
+let cars = ["Ford", "Volvo", "BMW"];
+console.log("Cars:", cars);
+
+// Access array elements
+let x = cars[0];
+console.log("First car:", x);
+
+// Modify array value
+cars[0] = "Toyota";
+console.log("After modification:", cars);
+
+// Array length
+let length = len(cars);
+console.log("Array length:", length);
+
+// Looping through array
+console.log("Loop through cars:");
+for (car in cars) {
+    console.log(" -", car);
+}
+
+// Add array element
+cars.append("Honda");
+console.log("After append:", cars);
+
+// Remove array element
+// cars.remove("Volvo")
+console.log("Remove would delete element");
+
+// Array methods
+// append() - adds element at end
+// clear() - removes all elements
+// copy() - returns copy of array
+// count() - returns number of elements with specified value
+// extend() - add elements from another array
+// index() - returns index of first element with specified value
+// insert() - adds element at specified position
+// pop() - removes element at specified position
+// remove() - removes first item with specified value
+// reverse() - reverses order of array
+// sort() - sorts array
+
+console.log("\n-- Array Operations --");
+
+// Create array with numbers
+let numbers = [1, 5, 3, 9, 2];
+console.log("Numbers:", numbers);
+
+// Sort array
+// numbers.sort()
+console.log("Sort would order elements");
+
+// Reverse array
+// numbers.reverse()
+console.log("Reverse would flip order");
+
+// Count occurrences
+let fruits = ["apple", "banana", "cherry", "apple"];
+// count = fruits.count("apple")
+console.log("Fruits:", fruits);
+
+// Index of element
+// idx = fruits.index("banana")
+
+// Insert at position
+// fruits.insert(1, "orange")
+
+// Pop element
+// fruits.pop(1)
+
+// Extend array
+let more_fruits = ["mango", "pineapple"];
+// fruits.extend(more_fruits)
+console.log("More fruits:", more_fruits);
+
+// Copy array
+let fruits_copy = fruits;
+console.log("Copy:", fruits_copy);
+
+// Clear array
+// fruits.clear()
+
+// Multi-dimensional arrays (nested arrays)
+let matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+];
+console.log("Matrix:", matrix);
+console.log("Matrix[1][1]:", matrix[1][1]);
+
+// Array of objects
+let students = [
+    {"name": "Alice", "age": 20},
+    {"name": "Bob", "age": 22},
+    {"name": "Charlie", "age": 21}
+];
+console.log("Students:", students);
+console.log("First student:", students[0]["name"]);
+
+console.log("\n✅ W3C Test 20 Passed: Python Arrays");

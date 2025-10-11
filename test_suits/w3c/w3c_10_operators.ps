@@ -1,0 +1,96 @@
+// W3C Test 10: Python Operators
+// Based on: https://www.w3schools.com/python/python_operators.asp
+
+console.log("=== W3C Test 10: Python Operators ===");
+
+// Arithmetic Operators
+console.log("\n-- Arithmetic Operators --");
+let a = 10;
+let b = 3;
+
+console.log("Addition:", a + b);
+console.log("Subtraction:", a - b);
+console.log("Multiplication:", a * b);
+console.log("Division:", a / b);
+console.log("Modulus:", a % b);
+console.log("Exponentiation:", a ** b);
+console.log("Floor division:", int(a / b));
+
+// Assignment Operators
+console.log("\n-- Assignment Operators --");
+let x = 5;
+console.log("x = 5:", x);
+
+x += 3;
+console.log("x += 3:", x);
+
+x -= 2;
+console.log("x -= 2:", x);
+
+x *= 4;
+console.log("x *= 4:", x);
+
+x /= 2;
+console.log("x /= 2:", x);
+
+x %= 3;
+console.log("x %= 3:", x);
+
+// Comparison Operators
+console.log("\n-- Comparison Operators --");
+let p = 5;
+let q = 10;
+
+console.log("p == q:", p == q);
+console.log("p != q:", p != q);
+console.log("p > q:", p > q);
+console.log("p < q:", p < q);
+console.log("p >= q:", p >= q);
+console.log("p <= q:", p <= q);
+
+// Logical Operators
+console.log("\n-- Logical Operators --");
+let c = true;
+let d = false;
+
+console.log("c && d:", c && d);
+console.log("c || d:", c || d);
+console.log("!c:", !c);
+
+// Identity Operators (is, is not)
+console.log("\n-- Identity Operators --");
+let obj1 = {"name": "John"};
+let obj2 = obj1;
+let obj3 = {"name": "John"};
+
+console.log("obj1 === obj2:", obj1 === obj2);
+console.log("obj1 === obj3:", obj1 === obj3);
+
+// Membership Operators (in, not in)
+console.log("\n-- Membership Operators --");
+let fruits = ["apple", "banana", "cherry"];
+// In Python: "banana" in fruits
+console.log("Fruits array:", fruits);
+console.log("Contains banana:", fruits.includes ? fruits.includes("banana") : "includes not available");
+
+// Bitwise Operators
+console.log("\n-- Bitwise Operators --");
+let m = 6;  // Binary: 110
+let n = 3;  // Binary: 011
+
+console.log("m & n (AND):", m & n);
+console.log("m | n (OR):", m | n);
+console.log("m ^ n (XOR):", m ^ n);
+console.log("~m (NOT):", ~m);
+console.log("m << 1 (Left shift):", m << 1);
+console.log("m >> 1 (Right shift):", m >> 1);
+
+// Operator Precedence
+console.log("\n-- Operator Precedence --");
+let result = 10 + 5 * 2;
+console.log("10 + 5 * 2 =", result);
+
+let result2 = (10 + 5) * 2;
+console.log("(10 + 5) * 2 =", result2);
+
+console.log("\n✅ W3C Test 10 Passed: Python Operators");

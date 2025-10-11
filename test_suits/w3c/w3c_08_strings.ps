@@ -1,0 +1,74 @@
+// W3C Test 08: Python Strings
+// Based on: https://www.w3schools.com/python/python_strings.asp
+
+console.log("=== W3C Test 08: Python Strings ===");
+
+// String literals
+let a = "Hello";
+let b = "Hello";
+console.log("Strings:", a, b);
+
+// Multiline strings
+let multiline = "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit,\nsed do eiusmod tempor incididunt";
+console.log("Multiline string:");
+console.log(multiline);
+
+// Strings are arrays
+let text = "Hello, World!";
+console.log("First character:", text[0]);
+
+// Looping through a string
+console.log("Characters:");
+for (char in text) {
+    console.log(char);
+}
+
+// String length
+console.log("String length:", len(text));
+
+// Check string
+let txt = "The best things in life are free!";
+// if "free" in txt would use 'in' operator
+console.log("Contains check:", txt);
+
+// Check if NOT
+// "expensive" not in txt
+
+// Slicing (not yet fully supported in PS)
+// let slice = txt[2:5]
+console.log("Slicing would extract substring");
+
+// Slice from the start
+// let slice_start = txt[:5]
+
+// Slice to the end
+// let slice_end = txt[2:]
+
+// Negative indexing
+// let slice_neg = txt[-5:-2]
+
+// String concatenation
+let first = "John";
+let last = "Doe";
+let full = first + " " + last;
+console.log("Concatenation:", full);
+
+// String formatting
+let age = 36;
+let formatted = f"My name is John, I am {age}";
+console.log("Formatted:", formatted);
+
+// Escape characters
+let escape = "We are the so-called \"Vikings\" from the north.";
+console.log("Escape:", escape);
+
+// Other escape characters
+let newline = "Hello\nWorld";
+let tab = "Hello\tWorld";
+let backslash = "This is a backslash: \\";
+
+console.log("Newline:", newline);
+console.log("Tab:", tab);
+console.log("Backslash:", backslash);
+
+console.log("\n✅ W3C Test 08 Passed: Python Strings");

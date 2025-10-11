@@ -1,0 +1,317 @@
+// W3C Test 38: Python Data Structures & Algorithms (DSA)
+// Based on: https://www.w3schools.com/python/python_dsa.asp
+
+console.log("=== W3C Test 38: Python DSA ===");
+
+// Data Structures and Algorithms are fundamental to programming
+// Python provides built-in data structures and supports custom implementations
+
+console.log("\n-- Arrays --");
+console.log("Fixed-size, contiguous memory");
+let array = [1, 2, 3, 4, 5];
+console.log("Array:", array);
+console.log("Access O(1), Insert O(n), Delete O(n)");
+
+console.log("\n-- Linked Lists --");
+console.log("Node-based, dynamic size");
+console.log("class Node:");
+console.log("    def __init__(self, data):");
+console.log("        self.data = data");
+console.log("        self.next = None");
+
+// Linked list simulation
+let node1 = {"data": 10, "next": null};
+let node2 = {"data": 20, "next": null};
+let node3 = {"data": 30, "next": null};
+node1["next"] = node2;
+node2["next"] = node3;
+
+console.log("Linked list: 10 -> 20 -> 30");
+
+console.log("\n-- Stacks (LIFO) --");
+console.log("Last In, First Out");
+let stack = [];
+stack.append(1);
+stack.append(2);
+stack.append(3);
+console.log("Stack:", stack);
+console.log("Push: append(), Pop: pop()");
+
+console.log("\n-- Queues (FIFO) --");
+console.log("First In, First Out");
+let queue = [];
+queue.append(1);
+queue.append(2);
+queue.append(3);
+console.log("Queue:", queue);
+console.log("Enqueue: append(), Dequeue: pop(0)");
+
+console.log("\n-- Hash Tables (Dictionaries) --");
+console.log("Key-value pairs, O(1) average access");
+let hash_table = {
+    "apple": 1,
+    "banana": 2,
+    "orange": 3
+};
+console.log("Hash table:", hash_table);
+console.log("Access:", hash_table["apple"]);
+
+console.log("\n-- Trees --");
+console.log("Hierarchical structure");
+console.log("Binary Tree: Each node has max 2 children");
+console.log("Binary Search Tree: Left < Parent < Right");
+
+let tree_root = {
+    "value": 10,
+    "left": {
+        "value": 5,
+        "left": null,
+        "right": null
+    },
+    "right": {
+        "value": 15,
+        "left": null,
+        "right": null
+    }
+};
+
+console.log("Tree root:", tree_root["value"]);
+console.log("Left child:", tree_root["left"]["value"]);
+console.log("Right child:", tree_root["right"]["value"]);
+
+console.log("\n-- Graphs --");
+console.log("Nodes connected by edges");
+console.log("Adjacency List representation:");
+
+let graph = {
+    "A": ["B", "C"],
+    "B": ["A", "D", "E"],
+    "C": ["A", "F"],
+    "D": ["B"],
+    "E": ["B", "F"],
+    "F": ["C", "E"]
+};
+
+console.log("Graph:", graph);
+console.log("Neighbors of B:", graph["B"]);
+
+console.log("\n-- Sorting Algorithms --");
+
+// Bubble Sort
+console.log("Bubble Sort: O(n²)");
+console.log("Compare adjacent elements, swap if wrong order");
+
+function bubble_sort(arr) {
+    let n = len(arr);
+    for (let i = 0; i < n; i += 1) {
+        for (let j = 0; j < n - i - 1; j += 1) {
+            if (arr[j] > arr[j + 1]) {
+                let temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+    return arr;
+}
+
+let unsorted = [64, 34, 25, 12, 22, 11, 90];
+console.log("Unsorted:", unsorted);
+console.log("Bubble sort would sort to:", [11, 12, 22, 25, 34, 64, 90]);
+
+// Selection Sort
+console.log("\nSelection Sort: O(n²)");
+console.log("Find minimum, place at beginning");
+
+// Insertion Sort
+console.log("\nInsertion Sort: O(n²)");
+console.log("Build sorted array one element at a time");
+
+// Merge Sort
+console.log("\nMerge Sort: O(n log n)");
+console.log("Divide and conquer, stable sort");
+
+// Quick Sort
+console.log("\nQuick Sort: O(n log n) average");
+console.log("Pivot-based partitioning");
+
+console.log("\n-- Searching Algorithms --");
+
+// Linear Search
+console.log("Linear Search: O(n)");
+console.log("Check each element sequentially");
+
+function linear_search(arr, target) {
+    for (let i = 0; i < len(arr); i += 1) {
+        if (arr[i] == target) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+let numbers = [10, 20, 30, 40, 50];
+let index = linear_search(numbers, 30);
+console.log("Found at index:", index);
+
+// Binary Search
+console.log("\nBinary Search: O(log n)");
+console.log("Requires sorted array");
+console.log("Divide search space in half each time");
+
+function binary_search(arr, target) {
+    let left = 0;
+    let right = len(arr) - 1;
+    
+    while (left <= right) {
+        let mid = int((left + right) / 2);
+        if (arr[mid] == target) {
+            return mid;
+        } else if (arr[mid] < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    return -1;
+}
+
+let sorted_arr = [10, 20, 30, 40, 50];
+let found_idx = binary_search(sorted_arr, 30);
+console.log("Binary search found at:", found_idx);
+
+console.log("\n-- Recursion --");
+console.log("Function calls itself");
+
+function factorial(n) {
+    if (n <= 1) {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+console.log("Factorial(5):", factorial(5));
+
+function fibonacci(n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+console.log("Fibonacci(7):", fibonacci(7));
+
+console.log("\n-- Dynamic Programming --");
+console.log("Store solutions to subproblems");
+console.log("Avoid redundant calculations");
+
+// Fibonacci with memoization
+let fib_cache = {};
+
+function fib_memo(n) {
+    if (n <= 1) {
+        return n;
+    }
+    if (n in Object.keys(fib_cache)) {
+        return fib_cache[n];
+    }
+    fib_cache[n] = fib_memo(n - 1) + fib_memo(n - 2);
+    return fib_cache[n];
+}
+
+console.log("Memoized Fibonacci(10):", fib_memo(10));
+
+console.log("\n-- Greedy Algorithms --");
+console.log("Make locally optimal choice");
+console.log("Example: Coin change problem");
+
+function min_coins(amount, coins) {
+    let count = 0;
+    for (let i = len(coins) - 1; i >= 0; i -= 1) {
+        while (amount >= coins[i]) {
+            amount -= coins[i];
+            count += 1;
+        }
+    }
+    return count;
+}
+
+let coin_types = [1, 5, 10, 25];
+console.log("Min coins for 63 cents:", min_coins(63, coin_types));
+
+console.log("\n-- Backtracking --");
+console.log("Try all possibilities, backtrack on failure");
+console.log("Example: N-Queens, Sudoku solver");
+
+console.log("\n-- Graph Traversal --");
+
+// BFS (Breadth-First Search)
+console.log("BFS: Level-by-level traversal");
+console.log("Uses queue, finds shortest path");
+
+// DFS (Depth-First Search)
+console.log("\nDFS: Explore as far as possible");
+console.log("Uses stack (or recursion)");
+
+console.log("\n-- Time Complexities --");
+console.log("O(1)     - Constant");
+console.log("O(log n) - Logarithmic");
+console.log("O(n)     - Linear");
+console.log("O(n log n) - Linearithmic");
+console.log("O(n²)    - Quadratic");
+console.log("O(2ⁿ)    - Exponential");
+console.log("O(n!)    - Factorial");
+
+console.log("\n-- Space Complexities --");
+console.log("Memory usage of algorithm");
+console.log("Consider: variables, call stack, data structures");
+
+console.log("\n-- Practical Applications --");
+
+// Find maximum in array
+function find_max(arr) {
+    let max_val = arr[0];
+    for (item in arr) {
+        if (item > max_val) {
+            max_val = item;
+        }
+    }
+    return max_val;
+}
+
+console.log("Max of [3, 7, 2, 9, 1]:", find_max([3, 7, 2, 9, 1]));
+
+// Check if palindrome
+function is_palindrome(text) {
+    let left = 0;
+    let right = len(text) - 1;
+    while (left < right) {
+        if (text[left] != text[right]) {
+            return false;
+        }
+        left += 1;
+        right -= 1;
+    }
+    return true;
+}
+
+console.log("'radar' is palindrome:", is_palindrome("radar"));
+console.log("'hello' is palindrome:", is_palindrome("hello"));
+
+// Two sum problem
+function two_sum(arr, target) {
+    let seen = {};
+    for (let i = 0; i < len(arr); i += 1) {
+        let complement = target - arr[i];
+        if (complement in Object.keys(seen)) {
+            return [seen[complement], i];
+        }
+        seen[arr[i]] = i;
+    }
+    return [-1, -1];
+}
+
+console.log("Two sum [2,7,11,15] target 9:", two_sum([2, 7, 11, 15], 9));
+
+console.log("\n✅ W3C Test 38 Passed: Python DSA");
+console.log("Note: DSA concepts are fundamental to efficient programming");

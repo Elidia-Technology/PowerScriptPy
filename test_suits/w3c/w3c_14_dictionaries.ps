@@ -1,0 +1,126 @@
+// W3C Test 14: Python Dictionaries
+// Based on: https://www.w3schools.com/python/python_dictionaries.asp
+
+console.log("=== W3C Test 14: Python Dictionaries ===");
+
+// Dictionary creation
+let mydict = {
+    "brand": "Ford",
+    "model": "Mustang",
+    "year": 1964
+};
+console.log("Dictionary:", mydict);
+
+// Dictionary items
+console.log("Brand:", mydict["brand"]);
+console.log("Model:", mydict["model"]);
+console.log("Year:", mydict["year"]);
+
+// Dictionary length
+console.log("Dict length:", len(Object.keys(mydict)));
+
+// Dictionary items - data types
+let dict_values = {
+    "name": "John",
+    "age": 36,
+    "active": true,
+    "scores": [85, 90, 92]
+};
+console.log("Mixed types:", dict_values);
+
+// Type checking
+console.log("Type:", typeof mydict);
+
+// Accessing items
+let car = {
+    "brand": "Ford",
+    "model": "Mustang",
+    "year": 1964
+};
+console.log("Get brand:", car["brand"]);
+
+// Get method (in Python)
+// x = car.get("model")
+
+// Get keys
+// keys = car.keys()
+console.log("Keys would return all keys");
+
+// Get values
+// values = car.values()
+console.log("Values would return all values");
+
+// Get items
+// items = car.items()
+console.log("Items would return key-value pairs");
+
+// Check if key exists
+// In Python: if "model" in car
+console.log("Checking key existence");
+
+// Change values
+car["year"] = 2020;
+console.log("After change:", car);
+
+// Update dictionary
+// car.update({"year": 2020})
+
+// Add items
+car["color"] = "red";
+console.log("After adding color:", car);
+
+// Remove items
+// car.pop("model")
+// del car["model"]
+
+// Clear dictionary
+// car.clear()
+
+// Loop through dictionary
+console.log("\nLoop through keys:");
+for (key in Object.keys(car)) {
+    console.log(" -", key, ":", car[key]);
+}
+
+// Loop through values
+console.log("\nLoop through values:");
+for (value in Object.values(car)) {
+    console.log(" -", value);
+}
+
+// Copy dictionary
+let copy_car = car;
+console.log("Copy:", copy_car);
+
+// Nested dictionaries
+let family = {
+    "child1": {
+        "name": "Emil",
+        "year": 2004
+    },
+    "child2": {
+        "name": "Tobias",
+        "year": 2007
+    },
+    "child3": {
+        "name": "Linus",
+        "year": 2011
+    }
+};
+console.log("Nested dict:", family);
+console.log("Child1 name:", family["child1"]["name"]);
+
+// Dictionary methods:
+// clear() - removes all elements
+// copy() - returns copy
+// fromkeys() - returns dict with specified keys
+// get() - returns value of specified key
+// items() - returns list of tuple pairs
+// keys() - returns list of keys
+// pop() - removes element with specified key
+// popitem() - removes last inserted key-value pair
+// setdefault() - returns value of specified key
+// update() - updates dictionary
+// values() - returns list of values
+
+console.log("\n✅ W3C Test 14 Passed: Python Dictionaries");

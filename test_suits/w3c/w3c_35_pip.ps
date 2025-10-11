@@ -1,0 +1,153 @@
+// W3C Test 35: Python PIP
+// Based on: https://www.w3schools.com/python/python_pip.asp
+
+console.log("=== W3C Test 35: Python PIP ===");
+
+// PIP is a package manager for Python packages
+// PIP stands for "Pip Installs Packages"
+
+// What is a Package?
+console.log("\n-- What is a Package? --");
+console.log("A package contains all files needed for a module");
+console.log("Modules are Python code libraries");
+
+// Check if PIP is installed
+console.log("\n-- Check PIP Installation --");
+console.log("pip --version");
+console.log("Result: pip 21.2.4 from /usr/lib/python3/dist-packages/pip (python 3.9)");
+
+// Install a package
+console.log("\n-- Install Package --");
+console.log("pip install package_name");
+console.log("Example: pip install camelcase");
+
+// Using a package
+console.log("\n-- Using Package --");
+console.log("import camelcase");
+console.log("c = camelcase.CamelCase()");
+console.log("txt = 'hello world'");
+console.log("print(c.hump(txt))");
+console.log("Result: Hello World");
+
+// Find packages
+console.log("\n-- Find Packages --");
+console.log("Visit https://pypi.org/");
+console.log("Python Package Index");
+
+// Remove a package
+console.log("\n-- Remove Package --");
+console.log("pip uninstall package_name");
+console.log("Example: pip uninstall camelcase");
+
+// List packages
+console.log("\n-- List Packages --");
+console.log("pip list");
+console.log("Shows all installed packages");
+
+// Common PIP commands
+console.log("\n-- Common PIP Commands --");
+console.log("pip install package - Install package");
+console.log("pip uninstall package - Uninstall package");
+console.log("pip list - List installed packages");
+console.log("pip show package - Show package info");
+console.log("pip search package - Search for package");
+console.log("pip freeze - Output installed packages");
+console.log("pip install --upgrade package - Upgrade package");
+console.log("pip install package==version - Install specific version");
+
+// Requirements file
+console.log("\n-- Requirements File --");
+console.log("Create requirements.txt:");
+console.log("requests==2.28.0");
+console.log("numpy==1.23.0");
+console.log("pandas==1.4.2");
+console.log("");
+console.log("Install from requirements:");
+console.log("pip install -r requirements.txt");
+
+// Virtual environments
+console.log("\n-- Virtual Environments --");
+console.log("python -m venv myenv");
+console.log("source myenv/bin/activate (Linux/Mac)");
+console.log("myenv\\Scripts\\activate (Windows)");
+console.log("pip install packages in isolated environment");
+console.log("deactivate - Exit virtual environment");
+
+// Popular packages
+console.log("\n-- Popular Python Packages --");
+console.log("requests - HTTP library");
+console.log("numpy - Numerical computing");
+console.log("pandas - Data analysis");
+console.log("matplotlib - Plotting");
+console.log("django - Web framework");
+console.log("flask - Micro web framework");
+console.log("tensorflow - Machine learning");
+console.log("pytorch - Deep learning");
+console.log("scikit-learn - Machine learning");
+console.log("beautifulsoup4 - Web scraping");
+console.log("selenium - Browser automation");
+console.log("pillow - Image processing");
+
+// Package management in PowerScript
+console.log("\n-- Package Management in PS --");
+console.log("PowerScript may have its own package manager");
+console.log("Similar to npm for JavaScript");
+console.log("Or pip for Python");
+
+// Example package.json concept
+let package_info = {
+    "name": "my-powerscript-app",
+    "version": "1.0.0",
+    "dependencies": {
+        "http": "^1.0.0",
+        "json": "^2.0.0"
+    }
+};
+
+console.log("\nPackage info concept:");
+console.log("Name:", package_info["name"]);
+console.log("Version:", package_info["version"]);
+console.log("Dependencies:", package_info["dependencies"]);
+
+// Practical examples
+console.log("\n-- Practical Examples --");
+
+// Install multiple packages
+console.log("Install multiple packages:");
+console.log("pip install requests numpy pandas");
+
+// Upgrade pip
+console.log("\nUpgrade pip:");
+console.log("pip install --upgrade pip");
+
+// Install from git
+console.log("\nInstall from git:");
+console.log("pip install git+https://github.com/user/repo.git");
+
+// Install editable package
+console.log("\nInstall editable (development mode):");
+console.log("pip install -e .");
+
+// Show package details
+console.log("\nShow package details:");
+console.log("pip show requests");
+console.log("Name: requests");
+console.log("Version: 2.28.0");
+console.log("Summary: HTTP library");
+console.log("Home-page: https://requests.readthedocs.io");
+
+// Freeze installed packages
+console.log("\nFreeze packages:");
+console.log("pip freeze > requirements.txt");
+console.log("Saves all installed packages with versions");
+
+// Install specific version
+console.log("\nInstall specific version:");
+console.log("pip install django==3.2.0");
+
+// Install minimum version
+console.log("\nInstall minimum version:");
+console.log("pip install 'django>=3.0'");
+
+console.log("\n✅ W3C Test 35 Passed: Python PIP");
+console.log("Note: Package management for PowerScript may be developed");

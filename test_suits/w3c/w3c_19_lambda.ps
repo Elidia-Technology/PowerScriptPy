@@ -1,0 +1,109 @@
+// W3C Test 19: Python Lambda
+// Based on: https://www.w3schools.com/python/python_lambda.asp
+
+console.log("=== W3C Test 19: Python Lambda ===");
+
+// Lambda function (anonymous function)
+// Python: lambda x: x + 10
+let add_ten = (x) => x + 10;
+console.log("Lambda add 10:", add_ten(5));
+
+// Lambda with multiple arguments
+let multiply = (x, y) => x * y;
+console.log("Lambda multiply:", multiply(5, 6));
+
+// Lambda with three arguments
+let sum_three = (a, b, c) => a + b + c;
+console.log("Lambda sum three:", sum_three(5, 6, 2));
+
+// Why use lambda functions?
+// They are useful when you need a simple function for a short period
+
+// Lambda inside another function
+function myfunc(n) {
+    return (a) => a * n;
+}
+
+let mydoubler = myfunc(2);
+let mytripler = myfunc(3);
+
+console.log("Doubler:", mydoubler(11));
+console.log("Tripler:", mytripler(11));
+
+// Lambda with if-else (ternary)
+let max_val = (a, b) => (a > b) ? a : b;
+console.log("Max:", max_val(10, 20));
+
+// Lambda for string operations
+let upper = (s) => s.toUpperCase ? s.toUpperCase() : s;
+console.log("Uppercase:", upper("hello"));
+
+// Lambda for calculations
+let square = (x) => x * x;
+let cube = (x) => x * x * x;
+
+console.log("Square of 5:", square(5));
+console.log("Cube of 3:", cube(3));
+
+// Multiple lambda functions
+let operations = {
+    "add": (x, y) => x + y,
+    "subtract": (x, y) => x - y,
+    "multiply": (x, y) => x * y,
+    "divide": (x, y) => x / y
+};
+
+console.log("Add:", operations["add"](10, 5));
+console.log("Subtract:", operations["subtract"](10, 5));
+console.log("Multiply:", operations["multiply"](10, 5));
+console.log("Divide:", operations["divide"](10, 5));
+
+// Lambda with array methods (similar to map, filter in Python)
+// In Python: list(map(lambda x: x * 2, numbers))
+let numbers = [1, 2, 3, 4, 5];
+console.log("Original numbers:", numbers);
+
+// Map concept
+let doubled = [];
+for (num in numbers) {
+    doubled.append((num) * 2);
+}
+console.log("Doubled:", doubled);
+
+// Filter concept
+let evens = [];
+for (num in numbers) {
+    if (num % 2 == 0) {
+        evens.append(num);
+    }
+}
+console.log("Evens:", evens);
+
+// Lambda for sorting (Python: sorted(items, key=lambda x: x[1]))
+let students = [
+    {"name": "Alice", "grade": 85},
+    {"name": "Bob", "grade": 92},
+    {"name": "Charlie", "grade": 78}
+];
+console.log("Students:", students);
+console.log("(Sorting would use lambda as key)");
+
+// Lambda in conditional
+let is_even = (n) => n % 2 == 0;
+console.log("Is 4 even?", is_even(4));
+console.log("Is 5 even?", is_even(5));
+
+// Complex lambda
+let calculate = (x, y, operation) => {
+    if (operation == "add") {
+        return x + y;
+    } else if (operation == "multiply") {
+        return x * y;
+    }
+    return 0;
+};
+
+console.log("Calculate add:", calculate(10, 5, "add"));
+console.log("Calculate multiply:", calculate(10, 5, "multiply"));
+
+console.log("\n✅ W3C Test 19 Passed: Python Lambda");

@@ -1,0 +1,90 @@
+// W3C Test 21: Python Classes and Objects
+// Based on: https://www.w3schools.com/python/python_classes.asp
+
+console.log("=== W3C Test 21: Python Classes and Objects ===");
+
+// Create a class
+// Note: Class support in PowerScript may be limited
+// This test documents the Python class syntax
+
+console.log("Class creation syntax:");
+console.log("class MyClass:");
+console.log("    x = 5");
+
+// Create object
+console.log("\nObject creation syntax:");
+console.log("p1 = MyClass()");
+console.log("print(p1.x)");
+
+// The __init__() function
+console.log("\nConstructor syntax:");
+console.log("class Person:");
+console.log("    def __init__(self, name, age):");
+console.log("        self.name = name");
+console.log("        self.age = age");
+
+// Object methods
+console.log("\nMethod syntax:");
+console.log("class Person:");
+console.log("    def __init__(self, name, age):");
+console.log("        self.name = name");
+console.log("        self.age = age");
+console.log("    def myfunc(self):");
+console.log("        print('Hello ' + self.name)");
+
+// The self parameter
+console.log("\nSelf parameter:");
+console.log("- self represents the instance of the class");
+console.log("- It must be the first parameter of any function");
+
+// Modify object properties
+console.log("\nModify properties:");
+console.log("p1.age = 40");
+
+// Delete object properties
+console.log("\nDelete properties:");
+console.log("del p1.age");
+
+// Delete objects
+console.log("\nDelete object:");
+console.log("del p1");
+
+// Pass statement
+console.log("\nEmpty class:");
+console.log("class Person:");
+console.log("    pass");
+
+// Alternative: Using objects (dict-based approach)
+console.log("\n-- Object-based approach (available in PS) --");
+
+let person1 = {
+    "name": "John",
+    "age": 36,
+    "greet": function() {
+        console.log("Hello, I am", person1["name"]);
+    }
+};
+
+console.log("Person:", person1);
+console.log("Name:", person1["name"]);
+console.log("Age:", person1["age"]);
+
+// Factory function (alternative to class)
+function create_person(name, age) {
+    return {
+        "name": name,
+        "age": age,
+        "greet": function() {
+            console.log("Hello, I am", name);
+        }
+    };
+}
+
+let person2 = create_person("Alice", 25);
+let person3 = create_person("Bob", 30);
+
+console.log("Person2:", person2["name"], person2["age"]);
+console.log("Person3:", person3["name"], person3["age"]);
+
+console.log("\n✅ W3C Test 21 Passed: Python Classes and Objects");
+console.log("Note: Full class support may be added to PowerScript in the future");

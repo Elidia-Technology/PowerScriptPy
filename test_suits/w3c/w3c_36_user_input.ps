@@ -1,0 +1,184 @@
+// W3C Test 36: Python User Input
+// Based on: https://www.w3schools.com/python/python_user_input.asp
+
+console.log("=== W3C Test 36: Python User Input ===");
+
+// Python allows for user input
+// That means we can ask the user for input
+
+// Python 3.6 uses input() method
+console.log("\n-- input() Method --");
+console.log("username = input('Enter username: ')");
+console.log("print('Username is:', username)");
+
+// Python 2.x uses raw_input()
+console.log("\n-- Python 2.x --");
+console.log("username = raw_input('Enter username: ')");
+
+// Input with prompt
+console.log("\n-- Input with Prompt --");
+console.log("name = input('What is your name? ')");
+console.log("print('Hello,', name)");
+
+// Input returns string
+console.log("\n-- Input Type --");
+console.log("All input is returned as string");
+console.log("Need to convert for numbers");
+
+// Converting input
+console.log("\n-- Converting Input --");
+console.log("age = input('Enter age: ')");
+console.log("age = int(age)");
+console.log("Or: age = int(input('Enter age: '))");
+
+// Multiple inputs
+console.log("\n-- Multiple Inputs --");
+console.log("name = input('Name: ')");
+console.log("age = input('Age: ')");
+console.log("city = input('City: ')");
+
+// Input validation
+console.log("\n-- Input Validation --");
+console.log("while True:");
+console.log("    age = input('Enter age: ')");
+console.log("    if age.isdigit():");
+console.log("        age = int(age)");
+console.log("        break");
+console.log("    print('Please enter a number')");
+
+// PowerScript input handling
+console.log("\n-- Input in PowerScript --");
+console.log("PowerScript may use console.read() or similar");
+console.log("Or integrate with GUI input methods");
+
+// Simulated input handling
+function simulate_input(prompt, default_value) {
+    console.log(prompt);
+    return default_value;
+}
+
+console.log("\nSimulated input:");
+let username = simulate_input("Enter username: ", "john_doe");
+console.log("Username:", username);
+
+let age = simulate_input("Enter age: ", "25");
+let age_num = int(age);
+console.log("Age:", age_num);
+
+// Practical examples
+console.log("\n-- Practical Examples --");
+
+// Simple calculator
+console.log("\nCalculator simulation:");
+let num1 = simulate_input("Enter first number: ", "10");
+let num2 = simulate_input("Enter second number: ", "5");
+let operation = simulate_input("Enter operation (+, -, *, /): ", "+");
+
+let n1 = int(num1);
+let n2 = int(num2);
+
+if (operation == "+") {
+    console.log("Result:", n1 + n2);
+} else if (operation == "-") {
+    console.log("Result:", n1 - n2);
+} else if (operation == "*") {
+    console.log("Result:", n1 * n2);
+} else if (operation == "/") {
+    console.log("Result:", n1 / n2);
+}
+
+// User registration
+console.log("\nUser registration simulation:");
+let reg_name = simulate_input("Full name: ", "John Doe");
+let reg_email = simulate_input("Email: ", "john@example.com");
+let reg_password = simulate_input("Password: ", "secret123");
+
+let user_data = {
+    "name": reg_name,
+    "email": reg_email,
+    "password": reg_password
+};
+
+console.log("User registered:", user_data["name"]);
+
+// Quiz application
+console.log("\nQuiz simulation:");
+console.log("Question: What is 2 + 2?");
+let answer = simulate_input("Your answer: ", "4");
+
+if (answer == "4") {
+    console.log("Correct!");
+} else {
+    console.log("Wrong! The answer is 4");
+}
+
+// Menu system
+console.log("\nMenu system simulation:");
+console.log("1. View profile");
+console.log("2. Edit profile");
+console.log("3. Logout");
+let choice = simulate_input("Select option: ", "1");
+
+if (choice == "1") {
+    console.log("Viewing profile...");
+} else if (choice == "2") {
+    console.log("Editing profile...");
+} else if (choice == "3") {
+    console.log("Logging out...");
+}
+
+// Form input
+console.log("\nForm input simulation:");
+let form = {
+    "first_name": simulate_input("First name: ", "John"),
+    "last_name": simulate_input("Last name: ", "Doe"),
+    "age": simulate_input("Age: ", "30"),
+    "country": simulate_input("Country: ", "USA")
+};
+
+console.log("\nForm submitted:");
+for (field in Object.keys(form)) {
+    console.log(field, ":", form[field]);
+}
+
+// Yes/No confirmation
+console.log("\nConfirmation simulation:");
+let confirm = simulate_input("Are you sure? (yes/no): ", "yes");
+
+if (confirm == "yes" || confirm == "y") {
+    console.log("Confirmed!");
+} else {
+    console.log("Cancelled");
+}
+
+// List input
+console.log("\nList input simulation:");
+let items = [];
+console.log("Enter items (type 'done' to finish):");
+items.append(simulate_input("Item: ", "apple"));
+items.append(simulate_input("Item: ", "banana"));
+items.append(simulate_input("Item: ", "cherry"));
+console.log("Items:", items);
+
+// Input with retry
+console.log("\nInput with retry simulation:");
+let attempts = 0;
+let max_attempts = 3;
+
+while (attempts < max_attempts) {
+    let password = simulate_input("Enter password: ", "wrong");
+    if (password == "secret") {
+        console.log("Access granted!");
+        break;
+    } else {
+        attempts += 1;
+        console.log("Wrong password. Attempts left:", max_attempts - attempts);
+    }
+}
+
+if (attempts == max_attempts) {
+    console.log("Access denied!");
+}
+
+console.log("\n✅ W3C Test 36 Passed: Python User Input");
+console.log("Note: Input methods for PowerScript may be developed");

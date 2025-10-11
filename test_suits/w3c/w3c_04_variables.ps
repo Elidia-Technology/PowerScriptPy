@@ -1,0 +1,69 @@
+// W3C Test 04: Python Variables
+// Based on: https://www.w3schools.com/python/python_variables.asp
+
+console.log("=== W3C Test 04: Python Variables ===");
+
+// Creating variables
+let x = 5;
+let y = "John";
+console.log("x:", x);
+console.log("y:", y);
+
+// Variables do not need to be declared with a particular type
+let z = 4;
+z = "Sally"; // Can change type
+console.log("z:", z);
+
+// Casting
+let a = str(3);
+let b = int(3);
+let c = float(3);
+console.log("Casted values:", a, b, c);
+
+// Get the type (would use type() in Python)
+console.log("Type of x:", typeof x);
+
+// Single or double quotes
+let name1 = "John";
+let name2 = "John";
+console.log("Names:", name1, name2);
+
+// Case-sensitive
+let myVar = "John";
+let myvar = "Sally";
+console.log("Case sensitive:", myVar, myvar);
+
+// Variable names
+let myVariableName = "camelCase";
+let MyVariableName = "PascalCase";
+let my_variable_name = "snake_case";
+console.log("Naming conventions:", myVariableName, MyVariableName, my_variable_name);
+
+// Many values to multiple variables
+let x1 = 1;
+let y1 = 2;
+let z1 = 3;
+console.log("Multiple assignment:", x1, y1, z1);
+
+// One value to multiple variables
+let val = "Orange";
+console.log("Same value:", val);
+
+// Unpack a collection
+let fruits = ["apple", "banana", "cherry"];
+let fruit1 = fruits[0];
+let fruit2 = fruits[1];
+let fruit3 = fruits[2];
+console.log("Unpacked:", fruit1, fruit2, fruit3);
+
+// Output variables
+console.log("The value is:", x);
+
+// Global variables
+let globalVar = "awesome";
+function testFunc() {
+    console.log("Python is", globalVar);
+}
+testFunc();
+
+console.log("\n✅ W3C Test 04 Passed: Python Variables");

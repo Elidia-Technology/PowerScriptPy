@@ -1,0 +1,119 @@
+// W3C Test 15: Python If...Else
+// Based on: https://www.w3schools.com/python/python_conditions.asp
+
+console.log("=== W3C Test 15: Python If...Else ===");
+
+// If statement
+let a = 33;
+let b = 200;
+
+if (b > a) {
+    console.log("b is greater than a");
+}
+
+// Elif (else if)
+let x = 33;
+let y = 33;
+
+if (y > x) {
+    console.log("y is greater than x");
+} else if (x == y) {
+    console.log("x and y are equal");
+}
+
+// Else
+let p = 200;
+let q = 33;
+
+if (q > p) {
+    console.log("q is greater than p");
+} else if (p == q) {
+    console.log("p and q are equal");
+} else {
+    console.log("p is greater than q");
+}
+
+// Short hand if
+// if a > b: print("a is greater than b")
+if (a > b) console.log("a is greater than b");
+
+// Short hand if...else (ternary operator)
+let result = (a > b) ? "a is greater" : "b is greater";
+console.log("Ternary result:", result);
+
+// And
+let m = 200;
+let n = 33;
+let o = 500;
+
+if (m > n && o > m) {
+    console.log("Both conditions are True");
+}
+
+// Or
+if (m > n || m > o) {
+    console.log("At least one condition is True");
+}
+
+// Not
+let z = 33;
+if (!(z > 100)) {
+    console.log("z is not greater than 100");
+}
+
+// Nested if
+let num = 41;
+
+if (num > 10) {
+    console.log("Above ten,");
+    if (num > 20) {
+        console.log("and also above 20!");
+    } else {
+        console.log("but not above 20.");
+    }
+}
+
+// Pass statement (in Python, use pass for empty if)
+// In PS/JS, just use empty block or comment
+if (num > 100) {
+    // pass / do nothing
+}
+
+// Multiple conditions
+let age = 25;
+let has_license = true;
+
+if (age >= 18 && has_license) {
+    console.log("Can drive");
+} else {
+    console.log("Cannot drive");
+}
+
+// Checking multiple values
+let score = 85;
+
+if (score >= 90) {
+    console.log("Grade: A");
+} else if (score >= 80) {
+    console.log("Grade: B");
+} else if (score >= 70) {
+    console.log("Grade: C");
+} else if (score >= 60) {
+    console.log("Grade: D");
+} else {
+    console.log("Grade: F");
+}
+
+// Boolean conditions
+let is_active = true;
+let is_verified = false;
+
+if (is_active) {
+    console.log("User is active");
+}
+
+if (!is_verified) {
+    console.log("User is not verified");
+}
+
+console.log("\n✅ W3C Test 15 Passed: Python If...Else");

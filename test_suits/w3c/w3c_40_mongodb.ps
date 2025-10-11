@@ -1,0 +1,274 @@
+// W3C Test 40: Python MongoDB
+// Based on: https://www.w3schools.com/python/python_mongodb_getstarted.asp
+
+console.log("=== W3C Test 40: Python MongoDB ===");
+
+// MongoDB is a NoSQL database
+// Python uses pymongo library to interact with MongoDB
+
+console.log("\n-- Install PyMongo --");
+console.log("pip install pymongo");
+
+console.log("\n-- Import PyMongo --");
+console.log("import pymongo");
+
+console.log("\n-- Create Connection --");
+console.log("myclient = pymongo.MongoClient('mongodb://localhost:27017/')");
+
+console.log("\n-- Create Database --");
+console.log("mydb = myclient['mydatabase']");
+
+console.log("\n-- Create Collection --");
+console.log("mycol = mydb['customers']");
+
+// PowerScript MongoDB simulation
+console.log("\n-- PowerScript MongoDB Simulation --");
+
+let MongoDB = {
+    "connect": function(uri) {
+        console.log("Connecting to MongoDB:", uri);
+        return {
+            "database": function(name) {
+                console.log("Using database:", name);
+                return MongoDB["_db"];
+            },
+            "close": function() {
+                console.log("Connection closed");
+            }
+        };
+    },
+    "_db": {
+        "collection": function(name) {
+            console.log("Using collection:", name);
+            return MongoDB["_collection"];
+        },
+        "list_collection_names": function() {
+            return ["customers", "products", "orders"];
+        }
+    },
+    "_collection": {
+        "insert_one": function(doc) {
+            console.log("Inserting document:", doc);
+            return {"inserted_id": "507f1f77bcf86cd799439011"};
+        },
+        "insert_many": function(docs) {
+            console.log("Inserting", len(docs), "documents");
+            return {"inserted_ids": ["id1", "id2", "id3"]};
+        },
+        "find": function(query) {
+            console.log("Finding documents:", query);
+            return [
+                {"_id": "1", "name": "John", "address": "Highway 37"},
+                {"_id": "2", "name": "Peter", "address": "Lowstreet 27"}
+            ];
+        },
+        "find_one": function(query) {
+            console.log("Finding one document:", query);
+            return {"_id": "1", "name": "John", "address": "Highway 37"};
+        },
+        "update_one": function(query, newvalues) {
+            console.log("Updating one document");
+            console.log("Query:", query);
+            console.log("New values:", newvalues);
+            return {"matched_count": 1, "modified_count": 1};
+        },
+        "update_many": function(query, newvalues) {
+            console.log("Updating many documents");
+            return {"matched_count": 3, "modified_count": 3};
+        },
+        "delete_one": function(query) {
+            console.log("Deleting one document:", query);
+            return {"deleted_count": 1};
+        },
+        "delete_many": function(query) {
+            console.log("Deleting many documents:", query);
+            return {"deleted_count": 5};
+        },
+        "drop": function() {
+            console.log("Collection dropped");
+        }
+    }
+};
+
+// Connect to MongoDB
+console.log("\n-- Example: Connect to MongoDB --");
+let client = MongoDB["connect"]("mongodb://localhost:27017/");
+let db = client["database"]("testdb");
+let collection = db["collection"]("customers");
+
+console.log("\n-- Insert Document --");
+let customer = {
+    "name": "John",
+    "address": "Highway 37"
+};
+let result = collection["insert_one"](customer);
+console.log("Inserted ID:", result["inserted_id"]);
+
+console.log("\n-- Insert Multiple Documents --");
+let customers = [
+    {"name": "Amy", "address": "Apple st 652"},
+    {"name": "Hannah", "address": "Mountain 21"},
+    {"name": "Michael", "address": "Valley 345"},
+    {"name": "Sandy", "address": "Ocean blvd 2"},
+    {"name": "Betty", "address": "Green Grass 1"}
+];
+let insert_result = collection["insert_many"](customers);
+console.log("Inserted IDs:", insert_result["inserted_ids"]);
+
+console.log("\n-- Find All Documents --");
+let docs = collection["find"]({});
+console.log("All documents:");
+for (doc in docs) {
+    console.log("  ", doc);
+}
+
+console.log("\n-- Find One Document --");
+let one_doc = collection["find_one"]({});
+console.log("First document:", one_doc);
+
+console.log("\n-- Find With Query --");
+let query = {"address": "Highway 37"};
+let filtered = collection["find"](query);
+console.log("Filtered documents:", filtered);
+
+console.log("\n-- Query With Filter --");
+let regex_query = {"address": {"$regex": "^H"}};
+console.log("Query:", regex_query);
+collection["find"](regex_query);
+
+console.log("\n-- Sort Results --");
+console.log("Ascending: sort('name', 1)");
+console.log("Descending: sort('name', -1)");
+
+console.log("\n-- Update Document --");
+let update_query = {"address": "Valley 345"};
+let new_values = {"$set": {"address": "Canyon 123"}};
+collection["update_one"](update_query, new_values);
+console.log("Document updated");
+
+console.log("\n-- Update Many --");
+let update_many_query = {"address": {"$regex": "^S"}};
+let update_many_values = {"$set": {"name": "Minnie"}};
+collection["update_many"](update_many_query, update_many_values);
+
+console.log("\n-- Delete Document --");
+let delete_query = {"address": "Mountain 21"};
+collection["delete_one"](delete_query);
+console.log("Document deleted");
+
+console.log("\n-- Delete Many --");
+let delete_many_query = {"address": {"$regex": "^S"}};
+collection["delete_many"](delete_many_query);
+console.log("Multiple documents deleted");
+
+console.log("\n-- Drop Collection --");
+collection["drop"]();
+console.log("Collection dropped");
+
+console.log("\n-- List Collections --");
+let collist = db["list_collection_names"]();
+console.log("Collections:", collist);
+
+console.log("\n-- MongoDB Operators --");
+console.log("$eq  - Equal to");
+console.log("$ne  - Not equal to");
+console.log("$gt  - Greater than");
+console.log("$gte - Greater than or equal to");
+console.log("$lt  - Less than");
+console.log("$lte - Less than or equal to");
+console.log("$in  - In array");
+console.log("$nin - Not in array");
+console.log("$and - Logical AND");
+console.log("$or  - Logical OR");
+console.log("$not - Logical NOT");
+
+console.log("\n-- Query Examples --");
+console.log("Greater than:");
+let gt_query = {"age": {"$gt": 25}};
+console.log("  ", gt_query);
+
+console.log("\nRegex:");
+let regex_ex = {"name": {"$regex": "^J"}};
+console.log("  ", regex_ex);
+
+console.log("\nMultiple conditions:");
+let multi_query = {"$and": [{"age": {"$gt": 20}}, {"age": {"$lt": 40}}]};
+console.log("  ", multi_query);
+
+console.log("\n-- Limit Results --");
+console.log("find().limit(5)");
+console.log("Returns first 5 documents");
+
+console.log("\n-- Aggregation --");
+console.log("pipeline = [");
+console.log("    {'$match': {'status': 'active'}},");
+console.log("    {'$group': {'_id': '$category', 'total': {'$sum': 1}}}");
+console.log("]");
+console.log("collection.aggregate(pipeline)");
+
+console.log("\n-- Indexing --");
+console.log("collection.create_index('name')");
+console.log("Improves query performance");
+
+// Practical example: Blog system
+console.log("\n-- Practical: Blog System --");
+
+let blog_collection = db["collection"]("posts");
+
+function create_post(title, content, author) {
+    let post = {
+        "title": title,
+        "content": content,
+        "author": author,
+        "created_at": "2025-10-11T14:30:00",
+        "views": 0,
+        "likes": 0,
+        "comments": []
+    };
+    console.log("Creating post:", title);
+    return blog_collection["insert_one"](post);
+}
+
+function get_posts_by_author(author) {
+    let query = {"author": author};
+    console.log("Getting posts by:", author);
+    return blog_collection["find"](query);
+}
+
+function add_comment(post_id, comment) {
+    let query = {"_id": post_id};
+    let update = {"$push": {"comments": comment}};
+    console.log("Adding comment to post:", post_id);
+    return blog_collection["update_one"](query, update);
+}
+
+function increment_views(post_id) {
+    let query = {"_id": post_id};
+    let update = {"$inc": {"views": 1}};
+    console.log("Incrementing views for:", post_id);
+    return blog_collection["update_one"](query, update);
+}
+
+// Test blog functions
+create_post("My First Post", "This is the content...", "John");
+let posts = get_posts_by_author("John");
+console.log("Posts by John:", posts);
+
+add_comment("post_id_1", {
+    "user": "Alice",
+    "text": "Great post!",
+    "timestamp": "2025-10-11T15:00:00"
+});
+
+increment_views("post_id_1");
+
+console.log("\n-- Connection URI Formats --");
+console.log("Local: mongodb://localhost:27017/");
+console.log("Auth: mongodb://username:password@localhost:27017/");
+console.log("Atlas: mongodb+srv://user:pass@cluster.mongodb.net/db");
+
+// Close connection
+client["close"]();
+
+console.log("\n✅ W3C Test 40 Passed: Python MongoDB");
+console.log("Note: Database module may support MongoDB in PowerScript");

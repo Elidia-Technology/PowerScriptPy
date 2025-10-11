@@ -1,0 +1,57 @@
+// W3C Test 05: Python Data Types
+// Based on: https://www.w3schools.com/python/python_datatypes.asp
+
+console.log("=== W3C Test 05: Python Data Types ===");
+
+// Built-in Data Types
+// Text Type: str
+let text = "Hello World";
+console.log("Text:", text);
+
+// Numeric Types: int, float, complex
+let num_int = 20;
+let num_float = 20.5;
+// complex not yet supported in PS
+console.log("Numeric:", num_int, num_float);
+
+// Sequence Types: list, tuple, range
+let list_data = ["apple", "banana", "cherry"];
+let tuple_data = ["apple", "banana", "cherry"]; // Tuples in PS represented as arrays
+console.log("List:", list_data);
+console.log("Tuple:", tuple_data);
+
+// Mapping Type: dict
+let dict_data = {"name": "John", "age": 36};
+console.log("Dict:", dict_data);
+
+// Set Types: set, frozenset
+let set_data = ["apple", "banana", "cherry"]; // Sets in PS represented as arrays
+console.log("Set:", set_data);
+
+// Boolean Type: bool
+let bool_data = true;
+console.log("Boolean:", bool_data);
+
+// Binary Types: bytes, bytearray, memoryview
+// Not directly supported in PS
+
+// None Type
+let none_data = null;
+console.log("None:", none_data);
+
+// Getting the Data Type
+console.log("Type of text:", typeof text);
+console.log("Type of num_int:", typeof num_int);
+console.log("Type of bool_data:", typeof bool_data);
+
+// Setting the Data Type
+let x1 = "Hello World"; // str
+let x2 = 20; // int
+let x3 = 20.5; // float
+let x4 = ["apple", "banana", "cherry"]; // list
+let x5 = {"name": "John", "age": 36}; // dict
+let x6 = true; // bool
+
+console.log("All types created:", x1, x2, x3, x4, x5, x6);
+
+console.log("\n✅ W3C Test 05 Passed: Python Data Types");

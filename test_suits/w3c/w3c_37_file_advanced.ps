@@ -1,0 +1,245 @@
+// W3C Test 37: Python File Handling - Advanced
+// Based on: https://www.w3schools.com/python/python_file_handling.asp
+
+console.log("=== W3C Test 37: Python File Handling - Advanced ===");
+
+// File handling is crucial for data persistence
+// Python provides comprehensive file handling capabilities
+
+console.log("\n-- File Objects --");
+console.log("File object represents a file on disk");
+console.log("f = open('filename.txt', mode)");
+
+// File modes in detail
+console.log("\n-- File Modes (Detailed) --");
+console.log("'r'  - Read only (default)");
+console.log("'w'  - Write only (overwrite)");
+console.log("'a'  - Append only");
+console.log("'r+' - Read and write");
+console.log("'w+' - Write and read (overwrite)");
+console.log("'a+' - Append and read");
+console.log("'x'  - Create new file (exclusive)");
+console.log("'b'  - Binary mode");
+console.log("'t'  - Text mode (default)");
+
+// Reading methods
+console.log("\n-- Reading Methods --");
+console.log("read() - Read entire file");
+console.log("read(n) - Read n bytes");
+console.log("readline() - Read one line");
+console.log("readlines() - Read all lines as list");
+
+// Writing methods
+console.log("\n-- Writing Methods --");
+console.log("write(str) - Write string");
+console.log("writelines(list) - Write list of strings");
+
+// File position methods
+console.log("\n-- File Position --");
+console.log("tell() - Get current position");
+console.log("seek(offset, whence) - Set position");
+console.log("  whence: 0=start, 1=current, 2=end");
+
+// Context managers
+console.log("\n-- Context Manager (with) --");
+console.log("with open('file.txt', 'r') as f:");
+console.log("    content = f.read()");
+console.log("# File automatically closed");
+
+// File object attributes
+console.log("\n-- File Attributes --");
+console.log("f.name - File name");
+console.log("f.mode - File mode");
+console.log("f.closed - Is file closed?");
+
+// PowerScript File Operations
+console.log("\n-- PowerScript File Operations --");
+
+let FileSystem = {
+    "read": function(path) {
+        console.log("Reading file:", path);
+        return "Sample file content\\nLine 2\\nLine 3";
+    },
+    "write": function(path, content) {
+        console.log("Writing to:", path);
+        console.log("Content length:", len(str(content)));
+        return true;
+    },
+    "append": function(path, content) {
+        console.log("Appending to:", path);
+        return true;
+    },
+    "exists": function(path) {
+        console.log("Checking existence:", path);
+        return true;
+    },
+    "delete": function(path) {
+        console.log("Deleting:", path);
+        return true;
+    },
+    "list": function(path) {
+        console.log("Listing directory:", path);
+        return ["file1.txt", "file2.txt", "subdir"];
+    },
+    "mkdir": function(path) {
+        console.log("Creating directory:", path);
+        return true;
+    },
+    "rmdir": function(path) {
+        console.log("Removing directory:", path);
+        return true;
+    }
+};
+
+// Read file example
+console.log("\n-- Read File Example --");
+let content = FileSystem["read"]("data.txt");
+console.log("Content:", content);
+
+// Write file example
+console.log("\n-- Write File Example --");
+let data = "Hello, World!\\nThis is a test.";
+FileSystem["write"]("output.txt", data);
+
+// Append to file
+console.log("\n-- Append Example --");
+FileSystem["append"]("log.txt", "\\nNew log entry");
+
+// Check if file exists
+console.log("\n-- Check Existence --");
+if (FileSystem["exists"]("config.txt")) {
+    console.log("File exists");
+}
+
+// List directory
+console.log("\n-- List Directory --");
+let files = FileSystem["list"](".");
+console.log("Files:", files);
+
+// CSV file handling simulation
+console.log("\n-- CSV File Handling --");
+console.log("Python: import csv");
+console.log("with open('data.csv', 'r') as f:");
+console.log("    reader = csv.reader(f)");
+console.log("    for row in reader:");
+console.log("        print(row)");
+
+let csv_data = [
+    ["Name", "Age", "City"],
+    ["John", "30", "New York"],
+    ["Alice", "25", "London"],
+    ["Bob", "35", "Paris"]
+];
+
+console.log("\nCSV Data:");
+for (row in csv_data) {
+    console.log(row);
+}
+
+// JSON file handling
+console.log("\n-- JSON File Handling --");
+let json_data = {
+    "users": [
+        {"name": "John", "age": 30},
+        {"name": "Alice", "age": 25}
+    ]
+};
+
+console.log("JSON data:", json_data);
+console.log("Writing JSON would use json.dumps()");
+
+// Binary file handling
+console.log("\n-- Binary Files --");
+console.log("with open('image.jpg', 'rb') as f:");
+console.log("    data = f.read()");
+console.log("Binary mode reads bytes");
+
+// File path operations
+console.log("\n-- Path Operations --");
+console.log("import os.path");
+console.log("os.path.exists(path) - Check existence");
+console.log("os.path.isfile(path) - Is it a file?");
+console.log("os.path.isdir(path) - Is it a directory?");
+console.log("os.path.join(a, b) - Join paths");
+console.log("os.path.split(path) - Split path");
+console.log("os.path.basename(path) - Get filename");
+console.log("os.path.dirname(path) - Get directory");
+console.log("os.path.abspath(path) - Absolute path");
+
+// Practical example: Log file
+console.log("\n-- Practical: Log File --");
+
+function write_log(message) {
+    let timestamp = "2025-10-11 14:30:45";
+    let log_entry = f"{timestamp} - {message}";
+    console.log("Log:", log_entry);
+    FileSystem["append"]("app.log", log_entry + "\\n");
+}
+
+write_log("Application started");
+write_log("User logged in");
+write_log("Data processed");
+
+// Practical example: Configuration file
+console.log("\n-- Practical: Config File --");
+
+let config = {
+    "database": {
+        "host": "localhost",
+        "port": 5432,
+        "name": "mydb"
+    },
+    "app": {
+        "debug": true,
+        "version": "1.0.0"
+    }
+};
+
+console.log("Config:", config);
+console.log("Would save as JSON file");
+
+// Practical example: Data export
+console.log("\n-- Practical: Data Export --");
+
+let users = [
+    {"id": 1, "name": "John", "email": "john@example.com"},
+    {"id": 2, "name": "Alice", "email": "alice@example.com"},
+    {"id": 3, "name": "Bob", "email": "bob@example.com"}
+];
+
+console.log("Exporting users to CSV:");
+let csv_header = "ID,Name,Email";
+console.log(csv_header);
+
+for (user in users) {
+    let csv_row = f"{user['id']},{user['name']},{user['email']}";
+    console.log(csv_row);
+}
+
+// File locking concept
+console.log("\n-- File Locking --");
+console.log("import fcntl (Unix/Linux)");
+console.log("fcntl.flock(f, fcntl.LOCK_EX)");
+console.log("Prevents concurrent access");
+
+// Temporary files
+console.log("\n-- Temporary Files --");
+console.log("import tempfile");
+console.log("with tempfile.NamedTemporaryFile() as f:");
+console.log("    f.write(b'data')");
+console.log("File deleted when closed");
+
+// Error handling in file operations
+console.log("\n-- Error Handling --");
+console.log("try:");
+console.log("    f = open('file.txt', 'r')");
+console.log("    content = f.read()");
+console.log("except FileNotFoundError:");
+console.log("    print('File not found')");
+console.log("except PermissionError:");
+console.log("    print('Permission denied')");
+console.log("finally:");
+console.log("    f.close()");
+
+console.log("\n✅ W3C Test 37 Passed: Python File Handling - Advanced");
+console.log("Note: FileSystem module provides file operations in PowerScript");

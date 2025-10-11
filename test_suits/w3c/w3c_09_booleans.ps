@@ -1,0 +1,68 @@
+// W3C Test 09: Python Booleans
+// Based on: https://www.w3schools.com/python/python_booleans.asp
+
+console.log("=== W3C Test 09: Python Booleans ===");
+
+// Boolean values
+let bool_true = true;
+let bool_false = false;
+
+console.log("True:", bool_true);
+console.log("False:", bool_false);
+
+// Boolean evaluation
+console.log("10 > 9:", 10 > 9);
+console.log("10 == 9:", 10 == 9);
+console.log("10 < 9:", 10 < 9);
+
+// Bool function
+// Most values are True
+console.log("bool(\"Hello\"):", bool("Hello"));
+console.log("bool(15):", bool(15));
+
+// Some values are False
+console.log("bool(0):", bool(0));
+console.log("bool(\"\"):", bool(""));
+console.log("bool(null):", bool(null));
+console.log("bool(false):", bool(false));
+
+// Operators return Boolean values
+let x = 10;
+let y = 5;
+
+console.log("x > y:", x > y);
+console.log("x == y:", x == y);
+console.log("x < y:", x < y);
+
+// Logical operators
+let a = true;
+let b = false;
+
+console.log("a and b:", a && b);
+console.log("a or b:", a || b);
+console.log("not a:", !a);
+
+// Boolean in conditions
+if (x > y) {
+    console.log("x is greater than y");
+}
+
+if (bool_true) {
+    console.log("This is true");
+}
+
+if (!bool_false) {
+    console.log("This is not false");
+}
+
+// Truthy and Falsy values
+let empty_string = "";
+let zero = 0;
+let null_value = null;
+let undefined_value; // Would be undefined
+
+console.log("Empty string is:", bool(empty_string));
+console.log("Zero is:", bool(zero));
+console.log("Null is:", bool(null_value));
+
+console.log("\n✅ W3C Test 09 Passed: Python Booleans");

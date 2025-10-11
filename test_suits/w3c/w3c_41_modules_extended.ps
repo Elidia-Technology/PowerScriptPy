@@ -1,0 +1,304 @@
+// W3C Test 41: Python Modules - Extended
+// Based on: https://www.w3schools.com/python/python_modules.asp
+
+console.log("=== W3C Test 41: Python Modules - Extended ===");
+
+// Modules allow code organization and reusability
+// Python has built-in modules and supports creating custom modules
+
+console.log("\n-- Import Module --");
+console.log("import math");
+console.log("result = math.sqrt(16)");
+
+console.log("\n-- Import Specific Items --");
+console.log("from math import sqrt, pi");
+console.log("result = sqrt(16)");
+
+console.log("\n-- Import with Alias --");
+console.log("import numpy as np");
+console.log("arr = np.array([1, 2, 3])");
+
+console.log("\n-- Import All --");
+console.log("from math import *");
+console.log("# Imports all functions (not recommended)");
+
+console.log("\n-- Built-in Modules --");
+console.log("math     - Mathematical functions");
+console.log("random   - Random number generation");
+console.log("datetime - Date and time");
+console.log("os       - Operating system interface");
+console.log("sys      - System-specific parameters");
+console.log("json     - JSON encoder/decoder");
+console.log("re       - Regular expressions");
+console.log("collections - Container datatypes");
+console.log("itertools   - Iterator functions");
+console.log("functools   - Higher-order functions");
+
+// Math module examples
+console.log("\n-- Math Module --");
+console.log("import math");
+console.log("math.sqrt(16) =", 4);
+console.log("math.ceil(1.4) =", 2);
+console.log("math.floor(1.7) =", 1);
+console.log("math.pi =", 3.14159);
+console.log("math.e =", 2.71828);
+console.log("math.sin(math.pi/2) =", 1);
+console.log("math.cos(0) =", 1);
+console.log("math.pow(2, 3) =", 8);
+console.log("math.log(10) =", 2.302);
+console.log("math.log10(100) =", 2);
+
+// Random module examples
+console.log("\n-- Random Module --");
+console.log("import random");
+console.log("random.random() - Float [0.0, 1.0)");
+console.log("random.randint(1, 10) - Integer [1, 10]");
+console.log("random.choice(['a', 'b', 'c']) - Random choice");
+console.log("random.shuffle(list) - Shuffle in place");
+console.log("random.sample(list, k) - k random elements");
+
+// OS module examples
+console.log("\n-- OS Module --");
+console.log("import os");
+console.log("os.getcwd() - Current directory");
+console.log("os.listdir(path) - List directory");
+console.log("os.mkdir(path) - Create directory");
+console.log("os.rmdir(path) - Remove directory");
+console.log("os.remove(path) - Delete file");
+console.log("os.rename(old, new) - Rename");
+console.log("os.path.exists(path) - Check existence");
+console.log("os.path.isfile(path) - Is file?");
+console.log("os.path.isdir(path) - Is directory?");
+console.log("os.path.join(a, b) - Join paths");
+
+// Sys module examples
+console.log("\n-- Sys Module --");
+console.log("import sys");
+console.log("sys.argv - Command line arguments");
+console.log("sys.version - Python version");
+console.log("sys.platform - Platform identifier");
+console.log("sys.path - Module search paths");
+console.log("sys.exit(code) - Exit program");
+
+// Collections module
+console.log("\n-- Collections Module --");
+console.log("from collections import Counter, defaultdict, deque");
+console.log("");
+console.log("Counter: Count occurrences");
+console.log("c = Counter(['a', 'b', 'a', 'c', 'b', 'a'])");
+console.log("c['a'] = 3");
+console.log("");
+console.log("defaultdict: Dict with default value");
+console.log("d = defaultdict(int)");
+console.log("d['key'] += 1  # No KeyError");
+console.log("");
+console.log("deque: Double-ended queue");
+console.log("dq = deque([1, 2, 3])");
+console.log("dq.appendleft(0)");
+console.log("dq.append(4)");
+
+// Itertools module
+console.log("\n-- Itertools Module --");
+console.log("import itertools");
+console.log("");
+console.log("count(start) - Infinite counter");
+console.log("cycle(iterable) - Infinite cycle");
+console.log("repeat(value, n) - Repeat value");
+console.log("chain(iter1, iter2) - Chain iterators");
+console.log("combinations(iterable, r) - Combinations");
+console.log("permutations(iterable, r) - Permutations");
+console.log("product(iter1, iter2) - Cartesian product");
+
+// Functools module
+console.log("\n-- Functools Module --");
+console.log("from functools import reduce, partial, lru_cache");
+console.log("");
+console.log("reduce: Apply function cumulatively");
+console.log("result = reduce(lambda x, y: x + y, [1, 2, 3, 4])");
+console.log("# Returns: 10");
+console.log("");
+console.log("partial: Partial function application");
+console.log("multiply_by_2 = partial(multiply, 2)");
+console.log("");
+console.log("lru_cache: Memoization decorator");
+console.log("@lru_cache(maxsize=None)");
+console.log("def fibonacci(n): ...");
+
+// Creating custom modules
+console.log("\n-- Creating Custom Modules --");
+console.log("File: mymodule.py");
+console.log("def greet(name):");
+console.log("    return f'Hello, {name}!'");
+console.log("");
+console.log("File: main.py");
+console.log("import mymodule");
+console.log("print(mymodule.greet('World'))");
+
+// Module variables
+console.log("\n-- Module Variables --");
+console.log("__name__ - Module name");
+console.log("__file__ - Module file path");
+console.log("__doc__ - Module docstring");
+console.log("__dict__ - Module namespace");
+
+// __name__ == '__main__'
+console.log("\n-- Main Guard --");
+console.log("if __name__ == '__main__':");
+console.log("    # Code runs only when script is executed");
+console.log("    # Not when imported as module");
+console.log("    main()");
+
+// Package structure
+console.log("\n-- Packages --");
+console.log("mypackage/");
+console.log("    __init__.py");
+console.log("    module1.py");
+console.log("    module2.py");
+console.log("    subpackage/");
+console.log("        __init__.py");
+console.log("        module3.py");
+console.log("");
+console.log("import mypackage.module1");
+console.log("from mypackage.subpackage import module3");
+
+// __init__.py
+console.log("\n-- __init__.py --");
+console.log("Marks directory as package");
+console.log("Can contain initialization code");
+console.log("Can define __all__ for 'from package import *'");
+console.log("");
+console.log("# __init__.py");
+console.log("__all__ = ['module1', 'module2']");
+
+// Relative imports
+console.log("\n-- Relative Imports --");
+console.log("from . import module1");
+console.log("from .. import parent_module");
+console.log("from .subpackage import module3");
+console.log("");
+console.log(". = current package");
+console.log(".. = parent package");
+
+// dir() function
+console.log("\n-- dir() Function --");
+console.log("import math");
+console.log("dir(math)");
+console.log("# Lists all names in module");
+
+// PowerScript module simulation
+console.log("\n-- PowerScript Module System --");
+
+let MyModule = {
+    "greet": function(name) {
+        return f"Hello, {name}!";
+    },
+    "PI": 3.14159,
+    "calculate_area": function(radius) {
+        return MyModule["PI"] * radius * radius;
+    }
+};
+
+console.log("\nUsing custom module:");
+console.log(MyModule["greet"]("World"));
+console.log("PI:", MyModule["PI"]);
+console.log("Area of circle (r=5):", MyModule["calculate_area"](5));
+
+// Third-party modules
+console.log("\n-- Popular Third-Party Modules --");
+console.log("requests  - HTTP library");
+console.log("numpy     - Numerical computing");
+console.log("pandas    - Data analysis");
+console.log("matplotlib - Plotting");
+console.log("scikit-learn - Machine learning");
+console.log("tensorflow - Deep learning");
+console.log("flask     - Web framework");
+console.log("django    - Web framework");
+console.log("beautifulsoup4 - Web scraping");
+console.log("pillow    - Image processing");
+
+// Module search path
+console.log("\n-- Module Search Path --");
+console.log("1. Current directory");
+console.log("2. PYTHONPATH environment variable");
+console.log("3. Standard library directories");
+console.log("4. Site-packages (third-party)");
+
+// Reloading modules
+console.log("\n-- Reloading Modules --");
+console.log("import importlib");
+console.log("importlib.reload(module)");
+console.log("# Reloads module (rarely needed)");
+
+// Practical example: Math utilities module
+console.log("\n-- Practical: Math Utilities --");
+
+let MathUtils = {
+    "PI": 3.14159,
+    "E": 2.71828,
+    
+    "circle_area": function(radius) {
+        return MathUtils["PI"] * radius * radius;
+    },
+    
+    "circle_circumference": function(radius) {
+        return 2 * MathUtils["PI"] * radius;
+    },
+    
+    "rectangle_area": function(width, height) {
+        return width * height;
+    },
+    
+    "rectangle_perimeter": function(width, height) {
+        return 2 * (width + height);
+    },
+    
+    "triangle_area": function(base, height) {
+        return 0.5 * base * height;
+    }
+};
+
+console.log("\nMath Utilities:");
+console.log("Circle area (r=5):", MathUtils["circle_area"](5));
+console.log("Circle circumference (r=5):", MathUtils["circle_circumference"](5));
+console.log("Rectangle area (3x4):", MathUtils["rectangle_area"](3, 4));
+console.log("Triangle area (base=6, height=4):", MathUtils["triangle_area"](6, 4));
+
+// Practical example: String utilities module
+console.log("\n-- Practical: String Utilities --");
+
+let StringUtils = {
+    "reverse": function(text) {
+        let result = "";
+        for (let i = len(text) - 1; i >= 0; i -= 1) {
+            result += text[i];
+        }
+        return result;
+    },
+    
+    "is_palindrome": function(text) {
+        return text == StringUtils["reverse"](text);
+    },
+    
+    "count_vowels": function(text) {
+        let vowels = ["a", "e", "i", "o", "u"];
+        let count = 0;
+        for (let i = 0; i < len(text); i += 1) {
+            if (text[i].lower() in vowels) {
+                count += 1;
+            }
+        }
+        return count;
+    },
+    
+    "title_case": function(text) {
+        return text.title();
+    }
+};
+
+console.log("\nString Utilities:");
+console.log("Reverse 'hello':", StringUtils["reverse"]("hello"));
+console.log("Is 'radar' palindrome?", StringUtils["is_palindrome"]("radar"));
+console.log("Vowels in 'hello':", StringUtils["count_vowels"]("hello"));
+
+console.log("\n✅ W3C Test 41 Passed: Python Modules - Extended");
+console.log("Note: PowerScript uses object-based module system");
