@@ -1,29 +1,29 @@
 
-    class Person {
-        name: string;
-        age: number;
+class Person {
+    name: string;
+    age: number;
 
-        constructor(name: string, age: number) {
-            this.name = name;
-            this.age = age;
-        }
+    constructor(name: string, age: number) {
+        this.name = name;
+        this.age = age;
+    }
 
     function greet(): string {
-            return "Hello, my name is " + this.name;
-        }
+        return "Hello, my name is " + this.name;
     }
-    class Student extends Person {
-        grade: string;
+}
+class Student extends Person {
+    grade: string;
 
-        constructor(name: string, age: number, grade: string) {
-            super(name, age);
-            this.grade = grade;
-        }
+    constructor(name: string, age: number, grade: string) {
+        super(name, age);
+        this.grade = grade;
+    }
 
     function study(): string {
-            return this.name + " is studying in grade " + this.grade;
-        }
+        return this.name + " is studying in grade " + this.grade;
     }
+}
 
 try {
     let p = new Person("Alice", 30);
@@ -34,5 +34,5 @@ try {
     console.log(s.study());
 } catch (e) {
     console.log("Error in test_classes:", e);
-}
+}    
 console.log("test_classes passed");
