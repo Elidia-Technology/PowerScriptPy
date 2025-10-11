@@ -395,7 +395,7 @@ class FileOrganizer {
 # Run all tests
 cd test_suits
 python run_all_tests.py
-# ✅ All tests passed!
+
 ```
 
 ---
