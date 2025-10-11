@@ -1,0 +1,38 @@
+console.log("Testing Development Tools");
+
+// Test Debugger
+console.log("\n--- Testing Debugger ---");
+Debugger.log("Hello from debugger", "TEST");
+Debugger.inspect([1, 2, 3], true, false);
+
+// Test Profiler
+console.log("\n--- Testing Profiler ---");
+
+// Test memory usage (if psutil available)
+Profiler.memory_usage();
+
+// Test function profiling
+function testFunction(n) {
+    let result = 0;
+    for (i in range(0, n)) {
+        result += i * i;
+    }
+    return result;
+}
+
+console.log("Profiling test function:");
+Profiler.profile_function(testFunction, 1000);
+
+// Test memory tracing
+console.log("\nStarting memory trace:");
+if (Profiler.start_memory_trace()) {
+    // Do some memory operations
+    let bigArray = [];
+    for (i in range(0, 10000)) {
+        bigArray.push(i);
+    }
+    console.log("Created big array");
+    Profiler.stop_memory_trace();
+}
+
+console.log("\nDevelopment tools test completed");

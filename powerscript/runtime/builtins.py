@@ -934,47 +934,47 @@ def assert_func(condition, message=None):
 
 def type_func(obj):
     """Get type of object"""
-    return type(obj)
+    return __builtins__['type'](obj)
 
 def isinstance_func(obj, class_or_tuple):
     """Check if object is instance of class"""
-    return isinstance(obj, class_or_tuple)
+    return __builtins__['isinstance'](obj, class_or_tuple)
 
 def hasattr_func(obj, name):
     """Check if object has attribute"""
-    return hasattr(obj, name)
+    return __builtins__['hasattr'](obj, name)
 
 def getattr_func(obj, name, default=None):
     """Get attribute from object"""
-    return getattr(obj, name, default)
+    return __builtins__['getattr'](obj, name, default)
 
 def setattr_func(obj, name, value):
     """Set attribute on object"""
-    setattr(obj, name, value)
+    __builtins__['setattr'](obj, name, value)
 
 def delattr_func(obj, name):
     """Delete attribute from object"""
-    delattr(obj, name)
+    __builtins__['delattr'](obj, name)
 
 def dir_func(obj=None):
     """Get list of attributes"""
-    return dir(obj)
+    return __builtins__['dir'](obj)
 
 def vars_func(obj=None):
     """Get __dict__ of object"""
-    return vars(obj) if obj is not None else {}
+    return __builtins__['vars'](obj) if obj is not None else {}
 
 def id_func(obj):
     """Get identity of object"""
-    return id(obj)
+    return __builtins__['id'](obj)
 
 def hash_func(obj):
     """Get hash of object"""
-    return hash(obj)
+    return __builtins__['hash'](obj)
 
 def repr_func(obj):
     """Get string representation"""
-    return repr(obj)
+    return __builtins__['repr'](obj)
 
 def abs_func(x):
     """Get absolute value"""
@@ -1187,7 +1187,7 @@ def property_func(fget=None, fset=None, fdel=None, doc=None):
 
 def staticmethod_func(func):
     """Convert function to static method"""
-    return staticmethod(func)
+    return __builtins__['staticmethod'](func)
 
 def super_func(*args, **kwargs):
     """Access parent class"""
@@ -1772,6 +1772,261 @@ except ImportError:
 
 # Export all built-ins to module globals
 globals().update(BUILT_IN_GLOBALS)
+
+class PackageManager:
+    """Package management utilities (pip-like functionality)"""
+    
+    @staticmethod
+    def install(package_name: str, version: str = None, upgrade: bool = False) -> bool:
+        """Install a Python package using pip"""
+        import subprocess
+        import sys
+        
+        try:
+            cmd = [sys.executable, '-m', 'pip', 'install']
+            if upgrade:
+                cmd.append('--upgrade')
+            if version:
+                cmd.append(f"{package_name}=={version}")
+            else:
+                cmd.append(package_name)
+            
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            print(f"✓ Successfully installed {package_name}")
+            return True
+        except subprocess.CalledProcessError as e:
+            print(f"✗ Failed to install {package_name}: {e.stderr}")
+            return False
+        except Exception as e:
+            print(f"✗ Error installing {package_name}: {str(e)}")
+            return False
+    
+    @staticmethod
+    def uninstall(package_name: str) -> bool:
+        """Uninstall a Python package using pip"""
+        import subprocess
+        import sys
+        
+        try:
+            cmd = [sys.executable, '-m', 'pip', 'uninstall', '-y', package_name]
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            print(f"✓ Successfully uninstalled {package_name}")
+            return True
+        except subprocess.CalledProcessError as e:
+            print(f"✗ Failed to uninstall {package_name}: {e.stderr}")
+            return False
+        except Exception as e:
+            print(f"✗ Error uninstalling {package_name}: {str(e)}")
+            return False
+    
+    @staticmethod
+    def list_installed() -> list:
+        """List all installed packages"""
+        import subprocess
+        import sys
+        
+        try:
+            cmd = [sys.executable, '-m', 'pip', 'list', '--format=json']
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            import json
+            packages = json.loads(result.stdout)
+            return [pkg['name'] for pkg in packages]
+        except Exception as e:
+            print(f"✗ Error listing packages: {str(e)}")
+            return []
+    
+    @staticmethod
+    def show_info(package_name: str) -> dict:
+        """Show information about a package"""
+        import subprocess
+        import sys
+        
+        try:
+            cmd = [sys.executable, '-m', 'pip', 'show', package_name]
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            info = {}
+            for line in result.stdout.strip().split('\n'):
+                if ':' in line:
+                    key, value = line.split(':', 1)
+                    info[key.strip()] = value.strip()
+            return info
+        except subprocess.CalledProcessError:
+            print(f"✗ Package {package_name} not found")
+            return {}
+        except Exception as e:
+            print(f"✗ Error getting package info: {str(e)}")
+            return {}
+    
+    @staticmethod
+    def update_all() -> bool:
+        """Update all installed packages"""
+        import subprocess
+        import sys
+        
+        try:
+            cmd = [sys.executable, '-m', 'pip', 'install', '--upgrade', '--upgrade-strategy=eager']
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            # pip install --upgrade without specific packages updates pip itself
+            # For updating all packages, we need to get the list first
+            installed = PackageManager.list_installed()
+            success = True
+            for package in installed:
+                if not PackageManager.install(package, upgrade=True):
+                    success = False
+            return success
+        except Exception as e:
+            print(f"✗ Error updating packages: {str(e)}")
+            return False
+
+# Add PackageManager to globals after class definition
+BUILT_IN_GLOBALS['PackageManager'] = PackageManager
+
+class Debugger:
+    """Basic debugging utilities"""
+    
+    @staticmethod
+    def log(value, label="DEBUG"):
+        """Log a value with a label"""
+        print(f"[{label}] {value}")
+        return value
+    
+    @staticmethod
+    def inspect(obj, show_type=True, show_methods=False):
+        """Inspect an object"""
+        result = {}
+        if show_type:
+            result['type'] = __builtins__['type'](obj).__name__
+        
+        if hasattr(obj, '__dict__'):
+            result['attributes'] = obj.__dict__
+        elif __builtins__['isinstance'](obj, __builtins__['dict']):
+            result['keys'] = __builtins__['list'](obj.keys())
+            result['length'] = __builtins__['len'](obj)
+        elif hasattr(obj, '__len__'):
+            result['length'] = __builtins__['len'](obj)
+        
+        if show_methods and hasattr(obj, '__class__'):
+            methods = [method for method in __builtins__['dir'](obj) if not method.startswith('_')]
+            result['methods'] = methods
+        
+        print(f"Object inspection: {result}")
+        return result
+    
+    @staticmethod
+    def breakpoint():
+        """Simple breakpoint - wait for user input"""
+        print("🔴 BREAKPOINT: Press Enter to continue...")
+        input()
+    
+    @staticmethod
+    def trace_call(func, *args, **kwargs):
+        """Trace function calls"""
+        print(f"📞 Calling {func.__name__} with args={args}, kwargs={kwargs}")
+        try:
+            result = func(*args, **kwargs)
+            print(f"✅ {func.__name__} returned: {result}")
+            return result
+        except Exception as e:
+            print(f"❌ {func.__name__} raised: {type(e).__name__}: {e}")
+            raise
+    
+    @staticmethod
+    def time_execution(func, *args, **kwargs):
+        """Time function execution"""
+        import time
+        start_time = time.time()
+        try:
+            result = func(*args, **kwargs)
+            end_time = time.time()
+            duration = end_time - start_time
+            print(f"⏱️  {func.__name__} executed in {duration:.4f} seconds")
+            return result
+        except Exception as e:
+            end_time = time.time()
+            duration = end_time - start_time
+            print(f"⏱️  {func.__name__} failed after {duration:.4f} seconds: {e}")
+            raise
+
+class Profiler:
+    """Basic profiling utilities"""
+    
+    @staticmethod
+    def profile_function(func, *args, **kwargs):
+        """Profile a function execution"""
+        import cProfile
+        import pstats
+        import io
+        
+        pr = cProfile.Profile()
+        pr.enable()
+        
+        try:
+            result = func(*args, **kwargs)
+            pr.disable()
+            
+            s = io.StringIO()
+            ps = pstats.Stats(pr, stream=s).sort_stats('cumulative')
+            ps.print_stats()
+            profile_output = s.getvalue()
+            
+            print("📊 Function Profile:")
+            print(profile_output)
+            return result
+        except Exception as e:
+            pr.disable()
+            print(f"❌ Profiling failed: {e}")
+            raise
+    
+    @staticmethod
+    def memory_usage():
+        """Get current memory usage"""
+        try:
+            import psutil
+            import os
+            process = psutil.Process(os.getpid())
+            memory_info = process.memory_info()
+            memory_mb = memory_info.rss / 1024 / 1024
+            print(f"🧠 Memory usage: {memory_mb:.2f} MB")
+            return memory_mb
+        except ImportError:
+            print("⚠️  psutil not available for memory profiling")
+            return None
+    
+    @staticmethod
+    def start_memory_trace():
+        """Start memory tracing"""
+        try:
+            import tracemalloc
+            tracemalloc.start()
+            print("🧠 Memory tracing started")
+            return True
+        except ImportError:
+            print("⚠️  tracemalloc not available")
+            return False
+    
+    @staticmethod
+    def stop_memory_trace():
+        """Stop memory tracing and show top memory users"""
+        try:
+            import tracemalloc
+            current, peak = tracemalloc.get_traced_memory()
+            tracemalloc.stop()
+            
+            current_mb = current / 1024 / 1024
+            peak_mb = peak / 1024 / 1024
+            
+            print(f"🧠 Memory trace results:")
+            print(f"   Current memory: {current_mb:.2f} MB")
+            print(f"   Peak memory: {peak_mb:.2f} MB")
+            
+            return {'current': current_mb, 'peak': peak_mb}
+        except ImportError:
+            print("⚠️  tracemalloc not available")
+            return None
+
+# Add development tools to globals
+BUILT_IN_GLOBALS['Debugger'] = Debugger
+BUILT_IN_GLOBALS['Profiler'] = Profiler
 
 class Test:
     """Simple testing framework"""
