@@ -32,6 +32,8 @@ import random
 import time
 import datetime
 import re
+import hashlib
+import base64
 
 
 class Console:
@@ -925,40 +927,10 @@ class Set:
         return list(s)
 
 
-# Built-in functions that can be called directly
-def print(*args, sep: str = ' ', end: str = '\n'):
-    """Print to console"""
-    Console.log(*args, sep=sep, end=end)
-
-def input(prompt: str = "") -> str:
-    """Get user input"""
-    return Console.input(prompt)
-
-def len(obj) -> int:
-    """Get length of object"""
-    return obj.__len__() if hasattr(obj, '__len__') else 0
-
-def str(obj) -> str:
-    """Convert to string"""
-    return __builtins__['str'](obj)
-
-def int(obj):
-    """Convert to integer"""
-    return __builtins__['int'](obj)
-
-def float(obj):
-    """Convert to float"""
-    return __builtins__['float'](obj)
-
-def bool(obj):
-    """Convert to boolean"""
-    return __builtins__['bool'](obj)
-
-def assert_func(condition, message="Assertion failed"):
-    """Assert function for testing"""
-    if not condition:
-        raise AssertionError(message)
-    return True
+# Built-in function wrappers for PowerScript
+def assert_func(condition, message=None):
+    """Assert condition is true"""
+    assert condition, message
 
 def type_func(obj):
     """Get type of object"""
@@ -985,23 +957,23 @@ def delattr_func(obj, name):
     delattr(obj, name)
 
 def dir_func(obj=None):
-    """Get object attributes"""
+    """Get list of attributes"""
     return dir(obj)
 
 def vars_func(obj=None):
-    """Get object variables"""
-    return vars(obj) if obj else vars()
+    """Get __dict__ of object"""
+    return vars(obj) if obj is not None else {}
 
 def id_func(obj):
-    """Get object identity"""
+    """Get identity of object"""
     return id(obj)
 
 def hash_func(obj):
-    """Get object hash"""
+    """Get hash of object"""
     return hash(obj)
 
 def repr_func(obj):
-    """Get object representation"""
+    """Get string representation"""
     return repr(obj)
 
 def abs_func(x):
@@ -1018,50 +990,47 @@ def any_func(iterable):
 
 def min_func(*args, **kwargs):
     """Get minimum value"""
-    return min(*args, **kwargs)
+    return __builtins__['min'](*args, **kwargs)
 
 def max_func(*args, **kwargs):
     """Get maximum value"""
-    return max(*args, **kwargs)
+    return __builtins__['max'](*args, **kwargs)
 
 def sum_func(iterable, start=0):
-    """Sum iterable values"""
-    return sum(iterable, start)
+    """Sum elements"""
+    return __builtins__['sum'](iterable, start)
 
 def sorted_func(iterable, key=None, reverse=False):
     """Sort iterable"""
-    return sorted(iterable, key=key, reverse=reverse)
+    return __builtins__['sorted'](iterable, key=key, reverse=reverse)
 
 def reversed_func(seq):
     """Reverse sequence"""
-    return list(reversed(seq))
+    return __builtins__['reversed'](seq)
 
 def enumerate_func(iterable, start=0):
     """Enumerate iterable"""
-    return list(enumerate(iterable, start))
+    return __builtins__['enumerate'](iterable, start)
 
 def zip_func(*iterables):
     """Zip iterables"""
-    return list(zip(*iterables))
+    return __builtins__['zip'](*iterables)
 
-def map_func(function, *iterables):
+def map_func(func, *iterables):
     """Map function over iterables"""
-    import builtins
-    return list(builtins.map(function, *iterables))
+    return __builtins__['map'](func, *iterables)
 
-def filter_func(function, iterable):
+def filter_func(func, iterable):
     """Filter iterable"""
-    import builtins
-    return list(builtins.filter(function, iterable))
+    return __builtins__['filter'](func, iterable)
 
 def range_func(*args):
-    """Create range"""
-    return list(range(*args))
+    """Create range object"""
+    return __builtins__['range'](*args)
 
 def list_func(iterable=None):
     """Create list"""
-    import builtins
-    return builtins.list(iterable) if iterable is not None else []
+    return list(iterable) if iterable is not None else []
 
 def tuple_func(iterable=None):
     """Create tuple"""
@@ -1079,13 +1048,23 @@ def frozenset_func(iterable=None):
     """Create frozenset"""
     return frozenset(iterable) if iterable is not None else frozenset()
 
-def bytearray_func(*args):
+def bytearray_func(source=None, encoding=None, errors=None):
     """Create bytearray"""
-    return bytearray(*args)
+    if source is None:
+        return bytearray()
+    elif isinstance(source, str):
+        return bytearray(source, encoding or 'utf-8', errors or 'strict')
+    else:
+        return bytearray(source)
 
-def bytes_func(*args):
+def bytes_func(source=None, encoding=None, errors=None):
     """Create bytes"""
-    return bytes(*args)
+    if source is None:
+        return bytes()
+    elif isinstance(source, str):
+        return bytes(source, encoding or 'utf-8', errors or 'strict')
+    else:
+        return bytes(source)
 
 def memoryview_func(obj):
     """Create memoryview"""
@@ -1101,38 +1080,38 @@ def complex_func(real=0, imag=0):
 
 def round_func(number, ndigits=None):
     """Round number"""
-    return round(number, ndigits)
+    return round(number, ndigits) if ndigits is not None else round(number)
 
 def pow_func(base, exp, mod=None):
     """Power function"""
     return pow(base, exp, mod)
 
 def divmod_func(a, b):
-    """Divmod function"""
+    """Division and modulo"""
     return divmod(a, b)
 
 def bin_func(x):
-    """Convert to binary"""
+    """Binary representation"""
     return bin(x)
 
 def oct_func(x):
-    """Convert to octal"""
+    """Octal representation"""
     return oct(x)
 
 def hex_func(x):
-    """Convert to hexadecimal"""
+    """Hexadecimal representation"""
     return hex(x)
 
 def ord_func(c):
-    """Get character code"""
+    """Get unicode code point"""
     return ord(c)
 
 def chr_func(i):
-    """Get character from code"""
+    """Get character from code point"""
     return chr(i)
 
 def ascii_func(obj):
-    """Get ASCII representation"""
+    """ASCII representation"""
     return ascii(obj)
 
 def format_func(value, format_spec=''):
@@ -1143,9 +1122,9 @@ def eval_func(expression, globals=None, locals=None):
     """Evaluate expression"""
     return eval(expression, globals, locals)
 
-def exec_func(code, globals=None, locals=None):
+def exec_func(object, globals=None, locals=None):
     """Execute code"""
-    return exec(code, globals, locals)
+    exec(object, globals, locals)
 
 def compile_func(source, filename, mode, flags=0, dont_inherit=False, optimize=-1):
     """Compile source"""
@@ -1219,6 +1198,259 @@ def super_func(*args, **kwargs):
 _fs = FileSystem()
 _console = Console()
 
+class Database:
+    """Simple database interface using SQLite"""
+    
+    def __init__(self, db_path=":memory:"):
+        """Initialize database connection"""
+        import sqlite3
+        self.conn = sqlite3.connect(db_path)
+        self.cursor = self.conn.cursor()
+    
+    def execute(self, query, params=None):
+        """Execute SQL query"""
+        try:
+            if params:
+                self.cursor.execute(query, params)
+            else:
+                self.cursor.execute(query)
+            return self.cursor.fetchall()
+        except Exception as e:
+            return f"Error: {e}"
+    
+    def commit(self):
+        """Commit changes"""
+        self.conn.commit()
+    
+    def close(self):
+        """Close database connection"""
+        self.conn.close()
+
+
+class Crypto:
+    """Basic cryptography utilities"""
+    
+    @staticmethod
+    def hash_sha256(data):
+        """SHA256 hash"""
+        try:
+            data = data.encode('utf-8')
+        except:
+            pass
+        return hashlib.sha256(data).hexdigest()
+    
+    @staticmethod
+    def hash_md5(data):
+        """MD5 hash"""
+        try:
+            data = data.encode('utf-8')
+        except:
+            pass
+        return hashlib.md5(data).hexdigest()
+    
+    @staticmethod
+    def base64_encode(data):
+        """Base64 encode"""
+        try:
+            data = data.encode('utf-8')
+        except:
+            pass
+        return base64.b64encode(data).decode('utf-8')
+    
+    @staticmethod
+    def base64_decode(data):
+        """Base64 decode"""
+        return base64.b64decode(data).decode('utf-8')
+
+
+class Network:
+    """Simple networking interface"""
+    
+    @staticmethod
+    def get(url, headers=None):
+        """HTTP GET request"""
+        try:
+            import urllib.request
+            import json
+            req = urllib.request.Request(url, headers=headers or {})
+            with urllib.request.urlopen(req) as response:
+                return response.read().decode('utf-8')
+        except Exception as e:
+            return f"Error: {e}"
+    
+    @staticmethod
+    def post(url, data=None, headers=None):
+        """HTTP POST request"""
+        try:
+            import urllib.request
+            import urllib.parse
+            import json
+            if isinstance(data, dict):
+                data = json.dumps(data).encode('utf-8')
+                if not headers:
+                    headers = {'Content-Type': 'application/json'}
+            elif isinstance(data, str):
+                data = data.encode('utf-8')
+            req = urllib.request.Request(url, data=data, headers=headers or {}, method='POST')
+            with urllib.request.urlopen(req) as response:
+                return response.read().decode('utf-8')
+        except Exception as e:
+            return f"Error: {e}"
+    
+    @staticmethod
+    def download(url, filename):
+        """Download file from URL"""
+        try:
+            import urllib.request
+            urllib.request.urlretrieve(url, filename)
+            return True
+        except Exception as e:
+            return f"Error: {e}"
+
+
+class Test:
+    """Simple testing framework"""
+    
+    def __init__(self):
+        self.tests_run = 0
+        self.tests_passed = 0
+        self.tests_failed = 0
+    
+    def assert_equal(self, actual, expected, message=""):
+        """Assert two values are equal"""
+        self.tests_run += 1
+        if actual == expected:
+            self.tests_passed += 1
+            print(f"✓ PASS: {message}")
+        else:
+            self.tests_failed += 1
+            print(f"✗ FAIL: {message} - Expected {expected}, got {actual}")
+    
+    def assert_true(self, condition, message=""):
+        """Assert condition is true"""
+        self.assert_equal(condition, True, message)
+    
+    def assert_false(self, condition, message=""):
+        """Assert condition is false"""
+        self.assert_equal(condition, False, message)
+    
+    def assert_raises(self, exception_type, func, message=""):
+        """Assert that function raises specific exception"""
+        self.tests_run += 1
+        try:
+            func()
+            self.tests_failed += 1
+            print(f"✗ FAIL: {message} - Expected {exception_type.__name__} but no exception raised")
+        except exception_type:
+            self.tests_passed += 1
+            print(f"✓ PASS: {message}")
+        except Exception as e:
+            self.tests_failed += 1
+            print(f"✗ FAIL: {message} - Expected {exception_type.__name__} but got {type(e).__name__}")
+    
+    def run(self):
+        """Run all tests and print summary"""
+        print(f"\nTest Results: {self.tests_passed}/{self.tests_run} passed, {self.tests_failed} failed")
+        return self.tests_failed == 0
+
+
+class GUI:
+    """Simple GUI interface using Tkinter"""
+    
+    def __init__(self):
+        self.root = None
+        self.widgets = {}
+    
+    def create_window(self, title="PowerScript GUI", width=400, height=300):
+        """Create main window"""
+        try:
+            import tkinter as tk
+            self.root = tk.Tk()
+            self.root.title(title)
+            self.root.geometry(f"{width}x{height}")
+            return self.root
+        except ImportError:
+            raise Exception("Tkinter not available. Install tkinter for GUI support.")
+    
+    def add_button(self, text, command=None, x=10, y=10):
+        """Add button to window"""
+        if not self.root:
+            self.create_window()
+        import tkinter as tk
+        button = tk.Button(self.root, text=text, command=command)
+        button.place(x=x, y=y)
+        return button
+    
+    def add_label(self, text, x=10, y=50):
+        """Add label to window"""
+        if not self.root:
+            self.create_window()
+        import tkinter as tk
+        label = tk.Label(self.root, text=text)
+        label.place(x=x, y=y)
+        return label
+    
+    def add_entry(self, x=10, y=80, width=20):
+        """Add text entry field"""
+        if not self.root:
+            self.create_window()
+        import tkinter as tk
+        entry = tk.Entry(self.root, width=width)
+        entry.place(x=x, y=y)
+        return entry
+    
+    def run(self):
+        """Start GUI event loop"""
+        if self.root:
+            self.root.mainloop()
+    
+    def close(self):
+        """Close GUI window"""
+        if self.root:
+            self.root.destroy()
+
+
+class MathStats:
+    """Mathematics and statistics utilities"""
+    
+    @staticmethod
+    def mean(data):
+        """Calculate mean of data"""
+        return __builtins__['sum'](data) / __builtins__['len'](data)
+    
+    @staticmethod
+    def median(data):
+        """Calculate median of data"""
+        sorted_data = __builtins__['sorted'](data)
+        n = __builtins__['len'](sorted_data)
+        if n % 2 == 0:
+            return (sorted_data[n//2 - 1] + sorted_data[n//2]) / 2
+        else:
+            return sorted_data[n//2]
+    
+    @staticmethod
+    def std(data):
+        """Calculate standard deviation"""
+        # Avoid recursion by using local calculation
+        mean_val = __builtins__['sum'](data) / __builtins__['len'](data)
+        variance = __builtins__['sum']((x - mean_val) ** 2 for x in data) / __builtins__['len'](data)
+        return variance ** 0.5
+    
+    @staticmethod
+    def linspace(start, stop, num=50):
+        """Create evenly spaced numbers"""
+        step = (stop - start) / (num - 1)
+        return [start + i * step for i in __builtins__['range'](num)]
+    
+    @staticmethod
+    def arange(start, stop=None, step=1):
+        """Create array with range"""
+        if stop is None:
+            stop = start
+            start = 0
+        return __builtins__['list'](__builtins__['range'](int(start), int(stop), int(step)))
+
+
 BUILT_IN_GLOBALS = {
     # File system operations  
     'FileSystem': FileSystem,
@@ -1261,6 +1493,11 @@ BUILT_IN_GLOBALS = {
     'FileStream': FileStream,
     'FileError': FileError,
     'Database': Database,
+    'GUI': GUI,
+    'Network': Network,
+    'Crypto': Crypto,
+    'Test': Test,
+    'MathStats': MathStats,
     
     # Core Python built-in functions
     'console': _console,
@@ -1517,14 +1754,14 @@ except ImportError:
 # Additional modules
 from .database import Database, create_database
 # from .gui import Window, create_window  # Tkinter not available
-from .networking import HTTPClient, create_http_client
+# from .networking import HTTPClient, create_http_client
 
 BUILT_IN_GLOBALS['Database'] = Database
 BUILT_IN_GLOBALS['create_database'] = create_database
 # BUILT_IN_GLOBALS['Window'] = Window
 # BUILT_IN_GLOBALS['create_window'] = create_window
-BUILT_IN_GLOBALS['HTTPClient'] = HTTPClient
-BUILT_IN_GLOBALS['create_http_client'] = create_http_client
+# # BUILT_IN_GLOBALS['HTTPClient'] = HTTPClient
+# BUILT_IN_GLOBALS['create_http_client'] = create_http_client
 
 try:
     import matplotlib.pyplot as plt
@@ -1535,3 +1772,48 @@ except ImportError:
 
 # Export all built-ins to module globals
 globals().update(BUILT_IN_GLOBALS)
+
+class Test:
+    """Simple testing framework"""
+    
+    def __init__(self):
+        self.tests_run = 0
+        self.tests_passed = 0
+        self.tests_failed = 0
+    
+    def assert_equal(self, actual, expected, message=""):
+        """Assert two values are equal"""
+        self.tests_run += 1
+        if actual == expected:
+            self.tests_passed += 1
+            print(f"✓ PASS: {message}")
+        else:
+            self.tests_failed += 1
+            print(f"✗ FAIL: {message} - Expected {expected}, got {actual}")
+    
+    def assert_true(self, condition, message=""):
+        """Assert condition is true"""
+        self.assert_equal(condition, True, message)
+    
+    def assert_false(self, condition, message=""):
+        """Assert condition is false"""
+        self.assert_equal(condition, False, message)
+    
+    def assert_raises(self, exception_type, func, message=""):
+        """Assert that function raises specific exception"""
+        self.tests_run += 1
+        try:
+            func()
+            self.tests_failed += 1
+            print(f"✗ FAIL: {message} - Expected {exception_type.__name__} but no exception raised")
+        except exception_type:
+            self.tests_passed += 1
+            print(f"✓ PASS: {message}")
+        except Exception as e:
+            self.tests_failed += 1
+            print(f"✗ FAIL: {message} - Expected {exception_type.__name__} but got {type(e).__name__}")
+    
+    def run(self):
+        """Run all tests and print summary"""
+        print(f"\nTest Results: {self.tests_passed}/{self.tests_run} passed, {self.tests_failed} failed")
+        return self.tests_failed == 0
