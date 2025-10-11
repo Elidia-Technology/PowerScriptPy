@@ -293,7 +293,7 @@ class Person {
 - **VS Code**: Version 1.60.0 or higher
 - **PowerScript Compiler**: Install via pip:
   ```bash
-  pip install tps
+  pip install eitps
   ```
 - **Python**: Version 3.8 or higher for running compiled code
 
@@ -301,7 +301,7 @@ class Person {
 
 1. **Install PowerScript**:
    ```bash
-   pip install tps
+   pip install eitps
    ```
 
 2. **Install VS Code Extension**:

@@ -14,7 +14,7 @@ Complete guide to installing PowerScript on any platform.
 
 ```bash
 # Install TPS globally
-pip install tps
+pip install eitps
 
 # Verify installation
 tps --version
@@ -24,8 +24,8 @@ tps --version
 
 ```bash
 # Clone repository
-git clone https://github.com/SaleemLww/Python-PowerScript.git
-cd Python-PowerScript
+git clone https://github.com/SaleemLww/PowerScript-EITPS.git
+cd PowerScript-EITPS
 
 # Create virtual environment (recommended)
 python -m venv .venv
@@ -45,7 +45,7 @@ tps --version
 Install TPS system-wide for all projects:
 
 ```bash
-pip install tps
+pip install eitps
 ```
 
 **Pros:**
@@ -70,7 +70,7 @@ source myproject_env/bin/activate  # macOS/Linux
 myproject_env\Scripts\activate     # Windows
 
 # Install TPS
-pip install tps
+pip install eitps
 ```
 
 **Pros:**
@@ -88,8 +88,8 @@ For contributing or testing:
 
 ```bash
 # Clone and install editably
-git clone https://github.com/SaleemLww/Python-PowerScript.git
-cd Python-PowerScript
+git clone https://github.com/SaleemLww/PowerScript-EITPS.git
+cd PowerScript-EITPS
 pip install -e ".[dev]"
 ```
 
@@ -130,7 +130,7 @@ source ~/.bashrc
 # Install Python from python.org or Microsoft Store
 
 # Install TPS
-pip install tps
+pip install eitps
 
 # Add to PATH (usually automatic)
 # If needed, add: C:\Users\<YourName>\AppData\Local\Programs\Python\Python39\Scripts

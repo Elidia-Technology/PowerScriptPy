@@ -7,7 +7,7 @@ Get started with PowerScript in 5 minutes!
 ### Step 1: Install TPS
 
 ```bash
-pip install tps
+pip install eitps
 ```
 
 ### Step 2: Create a File

@@ -7,7 +7,7 @@
 [![PyPI Version](https://img.shields.io/badge/pypi-v1.0.0--beta-blue?style=for-the-badge&logo=pypi)](https://pypi.org/project/eitps/)
 [![Python Version](https://img.shields.io/badge/python-3.8+-green?style=for-the-badge&logo=python)](https://www.python.org)
 [![License](https://img.shields.io/badge/license-MIT-orange?style=for-the-badge)](LICENSE.txt)
-[![Status](https://img.shields.io/badge/status-beta-yellow?style=for-the-badge)](https://github.com/SaleemLww/Python-PowerScript)
+[![Status](https://img.shields.io/badge/status-beta-yellow?style=for-the-badge)](https://github.com/SaleemLww/PowerScript-EITPS)
 
 **A Modern Typed Programming Language that Transpiles to Python**
 
@@ -82,8 +82,8 @@ tps --version
 
 ```bash
 # Clone repository
-git clone https://github.com/SaleemLww/Python-PowerScript.git
-cd Python-PowerScript
+git clone https://github.com/SaleemLww/PowerScript-EITPS.git
+cd PowerScript-EITPS
 
 # Install
 pip install -e .
@@ -448,8 +448,8 @@ We welcome contributions! PowerScript is open source and community-driven.
 
 ```bash
 # Clone repository
-git clone https://github.com/SaleemLww/Python-PowerScript.git
-cd Python-PowerScript
+git clone https://github.com/SaleemLww/PowerScript-EITPS.git
+cd PowerScript-EITPS
 
 # Create virtual environment
 python -m venv .venv
@@ -499,8 +499,8 @@ copies or substantial portions of the Software.
 ## 🌟 Support
 
 - ⭐ **Star this repository** if you find it useful!  
-- 🐛 **Report issues** on [GitHub Issues](https://github.com/SaleemLww/Python-PowerScript/issues)  
-- 💬 **Join discussions** on [GitHub Discussions](https://github.com/SaleemLww/Python-PowerScript/discussions)  
+- 🐛 **Report issues** on [GitHub Issues](https://github.com/SaleemLww/PowerScript-EITPS/issues)  
+- 💬 **Join discussions** on [GitHub Discussions](https://github.com/SaleemLww/PowerScript-EITPS/discussions)  
 - 📧 **Contact:** [GitHub Profile](https://github.com/SaleemLww)
 
 ---

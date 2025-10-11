@@ -166,7 +166,7 @@ The extension automatically activates for `.ps` files.
    ```
 
 ### Commands Not Working
-1. Ensure `tps` is installed: `pip install tps`
+1. Ensure `tps` is installed: `pip install eitps`
 2. Verify PATH includes Python scripts directory
 3. Test command manually: `tps --version`
 

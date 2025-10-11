@@ -203,7 +203,7 @@ for (i = 0; i < 10; i += 1) {
 
 ```bash
 # Install PowerScript
-pip install tps
+pip install eitps
 
 # Compile file
 tps compile file.ps

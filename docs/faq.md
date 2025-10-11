@@ -49,7 +49,7 @@ PowerScript (TPS — **T**yped **P**ower**S**cript) is a modern programming lang
 Simple one-line install:
 
 ```bash
-pip install tps
+pip install eitps
 ```
 
 See [Installation Guide](installation.md) for detailed instructions.
@@ -407,7 +407,7 @@ See [API Reference](api_reference.md) for details.
 ### How do I get help?
 
 1. **Check [Documentation](README.md)**
-2. **Search [GitHub Issues](https://github.com/SaleemLww/Python-PowerScript/issues)**
+2. **Search [GitHub Issues](https://github.com/SaleemLww/PowerScript-EITPS/issues)**
 3. **Ask in [GitHub Discussions](https://github.com/SaleemLww/Python-PowerScript/discussions)**
 4. **Read [Troubleshooting Guide](troubleshooting.md)**
 

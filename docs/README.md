@@ -45,8 +45,8 @@ Welcome to the comprehensive PowerScript documentation!
 
 ### For Contributors
 - See main [README](../README.md)
-- Check [GitHub Issues](https://github.com/SaleemLww/Python-PowerScript/issues)
-- Join [Discussions](https://github.com/SaleemLww/Python-PowerScript/discussions)
+- Check [GitHub Issues](https://github.com/SaleemLww/PowerScript-EITPS/issues)
+- Join [Discussions](https://github.com/SaleemLww/PowerScript-EITPS/discussions)
 
 ---
 
@@ -54,6 +54,6 @@ Welcome to the comprehensive PowerScript documentation!
 
 **PowerScript (TPS) v1.0.0 Beta**
 
-[Main Repository](https://github.com/SaleemLww/Python-PowerScript) • [PyPI Package](https://pypi.org/project/tps/)
+[Main Repository](https://github.com/SaleemLww/PowerScript-EITPS) • [PyPI Package](https://pypi.org/project/eitps/)
 
 </div>

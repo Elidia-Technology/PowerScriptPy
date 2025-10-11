@@ -418,8 +418,8 @@ Future extension features:
 
 **Issues with Extension?**
 - Check [Troubleshooting](troubleshooting.md)
-- Report issue: [GitHub Issues](https://github.com/SaleemLww/Python-PowerScript/issues)
-- Ask community: [GitHub Discussions](https://github.com/SaleemLww/Python-PowerScript/discussions)
+- Report issue: [GitHub Issues](https://github.com/SaleemLww/PowerScript-EITPS/issues)
+- Ask community: [GitHub Discussions](https://github.com/SaleemLww/PowerScript-EITPS/discussions)
 
 ---
 
