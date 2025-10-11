@@ -388,17 +388,6 @@ class FileOrganizer {
 
 ## 🧪 Testing & Quality
 
-### Test Coverage
-
-| Category | Tests | Status | Coverage |
-|----------|-------|--------|----------|
-| Core Language | 15/15 | ✅ Pass | 100% |
-| Type System | 8/8 | ✅ Pass | 100% |
-| Functions | 5/5 | ✅ Pass | 100% |
-| Classes | 6/6 | ✅ Pass | 100% |
-| Control Flow | 7/7 | ✅ Pass | 100% |
-| Runtime Libs | 12/12 | ✅ Pass | 100% |
-| **Total** | **53/53** | **✅ Pass** | **100%** |
 
 ### Build Status
 
