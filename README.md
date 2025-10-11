@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚀 PowerScript (TPS)
+# 🚀 PowerScript (TPS) Preview Version 1.0.0
 
 ### *Modern Typed Syntax Meets Python's Power*
 
