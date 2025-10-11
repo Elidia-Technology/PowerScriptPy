@@ -4,7 +4,7 @@
 
 ### *Modern Typed Syntax Meets Python's Power*
 
-[![PyPI Version](https://img.shields.io/badge/pypi-v1.0.0--beta-blue?style=for-the-badge&logo=pypi)](https://pypi.org/project/tps/)
+[![PyPI Version](https://img.shields.io/badge/pypi-v1.0.0--beta-blue?style=for-the-badge&logo=pypi)](https://pypi.org/project/eitps/)
 [![Python Version](https://img.shields.io/badge/python-3.8+-green?style=for-the-badge&logo=python)](https://www.python.org)
 [![License](https://img.shields.io/badge/license-MIT-orange?style=for-the-badge)](LICENSE.txt)
 [![Status](https://img.shields.io/badge/status-beta-yellow?style=for-the-badge)](https://github.com/SaleemLww/Python-PowerScript)
@@ -72,7 +72,7 @@ class NeuralNetwork {
 
 ```bash
 # Install TPS
-pip install tps
+pip install eitps
 
 # Verify installation
 tps --version
