@@ -48,6 +48,7 @@ class NodeType(Enum):
     ASSIGNMENT = "assignment"
     BINARY_OP = "binary_op"
     UNARY_OP = "unary_op"
+    AWAIT = "await"
     RETURN = "return"
     IF = "if"
     WHILE = "while"
@@ -332,6 +333,17 @@ class UnaryOpNode(ExpressionNode):
     
     def accept(self, visitor):
         return visitor.visit_unary_op(self)
+
+
+class AwaitNode(ExpressionNode):
+    """AST node for await expressions"""
+    
+    def __init__(self, expression: ExpressionNode, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.AWAIT, location)
+        self.expression = expression
+    
+    def accept(self, visitor):
+        return visitor.visit_await(self)
 
 
 class AssignmentNode(ExpressionNode):
@@ -826,6 +838,9 @@ class ASTVisitor(ABC):
     
     @abstractmethod
     def visit_unary_op(self, node: UnaryOpNode): pass
+    
+    @abstractmethod
+    def visit_await(self, node: AwaitNode): pass
     
     @abstractmethod
     def visit_assignment(self, node: AssignmentNode): pass

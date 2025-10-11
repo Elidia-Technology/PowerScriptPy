@@ -50,6 +50,7 @@
 - ✅ **test_basic.ps** - Core language features
 - ✅ **test_advanced.ps** - Advanced language constructs
 - ✅ **test_arrays.ps** - Array/list operations
+- ✅ **test_async.ps** - Asynchronous programming
 - ✅ **test_database.ps** - SQLite database operations
 - ✅ **test_networking.ps** - HTTP client/server functionality
 - ✅ **test_crypto.ps** - Hashing and encryption

@@ -574,6 +574,11 @@ class Transpiler(ASTVisitor):
         
         raise TranspilerError(f"Unsupported unary operator: {node.operator}", node)
     
+    def visit_await(self, node: AwaitNode) -> ast.Await:
+        """Visit await expression node"""
+        expression = node.expression.accept(self)
+        return ast.Await(value=expression)
+    
     def visit_assignment(self, node: AssignmentNode) -> Union[ast.Assign, ast.AugAssign]:
         """Visit assignment node"""
         target = node.target.accept(self)
@@ -774,8 +779,12 @@ class Transpiler(ASTVisitor):
         """Visit import node"""
         if node.is_default_import:
             # Default import: import defaultName from "module" -> from module import defaultName
-            alias = ast.alias(name="*", asname=node.specifiers[0].local_name)
+            alias = ast.alias(name=node.specifiers[0].imported_name, asname=node.specifiers[0].local_name)
             return ast.ImportFrom(module=node.module_name, names=[alias], level=0)
+        elif node.specifiers and node.specifiers[0].imported_name == "*":
+            # Namespace import: import * as name from "module" -> import module as name
+            alias = ast.alias(name=node.module_name, asname=node.specifiers[0].local_name)
+            return ast.Import(names=[alias])
         else:
             # Named imports: import { name1, name2 } from "module" -> from module import name1, name2
             aliases = []

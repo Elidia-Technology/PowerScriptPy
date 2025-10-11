@@ -281,7 +281,15 @@ class Parser:
         is_default_import = False
         module_name = ""
         
-        if self._match(TokenType.LEFT_BRACE):
+        if self._match(TokenType.MULTIPLY):
+            # Namespace import: import * as name from "module"
+            self._consume(TokenType.AS, "Expected 'as' after '*'")
+            namespace_name = self._consume(TokenType.IDENTIFIER, "Expected namespace name after 'as'").value
+            specifiers.append(ImportSpecifier("*", namespace_name))
+            self._consume(TokenType.FROM, "Expected 'from' after namespace import")
+            module_name = self._consume(TokenType.STRING, "Expected module name").value[1:-1]  # Remove quotes
+        
+        elif self._match(TokenType.LEFT_BRACE):
             # Named imports: import { name1, name2 } from "module"
             while not self._check(TokenType.RIGHT_BRACE) and not self._is_at_end():
                 imported_name = self._consume(TokenType.IDENTIFIER, "Expected import name").value
@@ -931,6 +939,11 @@ class Parser:
     
     def _unary(self) -> ExpressionNode:
         """Parse unary expression"""
+        if self._match(TokenType.AWAIT):
+            operator = self._previous()
+            right = self._unary()
+            return AwaitNode(right, operator.location)
+        
         if self._match(TokenType.NOT, TokenType.MINUS, TokenType.PLUS, TokenType.BIT_NOT):
             operator = self._previous()
             right = self._unary()
