@@ -1,744 +1,1485 @@
-# PowerScript (TPS) 🚀# PowerScript (TPS) 🚀
+<div align="center"># PowerScript (TPS) by Elite India Team 🚀
 
 
 
-[![PyPI version](https://badge.fury.io/py/tps.svg)](https://badge.fury.io/py/tps)[![PyPI version](https://badge.fury.io/py/tps.svg)](https://badge.fury.io/py/tps)
+# 🚀 PowerScript (TPS)
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+### *Modern Typed Syntax Meets Python's Power*[![PyPI version](https://badge.fury.io/py/tps.svg)](https://badge.fury.io/py/tps)[![PyPI version](https://badge.fury.io/py/tps.svg)](https://badge.fury.io/py/tps)
+
+
+
+[![PyPI Version](https://img.shields.io/badge/pypi-v1.0.0--beta-blue?style=for-the-badge&logo=pypi)](https://pypi.org/project/tps/)[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+
+[![Python Version](https://img.shields.io/badge/python-3.8+-green?style=for-the-badge&logo=python)](https://www.python.org)
+
+[![License](https://img.shields.io/badge/license-MIT-orange?style=for-the-badge)](LICENSE.txt)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+[![Status](https://img.shields.io/badge/status-beta-yellow?style=for-the-badge)](https://github.com/SaleemLww/Python-PowerScript)
 
 [![Status: Beta](https://img.shields.io/badge/status-beta-yellow.svg)](https://github.com/SaleemLww/Python-PowerScript)[![GitHub](https://img.shields.io/github/stars/SaleemLww/Python-PowerScript?style=social)](https://github.com/SaleemLww/Python-PowerScript)
 
+**A production-ready programming language that brings modern syntax and type safety to Python's ecosystem**
 
 
-**A Modern Typed Programming Language that Transpiles to Python****A Modern Typed Programming Language PowerScript (TPS) that Transpiles to Python**
 
+[📦 Install](#-installation) •
 
+[📚 Docs](docs/) •**A Modern Typed Programming Language that Transpiles to Python**
+
+[🎯 Quick Start](docs/quickstart.md) •
+
+[💡 Examples](test_suits/) •
+
+[🤝 Contribute](docs/contributing.md)
 
 > **🔔 Status: Beta v1.0.0** - Production-ready core features with comprehensive testing. See [Roadmap](#-roadmap) for upcoming features.PowerScript (TPS - Typed PowerScript) is a production-ready programming language that brings modern syntax, elegant type safety, and powerful features to Python's ecosystem. Write clean, type-safe code with JavaScript-familiar syntax and get optimized Python output that runs anywhere Python runs.
 
+</div>
 
+
+
+---
 
 PowerScript (TPS - Typed PowerScript) brings clean, modern syntax with static type safety to Python's powerful ecosystem. Write JavaScript-familiar code with type annotations and get clean Python output that runs anywhere.> **✅ Status: v1.0.0 Beta** - Production-ready with comprehensive feature set, full VS Code support, and extensive testing!
 
+## 🌟 What is PowerScript?
 
+
+
+PowerScript (TPS - **T**yped **P**ower**S**cript) is a modern programming language that transpiles to clean Python code. Write with JavaScript-familiar syntax, get Python's power!
 
 ## 🎯 Why PowerScript?## 🎯 Why PowerScript?
 
-
-
-- **🎨 Modern Syntax** - Clean, JavaScript-inspired syntax that's easy to learn- **🎨 Modern Syntax** - Clean, familiar syntax inspired by JavaScript and modern languages
-
-- **🔒 Type Safety** - Static type checking catches errors before runtime- **🔒 Type Safety** - Static type checking with runtime validation
-
-- **🐍 Pure Python** - Transpiles to clean Python code, zero runtime overhead  - **🚀 Python Power** - Full access to Python's ecosystem (NumPy, TensorFlow, Django, etc.)
-
-- **🚀 Python Power** - Full access to NumPy, TensorFlow, Django, and entire Python ecosystem- **🛠️ Production Ready** - Complete compiler toolchain with VS Code integration
-
-- **🛠️ Production Ready** - Comprehensive compiler with VS Code extension- **⚡ Zero Runtime** - Transpiles to clean Python, no runtime overhead
-
-- **📦 Easy Install** - Available on PyPI: `pip install tps`- **🎓 Easy Learning** - If you know JavaScript or Python, you'll love PowerScript!
-
-
-
-## 📦 Installation## 📦 Quick Installation
-
-
-
-### Quick Start (PyPI)### Install from PyPI (Recommended)
-
-
-
-```bash```bash
-
-# Install PowerScript# Install PowerScript
-
-pip install tpspip install tps
-
-
-
-# Verify installation# Verify installation
-
-tps --versiontps --version
-
-
-
-# Create your first program# Create your first program
-
-echo 'console.log("Hello, PowerScript!");' > hello.psecho 'console.log("Hello, PowerScript!");' > hello.ps
-
-tps-run hello.pstps-run hello.ps
-
-``````
-
-
-
-### From Source### Install VS Code Extension
-
-
-
-```bash**Get the full IDE experience with syntax highlighting, IntelliSense, and more!**
-
-git clone https://github.com/SaleemLww/Python-PowerScript.git
-
-cd Python-PowerScript1. Visit [GitHub Repository](https://github.com/SaleemLww/Python-PowerScript)
-
-pip install -e .2. Download the VS Code extension from `vscode-extension/` folder
-
-```3. Install: `code --install-extension powerscript-1.0.0.vsix`
-
-4. Restart VS Code and start coding!
-
-### VS Code Extension
-
-📚 **[Complete Installation Guide](docs/installation.md)** | 🎨 **[VS Code Extension Guide](docs/vscode_extension.md)**
-
-**Get full IDE support!**
-
-## 🌟 Complete Feature Set
-
-1. Visit [GitHub Repository](https://github.com/SaleemLww/Python-PowerScript)
-
-2. Download extension from `vscode-extension/` folder  ## 🌟 Complete Feature Set
-
-3. Install: `code --install-extension powerscript-1.0.0.vsix`
-
-4. Restart VS Code### 🎨 Modern Language Features
-
-
-
-📚 **[Complete Installation Guide](docs/installation.md)** | 🎨 **[VS Code Setup](docs/vscode_extension.md)**#### Modern Typed Syntax
-
 ```powerscript
 
-## ✨ Features// Type annotations
+// Clean, modern syntax with type safety
 
-let name: string = "PowerScript";
+class NeuralNetwork {
 
-### ✅ Implemented & Workinglet version: number = 1.0;
-
-let isReady: boolean = true;
-
-#### Core Language Features
-
-- **✅ Variables & Types** - `let`, `const` with type annotations// Arrow functions
-
-- **✅ Functions** - Regular and arrow functions with typesconst add = (a: number, b: number): number => a + b;
-
-- **✅ Classes** - Full OOP with inheritanceconst greet = (name: string): string => f"Hello, {name}!";
-
-- **✅ Control Flow** - if/else, for, while, switch/case
-
-- **✅ Operators** - All standard operators// Classes with access modifiers
-
-- **✅ String Interpolation** - F-strings: `f"Hello {name}!"`class User {
-
-- **✅ Arrays & Objects** - Full array and object support    private name: string;
-
-- **✅ Error Handling** - try/catch/finally blocks    public age: number;
+    private model: any;- **🎨 Modern Syntax** - Clean, JavaScript-inspired syntax that's easy to learn- **🎨 Modern Syntax** - Clean, familiar syntax inspired by JavaScript and modern languages
 
     
 
-#### Type System    constructor(name: string, age: number) {
+    constructor(layers: Array<number>) {- **🔒 Type Safety** - Static type checking catches errors before runtime- **🔒 Type Safety** - Static type checking with runtime validation
 
-- **✅ Basic Types** - string, number, boolean, any        this.name = name;
+        this.model = this.buildModel(layers);
 
-- **✅ Array Types** - `Array<T>`, typed arrays        this.age = age;
-
-- **✅ Type Annotations** - Function parameters and return types    }
-
-- **✅ Type Inference** - Automatic type deduction    
-
-- **✅ Union Types** - `string | number` (Basic support)    public greet(): string {
-
-        return f"Hi, I'm {this.name}!";
-
-#### Advanced Features      }
-
-- **✅ Async/Await** - First-class async support}
-
-- **✅ Enums** - Type-safe enumerations
-
-- **✅ Access Modifiers** - `public`, `private`, `protected`// Interfaces
-
-- **✅ Interfaces** - Contract-based programminginterface Animal {
-
-- **✅ Abstract Classes** - Base class patterns    name: string;
-
-    makeSound(): string;
-
-#### Built-in Runtime}
-
-- **✅ Console** - `console.log()`, `console.error()`
-
-- **✅ File System** - Read, write, copy, move files// Enums
-
-- **✅ JSON** - `json_read()`, `json_write()`enum Status {
-
-- **✅ CSV** - `csv_read()`, `csv_write()`    PENDING = "pending",
-
-- **✅ Database** - SQLite integration (CRUD operations)    ACTIVE = "active",
-
-- **✅ GUI** - Tkinter-based GUI framework    COMPLETED = "completed"
-
-- **✅ Networking** - HTTP client (GET, POST)}
-
-- **✅ Math** - Math utilities and functions
-
-// Async/Await
-
-#### Development Toolsasync function fetchData(): Promise<string> {
-
-- **✅ CLI Tools** - `tps-compile`, `tps-run`, `tps-create`    const response = await fetch("https://api.example.com/data");
-
-- **✅ VS Code Extension** - Syntax highlighting, snippets, IntelliSense    return await response.json();
-
-- **✅ Error Messages** - Clear, helpful error reporting}
-
-- **✅ Watch Mode** - Auto-recompilation on file changes```
-
-
-
-### 🔄 Coming Soon (v1.1 - v2.0)#### Advanced Type System
-
-- **✅ Union Types**: `string | number | boolean`
-
-#### Type System Enhancements- **✅ Literal Types**: `"GET" | "POST" | "PUT"`
-
-- **🔄 Generic Types** - Full `<T>` generics support- **✅ Type Aliases**: `type ID = string | number`
-
-- **🔄 Literal Types** - `"GET" | "POST"` literal unions- **✅ Generic Types**: `Array<T>`, `Promise<T>`
-
-- **🔄 Type Aliases** - `type ID = string | number`- **✅ Type Inference**: Automatic type deduction
-
-- **🔄 Advanced Unions** - Complex union types- **✅ Runtime Validation**: beartype integration
-
-- **🔄 Runtime Validation** - beartype integration
-
-#### Modern JavaScript Features
-
-#### Language Features- **✅ Template Literals**: `` `Hello ${name}!` ``
-
-- **🔄 Decorators** - `@decorator` syntax- **✅ F-String Interpolation**: `f"Hello {name}!"`
-
-- **🔄 Pattern Matching** - Advanced match expressions- **✅ Destructuring**: `const {x, y} = point;`
-
-- **🔄 Generators** - `yield` expressions  - **✅ Spread Operator**: `[...arr1, ...arr2]`
-
-- **🔄 Destructuring** - Object and array destructuring- **✅ Default Parameters**: `function greet(name = "World")`
-
-- **🔄 Spread Operator** - `...` syntax- **✅ Optional Chaining**: `user?.address?.city`
-
-- **🔄 Optional Chaining** - `?.` operator
-
-### 🛠️ Professional CLI Tools
-
-#### Advanced Features
-
-- **🔄 Modules System** - ES6-style imports/exportsPowerScript comes with a complete set of command-line tools:
-
-- **🔄 Namespace** - Code organization
-
-- **🔄 Type Guards** - Runtime type checking```bash
-
-- **🔄 Mixins** - Multiple inheritance patterns# Compile PowerScript to Python
-
-tps-compile file.ps                    # Compile single file
-
-📚 **[Full Roadmap](docs/roadmap.md)** | **[Changelog](docs/changelog.md)**tps-compile src/ -o build/             # Compile directory
-
-tps-compile file.ps --watch            # Watch mode
-
-## 💻 Quick Example
-
-# Run PowerScript directly
-
-```powerscripttps-run hello.ps                       # Run without manual compilation
-
-// hello.ps - Your first PowerScript programtps-run script.ps --args arg1 arg2     # Pass arguments
-
-
-
-// Variables with type annotations# Create new projects
-
-let name: string = "PowerScript";tps-create my-project                  # Create basic project
-
-let version: number = 1.0;tps-create ml-project --template ai    # Create AI/ML project
-
-const isReady: boolean = true;tps-create web-api --template web      # Create web API project
-
-
-
-// Function with types# Type checking
-
-function greet(name: string): string {tps-check file.ps                      # Check types
-
-    return f"Hello, {name}!";tps-check src/ --strict                # Strict mode
-
-}```
-
-
-
-// Class with access modifiers📚 **[Complete CLI Reference](docs/cli_reference.md)**
-
-class Person {
-
-    private name: string;### 🎨 VS Code Extension
-
-    public age: number;
-
-    **Full-featured IDE support for PowerScript development!**
-
-    constructor(name: string, age: number) {
-
-        this.name = name;✨ **Features:**
-
-        this.age = age;- **Syntax Highlighting** - Beautiful code coloring
-
-    }- **IntelliSense** - Smart auto-completion
-
-    - **Error Diagnostics** - Real-time error detection
-
-    public introduce(): void {- **Code Snippets** - 13+ ready-to-use templates
-
-        console.log(f"Hi, I'm {this.name}, age {this.age}!");- **LSP Support** - Full Language Server Protocol
-
-    }- **Commands** - Compile, Run, Create Project
-
-}- **Keyboard Shortcuts** - Ctrl+Shift+B (compile), Ctrl+Shift+R (run)
-
-
-
-// Async function🎯 **Installation:**
-
-async function fetchData(): Promise<string> {```bash
-
-    // Async operations# Download from GitHub
-
-    return "Data loaded";https://github.com/SaleemLww/Python-PowerScript
-
-}
-
-# Install the extension
-
-// Enumcode --install-extension powerscript-1.0.0.vsix
-
-enum Status {```
-
-    PENDING = "pending",
-
-    ACTIVE = "active",📚 **[VS Code Extension Guide](docs/vscode_extension.md)**
-
-    DONE = "done"
-
-}### 🔧 Production-Ready Compiler
-
-### 🔧 Production-Ready Compiler
-
-// Create and use
-
-let person = new Person("Alice", 25);- **✅ Full Lexer & Parser** - Complete recursive descent parsing (960+ lines)
-
-person.introduce();- **✅ Advanced Transpiler** - Python AST generation with optimization
-
-console.log(greet("World"));- **✅ Type System** - Static checking, inference, and runtime validation
-
-```- **✅ Smart Compilation** - Optimized Python code generation
-
-- **✅ Source Maps** - Error tracking back to original source
-
-**Run it:**- **✅ Watch Mode** - Automatic recompilation on file changes
-
-
-
-```bash📚 **[Language Reference](docs/language_reference.md)** | **[Type System Guide](docs/type_system.md)**
-
-# Method 1: Direct run
-
-tps-run hello.ps### 🚀 Advanced Language Features
-
-### 🚀 Advanced Language Features
-
-# Method 2: Compile then run
-
-tps-compile hello.ps -o hello.py#### Object-Oriented Programming
-
-python hello.py- **✅ Classes** - Full OOP support with inheritance
-
-```- **✅ Access Modifiers** - `public`, `private`, `protected`
-
-- **✅ Interfaces** - Contract-based programming
-
-**Output:**- **✅ Abstract Classes** - Base class patterns
-
-```- **✅ Method Overriding** - Polymorphism support
-
-Hi, I'm Alice, age 25!- **✅ Static Members** - Class-level properties and methods
-
-Hello, World!
-
-```#### Modern Constructs
-
-- **✅ Enums** - Type-safe enumeration
-
-📚 **[Quick Start Tutorial](docs/quickstart.md)**- **✅ Pattern Matching** - Match expressions
-
-- **✅ Decorators** - Function and class decoration
-
-## 🛠️ CLI Commands- **✅ Generators** - Yield expressions
-
-- **✅ Context Managers** - With statements
-
-PowerScript provides professional command-line tools:- **✅ Exception Handling** - Try-catch-finally
-
-
-
-```bash#### Async Programming
-
-# Compile PowerScript to Python- **✅ Async/Await** - First-class async support
-
-tps-compile file.ps                    # Single file- **✅ Promises** - Promise-based workflows
-
-tps-compile src/ -o build/             # Directory- **✅ Async Iterators** - Async for loops
-
-tps-compile file.ps --watch            # Watch mode- **✅ Concurrent Execution** - Multi-task handling
-
-
-
-# Run directly (no manual compilation needed)📚 **[Best Practices Guide](docs/best_practices.md)**
-
-tps-run script.ps                      # Run file
-
-tps-run app.ps --args arg1 arg2        # With arguments### 📁 Built-in Runtime Libraries
-
-
-
-# Create new projectsPowerScript includes comprehensive runtime libraries:
-
-tps-create my-project                  # Basic project
-
-tps-create ml-app --template ai        # AI/ML template#### File System API
-
-tps-create web-api --template web      # Web API template```powerscript
-
-// File operations
-
-# Type checkingfile_write("data.txt", "Hello World");
-
-tps-check file.ps                      # Check typesconst content = file_read("data.txt");
-
-tps-check src/ --strict                # Strict modefile_append("log.txt", "New entry\n");
-
-```file_delete("temp.txt");
-
-
-
-📚 **[Complete CLI Reference](docs/cli_reference.md)**// Directory operations
-
-dir_create("output");
-
-## 📚 Documentationconst files = dir_list("./");
-
-dir_delete("temp");
-
-Comprehensive documentation to master PowerScript:
-
-// Path utilities
-
-### Getting Startedconst fullPath = path_absolute("./file.txt");
-
-- 📖 **[Installation Guide](docs/installation.md)** - Install on any platformconst joined = path_join("dir", "subdir", "file.txt");
-
-- 🚀 **[Quick Start](docs/quickstart.md)** - First program in 5 minutes
-
-- 🎨 **[VS Code Extension](docs/vscode_extension.md)** - IDE setup// JSON/CSV support
-
-json_write("data.json", {name: "John", age: 30});
-
-### Language Referenceconst data = json_read("data.json");
-
-- 📕 **[Language Reference](docs/language_reference.md)** - Complete syntax guidecsv_write("data.csv", rows);
-
-- 🔧 **[Type System](docs/type_system.md)** - Understanding typesconst csvData = csv_read("data.csv");
-
-- 🛠️ **[CLI Reference](docs/cli_reference.md)** - Command-line tools```
-
-- 📚 **[API Reference](docs/api_reference.md)** - Built-in libraries
-
-#### Database Integration
-
-### Guides & Best Practices```powerscript
-
-- ✨ **[Best Practices](docs/best_practices.md)** - Write clean code// SQLite database
-
-- 🔄 **[Migration Guide](docs/migration_guide.md)** - From Python/JavaScriptconst db = new Database("app.db");
-
-- 🔍 **[Troubleshooting](docs/troubleshooting.md)** - Common issuesdb.execute("CREATE TABLE users (id INTEGER, name TEXT)");
-
-- ❓ **[FAQ](docs/faq.md)** - Frequently asked questionsdb.insert("users", {id: 1, name: "Alice"});
-
-const users = db.query("SELECT * FROM users");
-
-### Project Infodb.update("users", {name: "Bob"}, "id = 1");
-
-- 🤝 **[Contributing](docs/contributing.md)** - How to contributedb.delete("users", "id = 1");
-
-- 📝 **[Changelog](docs/changelog.md)** - Version history```
-
-- 🗺️ **[Roadmap](docs/roadmap.md)** - Future plans
-
-#### Networking
-
-📂 **[Browse All Docs](docs/)** - Documentation index```powerscript
-
-// HTTP client
-
-## 🎯 What Can You Build?const net = new Network();
-
-const response = await net.get("https://api.example.com/data");
-
-### 🤖 AI & Machine Learningconst data = await net.post("https://api.example.com/users", {name: "Alice"});
-
-await net.download("https://example.com/file.zip", "file.zip");
-
-```powerscript```
-
-// Type-safe AI with Python libraries
-
-import tensorflow as tf;#### GUI Framework
-
-```powerscript
-
-class NeuralNet {// Create desktop applications
-
-    private model: any;const gui = new GUI();
-
-    gui.window("My App", 800, 600);
-
-    constructor(layers: Array<number>) {gui.button("Click Me", handleClick);
-
-        this.model = tf.sequential();gui.label("Hello, World!");
-
-        // Build modelgui.input("Enter name:", handleInput);
-
-    }gui.run();
-
-    ```
-
-    async train(data: Array, labels: Array): Promise<void> {
-
-        await this.model.fit(data, labels, {📚 **[API Reference](docs/api_reference.md)**
-
-            epochs: 10,
-
-            batchSize: 32### 🤖 Perfect for AI/ML Development
-
-        });
-
-    }PowerScript seamlessly integrates with Python's AI/ML ecosystem:
-
-}
-
-``````powerscript
-
-// TensorFlow example
-
-### 📊 Data Scienceimport tensorflow as tf;
-
-
-
-```powerscriptclass NeuralNetwork {
-
-// Clean data processing    private model: tf.Model;
-
-import pandas as pd;    
-
-import numpy as np;    constructor(inputShape: Array<number>) {
-
-        this.model = tf.sequential([
-
-function analyzeData(filePath: string): void {            tf.layers.dense({units: 128, activation: 'relu', inputShape}),
-
-    const df = pd.read_csv(filePath);            tf.layers.dense({units: 10, activation: 'softmax'})
-
-    const mean = df['sales'].mean();        ]);
-
-    const std = df['sales'].std();    }
-
-    console.log(f"Mean: {mean}, Std Dev: {std}");    
-
-}    async train(data: Array, labels: Array): Promise<void> {
-
-```        await this.model.fit(data, labels, {
-
-            epochs: 10,
-
-### 🌐 Web Development            batchSize: 32
-
-        });
-
-```powerscript    }
-
-// FastAPI web service    
-
-from fastapi import FastAPI;    async predict(input: Array): Promise<Array> {
-
-        return await this.model.predict(input);
-
-const app = new FastAPI();    }
-
-}
-
-interface User {
-
-    name: string;// PyTorch example
-
-    email: string;import torch;
-
-}import torch.nn as nn;
-
-
-
-@app.post("/users")class CNN extends nn.Module {
-
-async function createUser(user: User): Promise<User> {    constructor() {
-
-    // Create user logic        super(CNN, this).__init__();
-
-    return user;        this.conv1 = nn.Conv2d(1, 32, 3);
-
-}        this.fc1 = nn.Linear(32 * 26 * 26, 10);
-
-```    }
+    }- **🐍 Pure Python** - Transpiles to clean Python code, zero runtime overhead  - **🚀 Python Power** - Full access to Python's ecosystem (NumPy, TensorFlow, Django, etc.)
 
     
 
-### 🖥️ Desktop Applications    forward(x: torch.Tensor): torch.Tensor {
+    async train(data: Array, labels: Array): Promise<void> {- **🚀 Python Power** - Full access to NumPy, TensorFlow, Django, and entire Python ecosystem- **🛠️ Production Ready** - Complete compiler toolchain with VS Code integration
 
-        x = torch.relu(this.conv1(x));
+        await this.model.fit(data, labels, {
 
-```powerscript        x = x.view(-1, 32 * 26 * 26);
+            epochs: 10,- **🛠️ Production Ready** - Comprehensive compiler with VS Code extension- **⚡ Zero Runtime** - Transpiles to clean Python, no runtime overhead
 
-// GUI application        return this.fc1(x);
+            batchSize: 32
 
-const gui = new GUI();    }
-
-}
-
-gui.window("My App", 800, 600);```
-
-gui.button("Click Me", () => {
-
-    gui.showMessage("Button clicked!");### 🔧 Advanced Type System
-
-});- **✅ Union Types**: `string | number | boolean` with Python typing support
-
-gui.label("Welcome to PowerScript!");- **✅ Literal Types**: `"GET" | "POST" | 200 | 404` for precise type constraints
-
-gui.run();- **✅ Type Aliases**: `type ID = string | number` for better code organization
-
-```- **✅ Mixed Unions**: `string | "special" | 42 | null` complex type combinations
-
-- **✅ Type Inference**: Automatic type deduction from context
-
-### 🔧 Automation Scripts- **✅ Runtime Type Checking**: Full validation with beartype integration
-
-
-
-```powerscript### 📁 Complete File System API
-
-// File automation- **✅ File I/O**: `file_write()`, `file_read()`, `file_append()` operations
-
-function backupFiles(source: string, dest: string): void {- **✅ File Management**: `file_exists()`, `file_delete()`, `file_copy()`, `file_move()`
-
-    const files = dir_list(source);- **✅ Directory Operations**: `dir_create()`, `dir_list()`, `dir_delete()`
-
-    for (let file of files) {- **✅ Path Utilities**: `path_join()`, `path_absolute()` cross-platform paths
-
-        const srcPath = path_join(source, file);- **✅ JSON/CSV Support**: `json_write()`, `json_read()`, `csv_write()`, `csv_read()`
-
-        const destPath = path_join(dest, file);- **✅ File Streaming**: Chunked I/O for large files
-
-        file_copy(srcPath, destPath);- **✅ Temporary Files**: `temp_file_create()`, `temp_dir_create()`
+        });- **📦 Easy Install** - Available on PyPI: `pip install tps`- **🎓 Easy Learning** - If you know JavaScript or Python, you'll love PowerScript!
 
     }
 
-    console.log("Backup complete!");### 🔥 Modern JavaScript-Style Features (NEW!)
+}
 
-}- **✅ F-String Interpolation**: `f"Hello {name}!"` - Python-style string formatting
+```
 
-```- **✅ Template Literals**: `` `Hello ${name}!` `` - JavaScript-style multi-line templates
+## 📦 Installation## 📦 Quick Installation
 
-- **✅ Switch/Case Statements**: Pattern matching with multiple case values
+### ✨ Why PowerScript?
 
-## ✅ Testing & Quality- **✅ Arrow Functions**: `x => x * 2` and `(a, b) => a + b` concise syntax
 
-- **✅ Import/Export System**: Modern ES6-style module imports and exports
-
-PowerScript is thoroughly tested and production-ready:- **✅ Default Parameters**: `function test(x = 5)` - function parameter defaults
-
-- **✅ Break/Continue**: Flow control in loops and switch statements
-
-### Test Coverage
-
-- **✅ Core Tests** - 15/15 passing (100%)### 🤖 AI/ML Ecosystem
-
-- **✅ W3C Tests** - 11/43 passing (26% current, 74% planned features)- **✅ 8 AI/ML Examples**: TensorFlow, PyTorch, transformers, computer vision
-
-- **✅ Type System** - Validated and working- **✅ Data Processing**: NumPy, Pandas integration templates
-
-- **✅ Runtime Libraries** - All built-ins tested- **✅ Async ML Pipelines**: Concurrent training and inference
-
-- **✅ Type-Safe Tensors**: Strongly typed data structures
-
-### Quality Assurance
-
-- **✅ Static Type Checking** - Catch errors at compile time### 🚀 Advanced PowerScript 2.0 Features
-
-- **✅ Clean Python Output** - Readable, maintainable code- **✅ Database Integration**: Full SQLite support with `Database` class (CRUD operations)
-
-- **✅ Error Tracking** - Source maps for debugging- **✅ GUI Framework**: Tkinter-based GUI with `GUI` class (windows, buttons, labels, events)
-
-- **✅ Comprehensive Testing** - Extensive test suite- **✅ Networking**: HTTP client with `Network` class (GET, POST, download, JSON handling)
-
-- **✅ Cryptography**: Security utilities with `Crypto` class (SHA256, MD5, base64 encoding)
-
-📊 **[Test Report](docs/testing.md)** | **[Contributing](docs/contributing.md)**- **✅ Testing Framework**: Unit testing with `Test` class (assertions, test runners, reporting)
-
-- **✅ Mathematics/Statistics**: Statistical functions with `MathStats` class (mean, median, std, linspace, arange)
-
-## 🆚 Comparison- **✅ Package Management**: pip-like functionality with `PackageManager` class (install, uninstall, list, info)
-
-- **✅ Development Tools**: Debugging and profiling with `Debugger` and `Profiler` classes
 
 | Feature | PowerScript | Python | JavaScript |
 
-|---------|-------------|--------|------------|## 🚀 Quick Start
+|---------|-------------|--------|------------|### Quick Start (PyPI)### Install from PyPI (Recommended)
 
-| Type Safety | ✅ Static + Runtime | ❌ Dynamic | ❌ Dynamic |
+| 🎨 Modern Syntax | ✅ Clean & Familiar | ❌ Verbose | ✅ Modern |
 
-| Python Ecosystem | ✅ Full Access | ✅ Native | ❌ None |### Installation & Setup
+| 🔒 Type Safety | ✅ Static + Runtime | ⚠️ Optional | ⚠️ Optional |
 
-| Modern Syntax | ✅ Clean & Modern | ❌ Traditional | ✅ Modern |
+| 🐍 Python Ecosystem | ✅ Full Access | ✅ Native | ❌ None |
 
-| Compilation | ✅ Fast transpile | ❌ Interpreted | ❌ Interpreted |#### Option 1: Install from PyPI (Recommended)
+| ⚡ Performance | ✅ Python Speed | ✅ Native | ❌ Slower |```bash```bash
 
-| AI/ML Support | ✅ All Python libs | ✅ Native | ❌ Limited |
+| 🤖 AI/ML Support | ✅ TensorFlow, PyTorch | ✅ Native | ❌ Limited |
 
-| Learning Curve | ✅ Easy | ✅ Easy | ✅ Easy |```bash
-
-| Type Checking | ✅ Compile-time | ⚠️ Optional | ⚠️ Optional |# Install PowerScript (TPS) from PyPI
-
-| Zero Runtime | ✅ Pure Python | ✅ Native | ❌ Needs engine |pip install tps
+| 📦 Zero Runtime | ✅ Pure Python | ✅ Native | ❌ Needs Engine |# Install PowerScript# Install PowerScript
 
 
 
-## 🚀 Roadmap# Verify installation
+---pip install tpspip install tps
+
+
+
+## 📦 Installation
+
+
+
+### 🎯 Quick Install (Recommended)# Verify installation# Verify installation
+
+
+
+```bashtps --versiontps --version
+
+# Install from PyPI
+
+pip install tps
+
+
+
+# Verify installation# Create your first program# Create your first program
 
 tps --version
 
-### v1.0 (Current - Beta) ✅
+echo 'console.log("Hello, PowerScript!");' > hello.psecho 'console.log("Hello, PowerScript!");' > hello.ps
+
+# Start coding!
+
+echo 'console.log("Hello, PowerScript!");' > hello.pstps-run hello.pstps-run hello.ps
+
+tps-run hello.ps
+
+`````````
+
+
+
+### 🔧 From Source
+
+
+
+```bash### From Source### Install VS Code Extension
+
+git clone https://github.com/SaleemLww/Python-PowerScript.git
+
+cd Python-PowerScript
+
+pip install -e .
+
+``````bash**Get the full IDE experience with syntax highlighting, IntelliSense, and more!**
+
+
+
+### 🎨 VS Code Extensiongit clone https://github.com/SaleemLww/Python-PowerScript.git
+
+
+
+```bashcd Python-PowerScript1. Visit [GitHub Repository](https://github.com/SaleemLww/Python-PowerScript)
+
+# Download from GitHub
+
+# https://github.com/SaleemLww/Python-PowerScriptpip install -e .2. Download the VS Code extension from `vscode-extension/` folder
+
+
+
+# Install extension```3. Install: `code --install-extension powerscript-1.0.0.vsix`
+
+code --install-extension powerscript-1.0.0.vsix
+
+```4. Restart VS Code and start coding!
+
+
+
+📖 **[Full Installation Guide](docs/installation.md)**### VS Code Extension
+
+
+
+---📚 **[Complete Installation Guide](docs/installation.md)** | 🎨 **[VS Code Extension Guide](docs/vscode_extension.md)**
+
+
+
+## ✨ Features**Get full IDE support!**
+
+
+
+### ✅ Implemented Features (Beta v1.0.0)## 🌟 Complete Feature Set
+
+
+
+<details>1. Visit [GitHub Repository](https://github.com/SaleemLww/Python-PowerScript)
+
+<summary><b>🎯 Core Language</b></summary>
+
+2. Download extension from `vscode-extension/` folder  ## 🌟 Complete Feature Set
+
+- ✅ **Variables** - `let`, `const` with type annotations
+
+- ✅ **Functions** - Regular and arrow functions3. Install: `code --install-extension powerscript-1.0.0.vsix`
+
+- ✅ **Classes** - Full OOP with inheritance
+
+- ✅ **Control Flow** - if/else, for, while, switch/case4. Restart VS Code### 🎨 Modern Language Features
+
+- ✅ **Operators** - All arithmetic, logical, comparison operators
+
+- ✅ **String Interpolation** - F-strings: `f"Hello {name}!"`
+
+- ✅ **Arrays** - Full array operations and methods
+
+- ✅ **Objects** - Object literals and manipulation📚 **[Complete Installation Guide](docs/installation.md)** | 🎨 **[VS Code Setup](docs/vscode_extension.md)**#### Modern Typed Syntax
+
+- ✅ **Error Handling** - try/catch/finally blocks
+
+- ✅ **Comments** - Single-line `//` and multi-line `/* */````powerscript
+
+
+
+</details>## ✨ Features// Type annotations
+
+
+
+<details>let name: string = "PowerScript";
+
+<summary><b>🔧 Type System</b></summary>
+
+### ✅ Implemented & Workinglet version: number = 1.0;
+
+- ✅ **Basic Types** - `string`, `number`, `boolean`, `any`, `void`
+
+- ✅ **Array Types** - `Array<T>`, `number[]`, `string[]`let isReady: boolean = true;
+
+- ✅ **Function Types** - Parameter and return type annotations
+
+- ✅ **Type Inference** - Automatic type deduction#### Core Language Features
+
+- ✅ **Union Types** - `string | number` (basic support)
+
+- ✅ **Type Checking** - Compile-time type validation- **✅ Variables & Types** - `let`, `const` with type annotations// Arrow functions
+
+
+
+</details>- **✅ Functions** - Regular and arrow functions with typesconst add = (a: number, b: number): number => a + b;
+
+
+
+<details>- **✅ Classes** - Full OOP with inheritanceconst greet = (name: string): string => f"Hello, {name}!";
+
+<summary><b>🚀 Advanced Features</b></summary>
+
+- **✅ Control Flow** - if/else, for, while, switch/case
+
+- ✅ **Async/Await** - First-class async programming
+
+- ✅ **Promises** - Promise-based async patterns- **✅ Operators** - All standard operators// Classes with access modifiers
+
+- ✅ **Enums** - Type-safe enumerations
+
+- ✅ **Access Modifiers** - `public`, `private`, `protected`- **✅ String Interpolation** - F-strings: `f"Hello {name}!"`class User {
+
+- ✅ **Interfaces** - Contract-based programming
+
+- ✅ **Abstract Classes** - Base class patterns- **✅ Arrays & Objects** - Full array and object support    private name: string;
+
+- ✅ **Method Overriding** - Polymorphism support
+
+- **✅ Error Handling** - try/catch/finally blocks    public age: number;
+
+</details>
+
+    
+
+<details>
+
+<summary><b>📚 Built-in Runtime</b></summary>#### Type System    constructor(name: string, age: number) {
+
+
+
+- ✅ **Console** - `console.log()`, `console.error()`- **✅ Basic Types** - string, number, boolean, any        this.name = name;
+
+- ✅ **File System** - Read, write, copy, move, delete
+
+- ✅ **JSON** - `json_read()`, `json_write()`- **✅ Array Types** - `Array<T>`, typed arrays        this.age = age;
+
+- ✅ **CSV** - `csv_read()`, `csv_write()`
+
+- ✅ **Database** - SQLite CRUD operations- **✅ Type Annotations** - Function parameters and return types    }
+
+- ✅ **Networking** - HTTP GET/POST requests
+
+- ✅ **GUI** - Tkinter-based GUI framework- **✅ Type Inference** - Automatic type deduction    
+
+- ✅ **Math** - Mathematical functions
+
+- ✅ **Date/Time** - Date and time utilities- **✅ Union Types** - `string | number` (Basic support)    public greet(): string {
+
+
+
+</details>        return f"Hi, I'm {this.name}!";
+
+
+
+<details>#### Advanced Features      }
+
+<summary><b>🛠️ Developer Tools</b></summary>
+
+- **✅ Async/Await** - First-class async support}
+
+- ✅ **CLI Compiler** - `tps-compile` with options
+
+- ✅ **Direct Runner** - `tps-run` for instant execution- **✅ Enums** - Type-safe enumerations
+
+- ✅ **Project Creator** - `tps-create` with templates
+
+- ✅ **Type Checker** - `tps-check` for validation- **✅ Access Modifiers** - `public`, `private`, `protected`// Interfaces
+
+- ✅ **Watch Mode** - Auto-recompilation on changes
+
+- ✅ **VS Code Extension** - Full IDE support- **✅ Interfaces** - Contract-based programminginterface Animal {
+
+- ✅ **Syntax Highlighting** - Beautiful code coloring
+
+- ✅ **Code Snippets** - 13+ ready-to-use templates- **✅ Abstract Classes** - Base class patterns    name: string;
+
+- ✅ **IntelliSense** - Smart auto-completion
+
+- ✅ **Error Diagnostics** - Real-time error detection    makeSound(): string;
+
+
+
+</details>#### Built-in Runtime}
+
+
+
+### 🔄 Coming Soon (v1.1 - v2.0)- **✅ Console** - `console.log()`, `console.error()`
+
+
+
+<details>- **✅ File System** - Read, write, copy, move files// Enums
+
+<summary><b>📅 Planned Features</b></summary>
+
+- **✅ JSON** - `json_read()`, `json_write()`enum Status {
+
+#### v1.1 (Q1 2026)
+
+- 🔄 **Generic Types** - Full `<T>` support- **✅ CSV** - `csv_read()`, `csv_write()`    PENDING = "pending",
+
+- 🔄 **Literal Types** - `"GET" | "POST"` literal unions
+
+- 🔄 **Type Aliases** - `type ID = string | number`- **✅ Database** - SQLite integration (CRUD operations)    ACTIVE = "active",
+
+- 🔄 **Decorators** - `@decorator` syntax
+
+- 🔄 **Tuple Types** - `[string, number]`- **✅ GUI** - Tkinter-based GUI framework    COMPLETED = "completed"
+
+- 🔄 **Performance** - Compilation optimizations
+
+- **✅ Networking** - HTTP client (GET, POST)}
+
+#### v1.2 (Q2 2026)
+
+- 🔄 **Pattern Matching** - Advanced match expressions- **✅ Math** - Math utilities and functions
+
+- 🔄 **Destructuring** - Object and array destructuring
+
+- 🔄 **Spread Operator** - `...` syntax// Async/Await
+
+- 🔄 **Optional Chaining** - `?.` operator
+
+- 🔄 **Nullish Coalescing** - `??` operator#### Development Toolsasync function fetchData(): Promise<string> {
+
+- 🔄 **Module System** - ES6-style imports/exports
+
+- **✅ CLI Tools** - `tps-compile`, `tps-run`, `tps-create`    const response = await fetch("https://api.example.com/data");
+
+#### v2.0 (Q3 2026)
+
+- 🔄 **Advanced Generics** - Constraints, variance- **✅ VS Code Extension** - Syntax highlighting, snippets, IntelliSense    return await response.json();
+
+- 🔄 **Type Guards** - Runtime type checking
+
+- 🔄 **Mixins** - Multiple inheritance patterns- **✅ Error Messages** - Clear, helpful error reporting}
+
+- 🔄 **Reflection API** - Runtime introspection
+
+- 🔄 **Plugin System** - Extensible architecture- **✅ Watch Mode** - Auto-recompilation on file changes```
+
+- 🔄 **LSP Enhancements** - Better IDE integration
+
+
+
+</details>
+
+### 🔄 Coming Soon (v1.1 - v2.0)#### Advanced Type System
+
+📋 **[Full Roadmap](docs/roadmap.md)** | **[Changelog](docs/changelog.md)**
+
+- **✅ Union Types**: `string | number | boolean`
+
+---
+
+#### Type System Enhancements- **✅ Literal Types**: `"GET" | "POST" | "PUT"`
+
+## 🚀 Quick Start
+
+- **🔄 Generic Types** - Full `<T>` generics support- **✅ Type Aliases**: `type ID = string | number`
+
+### Hello World
+
+- **🔄 Literal Types** - `"GET" | "POST"` literal unions- **✅ Generic Types**: `Array<T>`, `Promise<T>`
+
+```powerscript
+
+// hello.ps- **🔄 Type Aliases** - `type ID = string | number`- **✅ Type Inference**: Automatic type deduction
+
+console.log("Hello, PowerScript! 🚀");
+
+- **🔄 Advanced Unions** - Complex union types- **✅ Runtime Validation**: beartype integration
+
+function greet(name: string): string {
+
+    return f"Welcome, {name}!";- **🔄 Runtime Validation** - beartype integration
+
+}
+
+#### Modern JavaScript Features
+
+console.log(greet("Developer"));
+
+```#### Language Features- **✅ Template Literals**: `` `Hello ${name}!` ``
+
+
+
+```bash- **🔄 Decorators** - `@decorator` syntax- **✅ F-String Interpolation**: `f"Hello {name}!"`
+
+tps-run hello.ps
+
+# Output:- **🔄 Pattern Matching** - Advanced match expressions- **✅ Destructuring**: `const {x, y} = point;`
+
+# Hello, PowerScript! 🚀
+
+# Welcome, Developer!- **🔄 Generators** - `yield` expressions  - **✅ Spread Operator**: `[...arr1, ...arr2]`
+
+```
+
+- **🔄 Destructuring** - Object and array destructuring- **✅ Default Parameters**: `function greet(name = "World")`
+
+### Functions & Types
+
+- **🔄 Spread Operator** - `...` syntax- **✅ Optional Chaining**: `user?.address?.city`
+
+```powerscript
+
+// math.ps- **🔄 Optional Chaining** - `?.` operator
+
+function add(a: number, b: number): number {
+
+    return a + b;### 🛠️ Professional CLI Tools
+
+}
+
+#### Advanced Features
+
+const multiply = (a: number, b: number): number => a * b;
+
+- **🔄 Modules System** - ES6-style imports/exportsPowerScript comes with a complete set of command-line tools:
+
+console.log(f"5 + 3 = {add(5, 3)}");
+
+console.log(f"4 × 7 = {multiply(4, 7)}");- **🔄 Namespace** - Code organization
+
+```
+
+- **🔄 Type Guards** - Runtime type checking```bash
+
+### Classes & OOP
+
+- **🔄 Mixins** - Multiple inheritance patterns# Compile PowerScript to Python
+
+```powerscript
+
+// person.pstps-compile file.ps                    # Compile single file
+
+class Person {
+
+    private name: string;📚 **[Full Roadmap](docs/roadmap.md)** | **[Changelog](docs/changelog.md)**tps-compile src/ -o build/             # Compile directory
+
+    public age: number;
+
+    tps-compile file.ps --watch            # Watch mode
+
+    constructor(name: string, age: number) {
+
+        this.name = name;## 💻 Quick Example
+
+        this.age = age;
+
+    }# Run PowerScript directly
+
+    
+
+    public introduce(): void {```powerscripttps-run hello.ps                       # Run without manual compilation
+
+        console.log(f"Hi! I'm {this.name}, {this.age} years old.");
+
+    }// hello.ps - Your first PowerScript programtps-run script.ps --args arg1 arg2     # Pass arguments
+
+    
+
+    public birthday(): void {
+
+        this.age += 1;
+
+        console.log(f"Happy birthday! Now {this.age} years old!");// Variables with type annotations# Create new projects
+
+    }
+
+}let name: string = "PowerScript";tps-create my-project                  # Create basic project
+
+
+
+let person = new Person("Alice", 25);let version: number = 1.0;tps-create ml-project --template ai    # Create AI/ML project
+
+person.introduce();
+
+person.birthday();const isReady: boolean = true;tps-create web-api --template web      # Create web API project
+
+```
+
+
+
+### Async/Await
+
+// Function with types# Type checking
+
+```powerscript
+
+// async.psfunction greet(name: string): string {tps-check file.ps                      # Check types
+
+async function fetchUserData(userId: number): Promise<any> {
+
+    console.log(f"Fetching user {userId}...");    return f"Hello, {name}!";tps-check src/ --strict                # Strict mode
+
+    // Simulate API call
+
+    return {"id": userId, "name": "Alice"};}```
+
+}
+
+
+
+async function main(): Promise<void> {
+
+    let user = await fetchUserData(123);// Class with access modifiers📚 **[Complete CLI Reference](docs/cli_reference.md)**
+
+    console.log(f"User: {user['name']}");
+
+}class Person {
+
+
+
+main();    private name: string;### 🎨 VS Code Extension
+
+```
+
+    public age: number;
+
+### Enums
+
+    **Full-featured IDE support for PowerScript development!**
+
+```powerscript
+
+// status.ps    constructor(name: string, age: number) {
+
+enum Status {
+
+    PENDING = "pending",        this.name = name;✨ **Features:**
+
+    ACTIVE = "active",
+
+    COMPLETED = "completed",        this.age = age;- **Syntax Highlighting** - Beautiful code coloring
+
+    FAILED = "failed"
+
+}    }- **IntelliSense** - Smart auto-completion
+
+
+
+function processTask(status: Status): void {    - **Error Diagnostics** - Real-time error detection
+
+    switch (status) {
+
+        case Status.PENDING:    public introduce(): void {- **Code Snippets** - 13+ ready-to-use templates
+
+            console.log("⏳ Task is pending...");
+
+            break;        console.log(f"Hi, I'm {this.name}, age {this.age}!");- **LSP Support** - Full Language Server Protocol
+
+        case Status.ACTIVE:
+
+            console.log("🔄 Task is running...");    }- **Commands** - Compile, Run, Create Project
+
+            break;
+
+        case Status.COMPLETED:}- **Keyboard Shortcuts** - Ctrl+Shift+B (compile), Ctrl+Shift+R (run)
+
+            console.log("✅ Task completed!");
+
+            break;
+
+        default:
+
+            console.log("❌ Task failed!");// Async function🎯 **Installation:**
+
+    }
+
+}async function fetchData(): Promise<string> {```bash
+
+
+
+processTask(Status.COMPLETED);    // Async operations# Download from GitHub
+
+```
+
+    return "Data loaded";https://github.com/SaleemLww/Python-PowerScript
+
+📖 **[Complete Quick Start Guide](docs/quickstart.md)**
+
+}
+
+---
+
+# Install the extension
+
+## 🛠️ CLI Commands
+
+// Enumcode --install-extension powerscript-1.0.0.vsix
+
+PowerScript provides powerful command-line tools:
+
+enum Status {```
+
+### Compilation
+
+    PENDING = "pending",
+
+```bash
+
+# Compile single file    ACTIVE = "active",📚 **[VS Code Extension Guide](docs/vscode_extension.md)**
+
+tps-compile script.ps
+
+    DONE = "done"
+
+# Compile to specific output
+
+tps-compile script.ps -o output.py}### 🔧 Production-Ready Compiler
+
+
+
+# Compile directory### 🔧 Production-Ready Compiler
+
+tps-compile src/ -o build/
+
+// Create and use
+
+# Watch mode (auto-recompile)
+
+tps-compile src/ --watchlet person = new Person("Alice", 25);- **✅ Full Lexer & Parser** - Complete recursive descent parsing (960+ lines)
+
+```
+
+person.introduce();- **✅ Advanced Transpiler** - Python AST generation with optimization
+
+### Execution
+
+console.log(greet("World"));- **✅ Type System** - Static checking, inference, and runtime validation
+
+```bash
+
+# Run PowerScript directly```- **✅ Smart Compilation** - Optimized Python code generation
+
+tps-run script.ps
+
+- **✅ Source Maps** - Error tracking back to original source
+
+# Run with arguments
+
+tps-run script.ps --args arg1 arg2**Run it:**- **✅ Watch Mode** - Automatic recompilation on file changes
+
+
+
+# Run with Python options
+
+tps-run script.ps --python-args -u
+
+``````bash📚 **[Language Reference](docs/language_reference.md)** | **[Type System Guide](docs/type_system.md)**
+
+
+
+### Project Management# Method 1: Direct run
+
+
+
+```bashtps-run hello.ps### 🚀 Advanced Language Features
+
+# Create new project
+
+tps-create my-project### 🚀 Advanced Language Features
+
+
+
+# Create with template# Method 2: Compile then run
+
+tps-create ml-project --template ai
+
+tps-create web-api --template webtps-compile hello.ps -o hello.py#### Object-Oriented Programming
+
+tps-create gui-app --template desktop
+
+python hello.py- **✅ Classes** - Full OOP support with inheritance
+
+# List available templates
+
+tps-create --list-templates```- **✅ Access Modifiers** - `public`, `private`, `protected`
+
+```
+
+- **✅ Interfaces** - Contract-based programming
+
+### Type Checking
+
+**Output:**- **✅ Abstract Classes** - Base class patterns
+
+```bash
+
+# Check types```- **✅ Method Overriding** - Polymorphism support
+
+tps-check script.ps
+
+Hi, I'm Alice, age 25!- **✅ Static Members** - Class-level properties and methods
+
+# Strict mode
+
+tps-check script.ps --strictHello, World!
+
+
+
+# Check entire directory```#### Modern Constructs
+
+tps-check src/ --recursive
+
+```- **✅ Enums** - Type-safe enumeration
+
+
+
+📘 **[Complete CLI Reference](docs/cli_reference.md)**📚 **[Quick Start Tutorial](docs/quickstart.md)**- **✅ Pattern Matching** - Match expressions
+
+
+
+---- **✅ Decorators** - Function and class decoration
+
+
+
+## 📚 Documentation## 🛠️ CLI Commands- **✅ Generators** - Yield expressions
+
+
+
+Comprehensive guides to master PowerScript:- **✅ Context Managers** - With statements
+
+
+
+### 🎯 Getting StartedPowerScript provides professional command-line tools:- **✅ Exception Handling** - Try-catch-finally
+
+- 📖 **[Installation Guide](docs/installation.md)** - Install on any platform
+
+- 🚀 **[Quick Start](docs/quickstart.md)** - First program in 5 minutes
+
+- 💡 **[Tutorial](docs/tutorial.md)** - Step-by-step learning path
+
+```bash#### Async Programming
+
+### 📕 Language Reference
+
+- 📘 **[Language Reference](docs/language_reference.md)** - Complete syntax guide# Compile PowerScript to Python- **✅ Async/Await** - First-class async support
+
+- 🔧 **[Type System](docs/type_system.md)** - Understanding types
+
+- 🎨 **[Best Practices](docs/best_practices.md)** - Writing clean codetps-compile file.ps                    # Single file- **✅ Promises** - Promise-based workflows
+
+
+
+### 🛠️ Tools & Developmenttps-compile src/ -o build/             # Directory- **✅ Async Iterators** - Async for loops
+
+- 🎨 **[VS Code Extension](docs/vscode_extension.md)** - IDE setup guide
+
+- 🛠️ **[CLI Reference](docs/cli_reference.md)** - Command-line toolstps-compile file.ps --watch            # Watch mode- **✅ Concurrent Execution** - Multi-task handling
+
+- 📚 **[API Reference](docs/api_reference.md)** - Built-in libraries
+
+
+
+### 🔄 Migration & Help
+
+- 🔄 **[Migration Guide](docs/migration_guide.md)** - From Python/JavaScript# Run directly (no manual compilation needed)📚 **[Best Practices Guide](docs/best_practices.md)**
+
+- 🔍 **[Troubleshooting](docs/troubleshooting.md)** - Common issues
+
+- ❓ **[FAQ](docs/faq.md)** - Frequently asked questionstps-run script.ps                      # Run file
+
+
+
+### 🤝 Communitytps-run app.ps --args arg1 arg2        # With arguments### 📁 Built-in Runtime Libraries
+
+- 🤝 **[Contributing](docs/contributing.md)** - How to contribute
+
+- 🗺️ **[Roadmap](docs/roadmap.md)** - Future plans
+
+- 📝 **[Changelog](docs/changelog.md)** - Version history
+
+# Create new projectsPowerScript includes comprehensive runtime libraries:
+
+📂 **[Browse All Documentation](docs/)**
+
+tps-create my-project                  # Basic project
+
+---
+
+tps-create ml-app --template ai        # AI/ML template#### File System API
+
+## 🎯 Use Cases & Examples
+
+tps-create web-api --template web      # Web API template```powerscript
+
+### 🤖 AI & Machine Learning
+
+// File operations
+
+```powerscript
+
+// tensorflow_model.ps# Type checkingfile_write("data.txt", "Hello World");
+
+import tensorflow as tf;
+
+tps-check file.ps                      # Check typesconst content = file_read("data.txt");
+
+class ImageClassifier {
+
+    private model: any;tps-check src/ --strict                # Strict modefile_append("log.txt", "New entry\n");
+
+    
+
+    constructor() {```file_delete("temp.txt");
+
+        this.model = tf.sequential([
+
+            tf.layers.conv2d({
+
+                filters: 32,
+
+                kernelSize: 3,📚 **[Complete CLI Reference](docs/cli_reference.md)**// Directory operations
+
+                activation: 'relu',
+
+                inputShape: [28, 28, 1]dir_create("output");
+
+            }),
+
+            tf.layers.maxPooling2d({poolSize: 2}),## 📚 Documentationconst files = dir_list("./");
+
+            tf.layers.flatten(),
+
+            tf.layers.dense({units: 10, activation: 'softmax'})dir_delete("temp");
+
+        ]);
+
+    }Comprehensive documentation to master PowerScript:
+
+    
+
+    async train(images: Array, labels: Array): Promise<void> {// Path utilities
+
+        await this.model.compile({
+
+            optimizer: 'adam',### Getting Startedconst fullPath = path_absolute("./file.txt");
+
+            loss: 'categoricalCrossentropy',
+
+            metrics: ['accuracy']- 📖 **[Installation Guide](docs/installation.md)** - Install on any platformconst joined = path_join("dir", "subdir", "file.txt");
+
+        });
+
+        - 🚀 **[Quick Start](docs/quickstart.md)** - First program in 5 minutes
+
+        await this.model.fit(images, labels, {
+
+            epochs: 10,- 🎨 **[VS Code Extension](docs/vscode_extension.md)** - IDE setup// JSON/CSV support
+
+            batchSize: 32,
+
+            validationSplit: 0.2json_write("data.json", {name: "John", age: 30});
+
+        });
+
+    }### Language Referenceconst data = json_read("data.json");
+
+}
+
+```- 📕 **[Language Reference](docs/language_reference.md)** - Complete syntax guidecsv_write("data.csv", rows);
+
+
+
+### 📊 Data Science- 🔧 **[Type System](docs/type_system.md)** - Understanding typesconst csvData = csv_read("data.csv");
+
+
+
+```powerscript- 🛠️ **[CLI Reference](docs/cli_reference.md)** - Command-line tools```
+
+// data_analysis.ps
+
+import pandas as pd;- 📚 **[API Reference](docs/api_reference.md)** - Built-in libraries
+
+import numpy as np;
+
+import matplotlib.pyplot as plt;#### Database Integration
+
+
+
+class DataAnalyzer {### Guides & Best Practices```powerscript
+
+    private df: any;
+
+    - ✨ **[Best Practices](docs/best_practices.md)** - Write clean code// SQLite database
+
+    constructor(filePath: string) {
+
+        this.df = pd.read_csv(filePath);- 🔄 **[Migration Guide](docs/migration_guide.md)** - From Python/JavaScriptconst db = new Database("app.db");
+
+    }
+
+    - 🔍 **[Troubleshooting](docs/troubleshooting.md)** - Common issuesdb.execute("CREATE TABLE users (id INTEGER, name TEXT)");
+
+    public analyze(): void {
+
+        console.log("Dataset Shape:", this.df.shape);- ❓ **[FAQ](docs/faq.md)** - Frequently asked questionsdb.insert("users", {id: 1, name: "Alice"});
+
+        console.log("Summary Statistics:");
+
+        console.log(this.df.describe());const users = db.query("SELECT * FROM users");
+
+        
+
+        const mean = this.df['sales'].mean();### Project Infodb.update("users", {name: "Bob"}, "id = 1");
+
+        const std = this.df['sales'].std();
+
+        - 🤝 **[Contributing](docs/contributing.md)** - How to contributedb.delete("users", "id = 1");
+
+        console.log(f"Mean Sales: ${mean:.2f}");
+
+        console.log(f"Std Dev: ${std:.2f}");- 📝 **[Changelog](docs/changelog.md)** - Version history```
+
+    }
+
+    - 🗺️ **[Roadmap](docs/roadmap.md)** - Future plans
+
+    public visualize(): void {
+
+        this.df['sales'].plot();#### Networking
+
+        plt.title("Sales Over Time");
+
+        plt.show();📂 **[Browse All Docs](docs/)** - Documentation index```powerscript
+
+    }
+
+}// HTTP client
+
+```
+
+## 🎯 What Can You Build?const net = new Network();
+
+### 🌐 Web API
+
+const response = await net.get("https://api.example.com/data");
+
+```powerscript
+
+// web_api.ps### 🤖 AI & Machine Learningconst data = await net.post("https://api.example.com/users", {name: "Alice"});
+
+from fastapi import FastAPI;
+
+await net.download("https://example.com/file.zip", "file.zip");
+
+const app = new FastAPI();
+
+```powerscript```
+
+interface User {
+
+    id: number;// Type-safe AI with Python libraries
+
+    name: string;
+
+    email: string;import tensorflow as tf;#### GUI Framework
+
+}
+
+```powerscript
+
+let users: Array<User> = [];
+
+class NeuralNet {// Create desktop applications
+
+@app.get("/")
+
+async function root(): Promise<any> {    private model: any;const gui = new GUI();
+
+    return {"message": "Welcome to PowerScript API!"};
+
+}    gui.window("My App", 800, 600);
+
+
+
+@app.post("/users")    constructor(layers: Array<number>) {gui.button("Click Me", handleClick);
+
+async function createUser(user: User): Promise<User> {
+
+    users.push(user);        this.model = tf.sequential();gui.label("Hello, World!");
+
+    return user;
+
+}        // Build modelgui.input("Enter name:", handleInput);
+
+
+
+@app.get("/users")    }gui.run();
+
+async function getUsers(): Promise<Array<User>> {
+
+    return users;    ```
+
+}
+
+```    async train(data: Array, labels: Array): Promise<void> {
+
+
+
+### 🖥️ Desktop GUI        await this.model.fit(data, labels, {📚 **[API Reference](docs/api_reference.md)**
+
+
+
+```powerscript            epochs: 10,
+
+// desktop_app.ps
+
+const gui = new GUI();            batchSize: 32### 🤖 Perfect for AI/ML Development
+
+
+
+class Calculator {        });
+
+    private result: number = 0;
+
+        }PowerScript seamlessly integrates with Python's AI/ML ecosystem:
+
+    constructor() {
+
+        gui.window("Calculator", 400, 300);}
+
+        this.createUI();
+
+    }``````powerscript
+
+    
+
+    private createUI(): void {// TensorFlow example
+
+        gui.label("Simple Calculator");
+
+        gui.input("Enter number:", this.handleInput);### 📊 Data Scienceimport tensorflow as tf;
+
+        gui.button("Add", () => this.add());
+
+        gui.button("Clear", () => this.clear());
+
+        gui.label("Result: 0", "result");
+
+    }```powerscriptclass NeuralNetwork {
+
+    
+
+    private add(): void {// Clean data processing    private model: tf.Model;
+
+        // Add logic
+
+        gui.updateLabel("result", f"Result: {this.result}");import pandas as pd;    
+
+    }
+
+    import numpy as np;    constructor(inputShape: Array<number>) {
+
+    private clear(): void {
+
+        this.result = 0;        this.model = tf.sequential([
+
+        gui.updateLabel("result", "Result: 0");
+
+    }function analyzeData(filePath: string): void {            tf.layers.dense({units: 128, activation: 'relu', inputShape}),
+
+    
+
+    public run(): void {    const df = pd.read_csv(filePath);            tf.layers.dense({units: 10, activation: 'softmax'})
+
+        gui.run();
+
+    }    const mean = df['sales'].mean();        ]);
+
+}
+
+    const std = df['sales'].std();    }
+
+let calc = new Calculator();
+
+calc.run();    console.log(f"Mean: {mean}, Std Dev: {std}");    
+
+```
+
+}    async train(data: Array, labels: Array): Promise<void> {
+
+### 🔧 Automation
+
+```        await this.model.fit(data, labels, {
+
+```powerscript
+
+// automation.ps            epochs: 10,
+
+class FileBackup {
+
+    private source: string;### 🌐 Web Development            batchSize: 32
+
+    private destination: string;
+
+            });
+
+    constructor(source: string, dest: string) {
+
+        this.source = source;```powerscript    }
+
+        this.destination = dest;
+
+    }// FastAPI web service    
+
+    
+
+    public backup(): void {from fastapi import FastAPI;    async predict(input: Array): Promise<Array> {
+
+        console.log("🔄 Starting backup...");
+
+                return await this.model.predict(input);
+
+        const files = dir_list(this.source);
+
+        let count = 0;const app = new FastAPI();    }
+
+        
+
+        for (let file of files) {}
+
+            const srcPath = path_join(this.source, file);
+
+            const destPath = path_join(this.destination, file);interface User {
+
+            
+
+            file_copy(srcPath, destPath);    name: string;// PyTorch example
+
+            count += 1;
+
+            console.log(f"✅ Backed up: {file}");    email: string;import torch;
+
+        }
+
+        }import torch.nn as nn;
+
+        console.log(f"🎉 Backup complete! {count} files copied.");
+
+    }
+
+}
+
+@app.post("/users")class CNN extends nn.Module {
+
+let backup = new FileBackup("./data", "./backup");
+
+backup.run();async function createUser(user: User): Promise<User> {    constructor() {
+
+```
+
+    // Create user logic        super(CNN, this).__init__();
+
+💡 **More examples in [`test_suits/`](test_suits/) folder**
+
+    return user;        this.conv1 = nn.Conv2d(1, 32, 3);
+
+---
+
+}        this.fc1 = nn.Linear(32 * 26 * 26, 10);
+
+## ✅ Testing & Quality
+
+```    }
+
+PowerScript is thoroughly tested and production-ready:
+
+    
+
+### 📊 Test Results
+
+### 🖥️ Desktop Applications    forward(x: torch.Tensor): torch.Tensor {
+
+| Test Suite | Status | Coverage |
+
+|------------|--------|----------|        x = torch.relu(this.conv1(x));
+
+| Core Features | ✅ 15/15 (100%) | Full |
+
+| Type System | ✅ Working | 90%+ |```powerscript        x = x.view(-1, 32 * 26 * 26);
+
+| Runtime Libraries | ✅ Tested | 95%+ |
+
+| W3C Python Tests | ✅ 11/43 (26%) | Partial* |// GUI application        return this.fc1(x);
+
+
+
+*74% of W3C tests document planned features for v1.1-v2.0const gui = new GUI();    }
+
+
+
+### 🔍 Quality Assurance}
+
+
+
+- ✅ **Static Analysis** - Type checking at compile-timegui.window("My App", 800, 600);```
+
+- ✅ **Clean Output** - Readable, maintainable Python code
+
+- ✅ **Error Messages** - Clear, actionable error reportinggui.button("Click Me", () => {
+
+- ✅ **Source Maps** - Debug back to original PowerScript
+
+- ✅ **Extensive Testing** - Comprehensive test suite    gui.showMessage("Button clicked!");### 🔧 Advanced Type System
+
+
+
+📊 **[Test Report](docs/testing.md)**});- **✅ Union Types**: `string | number | boolean` with Python typing support
+
+
+
+---gui.label("Welcome to PowerScript!");- **✅ Literal Types**: `"GET" | "POST" | 200 | 404` for precise type constraints
+
+
+
+## 🤝 Contributinggui.run();- **✅ Type Aliases**: `type ID = string | number` for better code organization
+
+
+
+We ❤️ contributions! PowerScript is open source and community-driven.```- **✅ Mixed Unions**: `string | "special" | 42 | null` complex type combinations
+
+
+
+### Ways to Contribute- **✅ Type Inference**: Automatic type deduction from context
+
+
+
+- 🐛 **Report Bugs** - [Open an issue](https://github.com/SaleemLww/Python-PowerScript/issues)### 🔧 Automation Scripts- **✅ Runtime Type Checking**: Full validation with beartype integration
+
+- 💡 **Suggest Features** - [Start a discussion](https://github.com/SaleemLww/Python-PowerScript/discussions)
+
+- 📝 **Improve Docs** - Documentation PRs welcome
+
+- 💻 **Write Code** - Contribute to compiler or runtime
+
+- 🎨 **Share Projects** - Show what you've built```powerscript### 📁 Complete File System API
+
+- ⭐ **Star the Repo** - Show your support!
+
+// File automation- **✅ File I/O**: `file_write()`, `file_read()`, `file_append()` operations
+
+### Development Setup
+
+function backupFiles(source: string, dest: string): void {- **✅ File Management**: `file_exists()`, `file_delete()`, `file_copy()`, `file_move()`
+
+```bash
+
+# Fork and clone    const files = dir_list(source);- **✅ Directory Operations**: `dir_create()`, `dir_list()`, `dir_delete()`
+
+git clone https://github.com/YOUR_USERNAME/Python-PowerScript.git
+
+cd Python-PowerScript    for (let file of files) {- **✅ Path Utilities**: `path_join()`, `path_absolute()` cross-platform paths
+
+
+
+# Install in development mode        const srcPath = path_join(source, file);- **✅ JSON/CSV Support**: `json_write()`, `json_read()`, `csv_write()`, `csv_read()`
+
+pip install -e .
+
+        const destPath = path_join(dest, file);- **✅ File Streaming**: Chunked I/O for large files
+
+# Run tests
+
+pytest        file_copy(srcPath, destPath);- **✅ Temporary Files**: `temp_file_create()`, `temp_dir_create()`
+
+
+
+# Test your changes    }
+
+tps-run test.ps
+
+```    console.log("Backup complete!");### 🔥 Modern JavaScript-Style Features (NEW!)
+
+
+
+📚 **[Contributing Guide](docs/contributing.md)** | **[Code of Conduct](docs/code_of_conduct.md)**}- **✅ F-String Interpolation**: `f"Hello {name}!"` - Python-style string formatting
+
+
+
+---```- **✅ Template Literals**: `` `Hello ${name}!` `` - JavaScript-style multi-line templates
+
+
+
+## 📄 License- **✅ Switch/Case Statements**: Pattern matching with multiple case values
+
+
+
+**MIT License** - Copyright (c) 2025 Saleem Ahmad (Elite India Org Team)## ✅ Testing & Quality- **✅ Arrow Functions**: `x => x * 2` and `(a, b) => a + b` concise syntax
+
+
+
+```- **✅ Import/Export System**: Modern ES6-style module imports and exports
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+
+of this software and associated documentation files (the "Software"), to dealPowerScript is thoroughly tested and production-ready:- **✅ Default Parameters**: `function test(x = 5)` - function parameter defaults
+
+in the Software without restriction, including without limitation the rights
+
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell- **✅ Break/Continue**: Flow control in loops and switch statements
+
+copies of the Software, and to permit persons to whom the Software is
+
+furnished to do so, subject to the following conditions...### Test Coverage
+
+```
+
+- **✅ Core Tests** - 15/15 passing (100%)### 🤖 AI/ML Ecosystem
+
+📄 **[Full License Text](LICENSE.txt)**
+
+- **✅ W3C Tests** - 11/43 passing (26% current, 74% planned features)- **✅ 8 AI/ML Examples**: TensorFlow, PyTorch, transformers, computer vision
+
+---
+
+- **✅ Type System** - Validated and working- **✅ Data Processing**: NumPy, Pandas integration templates
+
+## 🌟 Support & Community
+
+- **✅ Runtime Libraries** - All built-ins tested- **✅ Async ML Pipelines**: Concurrent training and inference
+
+### 💬 Get Help
+
+- **✅ Type-Safe Tensors**: Strongly typed data structures
+
+- 📖 **[Documentation](docs/)** - Comprehensive guides
+
+- 💬 **[GitHub Discussions](https://github.com/SaleemLww/Python-PowerScript/discussions)** - Ask questions### Quality Assurance
+
+- 🐛 **[Issue Tracker](https://github.com/SaleemLww/Python-PowerScript/issues)** - Report bugs
+
+- 📧 **Email** - team@eliteindia.org- **✅ Static Type Checking** - Catch errors at compile time### 🚀 Advanced PowerScript 2.0 Features
+
+
+
+### 🔗 Quick Links- **✅ Clean Python Output** - Readable, maintainable code- **✅ Database Integration**: Full SQLite support with `Database` class (CRUD operations)
+
+
+
+- 🏠 [GitHub Repository](https://github.com/SaleemLww/Python-PowerScript)- **✅ Error Tracking** - Source maps for debugging- **✅ GUI Framework**: Tkinter-based GUI with `GUI` class (windows, buttons, labels, events)
+
+- 📦 [PyPI Package](https://pypi.org/project/tps/)
+
+- 🎨 [VS Code Extension](https://github.com/SaleemLww/Python-PowerScript/tree/master/vscode-extension)- **✅ Comprehensive Testing** - Extensive test suite- **✅ Networking**: HTTP client with `Network` class (GET, POST, download, JSON handling)
+
+- 📚 [Documentation](docs/)
+
+- 🗺️ [Roadmap](docs/roadmap.md)- **✅ Cryptography**: Security utilities with `Crypto` class (SHA256, MD5, base64 encoding)
+
+
+
+### 📣 Stay Updated📊 **[Test Report](docs/testing.md)** | **[Contributing](docs/contributing.md)**- **✅ Testing Framework**: Unit testing with `Test` class (assertions, test runners, reporting)
+
+
+
+- ⭐ **[Star on GitHub](https://github.com/SaleemLww/Python-PowerScript)** - Show support!- **✅ Mathematics/Statistics**: Statistical functions with `MathStats` class (mean, median, std, linspace, arange)
+
+- 👁️ **Watch** - Get notified of updates
+
+- 🔔 **Follow Releases** - Stay current with latest features## 🆚 Comparison- **✅ Package Management**: pip-like functionality with `PackageManager` class (install, uninstall, list, info)
+
+
+
+---- **✅ Development Tools**: Debugging and profiling with `Debugger` and `Profiler` classes
+
+
+
+## 🎉 Acknowledgments| Feature | PowerScript | Python | JavaScript |
+
+
+
+PowerScript is built with ❤️ by the **Elite India Org Team**|---------|-------------|--------|------------|## 🚀 Quick Start
+
+
+
+### Special Thanks To:| Type Safety | ✅ Static + Runtime | ❌ Dynamic | ❌ Dynamic |
+
+
+
+- 🐍 **Python Community** - For the incredible ecosystem| Python Ecosystem | ✅ Full Access | ✅ Native | ❌ None |### Installation & Setup
+
+- 💛 **JavaScript Community** - For modern syntax inspiration  
+
+- 👥 **Contributors** - For your valuable contributions| Modern Syntax | ✅ Clean & Modern | ❌ Traditional | ✅ Modern |
+
+- 🌟 **Early Adopters** - For feedback and support
+
+- 💻 **Open Source** - For making this possible| Compilation | ✅ Fast transpile | ❌ Interpreted | ❌ Interpreted |#### Option 1: Install from PyPI (Recommended)
+
+
+
+---| AI/ML Support | ✅ All Python libs | ✅ Native | ❌ Limited |
+
+
+
+<div align="center">| Learning Curve | ✅ Easy | ✅ Easy | ✅ Easy |```bash
+
+
+
+### Made with ❤️ by [Elite India Org Team](https://github.com/SaleemLww)| Type Checking | ✅ Compile-time | ⚠️ Optional | ⚠️ Optional |# Install PowerScript (TPS) from PyPI
+
+
+
+[![GitHub Stars](https://img.shields.io/github/stars/SaleemLww/Python-PowerScript?style=social)](https://github.com/SaleemLww/Python-PowerScript)| Zero Runtime | ✅ Pure Python | ✅ Native | ❌ Needs engine |pip install tps
+
+[![GitHub Forks](https://img.shields.io/github/forks/SaleemLww/Python-PowerScript?style=social)](https://github.com/SaleemLww/Python-PowerScript/fork)
+
+[![GitHub Watchers](https://img.shields.io/github/watchers/SaleemLww/Python-PowerScript?style=social)](https://github.com/SaleemLww/Python-PowerScript)
+
+
+
+**[⭐ Star](https://github.com/SaleemLww/Python-PowerScript) • [📦 Install](https://pypi.org/project/tps/) • [📚 Learn](docs/) • [🐛 Report Bug](https://github.com/SaleemLww/Python-PowerScript/issues) • [💡 Request Feature](https://github.com/SaleemLww/Python-PowerScript/discussions)**## 🚀 Roadmap# Verify installation
+
+
+
+<h3>PowerScript - Modern Typed Syntax, Python's Power 🚀</h3>tps --version
+
+
+
+</div>### v1.0 (Current - Beta) ✅
+
 
 - ✅ Core language features# Start using PowerScript immediately!
 
