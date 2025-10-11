@@ -1,38 +1,44 @@
-let x: Int = 5
-print(x)
+try {
+    let x: number = 5;
+    console.log(x);
 
-let y: String = "hello"
-print(y)
+    let y: string = "hello";
+    console.log(y);
 
-let z: Float = 3.14
-print(z)
+    let z: number = 3.14;
+    console.log(z);
 
-let a: Bool = true
-print(a)
+    let a: boolean = true;
+    console.log(a);
 
-let b: Bool = false
-print(b)
+    let b: boolean = false;
+    console.log(b);
 
-let arr: [Int] = [1, 2, 3]
-print(arr)
+    let arr: Array<number> = [1, 2, 3];
+    console.log(arr);
 
-let dict: {String: Int} = {"a": 1, "b": 2}
-print(dict)
+    let dict = {"a": 1, "b": 2};
+    console.log(dict);
 
-let result: Int = x + 10
-print(result)
+    let result: number = x + 10;
+    console.log(result);
 
-if x > 0 {
-    print("positive")
-} else {
-    print("non-positive")
-}
+    if (x > 0) {
+        console.log("positive");
+    } else {
+        console.log("non-positive");
+    }
 
-for i in arr {
-    print(i)
-}
+    for (i in arr) {
+        console.log(i);
+    }
 
-while x > 0 {
-    print(x)
-    x = x - 1
+    while (x > 0) {
+        console.log(x);
+        x = x - 1;
+    }
+
+    console.log("test_basic passed");
+} catch (e) {
+    console.log("Error in test_basic:", e);
 }

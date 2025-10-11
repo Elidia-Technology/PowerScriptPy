@@ -1,11 +1,11 @@
-async func async_add(a: Int, b: Int) -> Int {
-    await sleep(0.1)
-    return a + b
+async function async_add(a: number, b: number): number {
+    await sleep(0.1);
+    return a + b;
 }
 
-async func main() {
-    let result = await async_add(5, 3)
-    print(result)
+async function main() {
+    let result = await async_add(5, 3);
+    console.log(result);
 }
 
-main()
+main();

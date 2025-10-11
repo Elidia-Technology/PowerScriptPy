@@ -465,7 +465,30 @@ class Parser:
     def _primary_type(self) -> ExpressionNode:
         """Parse primary type expression"""
         if self._match(TokenType.IDENTIFIER):
-            return IdentifierNode(self._previous().value, self._previous().location)
+            name = self._previous().value
+            # Check for generic type
+            if self._check(TokenType.LESS_THAN):
+                self._advance()  # consume <
+                type_args = []
+                type_args.append(self._type_expression())
+                while self._match(TokenType.COMMA):
+                    type_args.append(self._type_expression())
+                self._consume(TokenType.GREATER_THAN, "Expected '>' after type arguments")
+                return GenericTypeNode(name, type_args, self._previous().location)
+            else:
+                return IdentifierNode(name, self._previous().location)
+        
+        if self._match(TokenType.LEFT_BRACE):
+            properties = {}
+            while not self._check(TokenType.RIGHT_BRACE) and not self._is_at_end():
+                key_token = self._consume(TokenType.IDENTIFIER, "Expected property name")
+                self._consume(TokenType.COLON, "Expected ':' after property name")
+                prop_type = self._type_expression()
+                properties[key_token.value] = prop_type
+                if not self._match(TokenType.COMMA):
+                    break
+            self._consume(TokenType.RIGHT_BRACE, "Expected '}' after object type")
+            return ObjectTypeNode(properties, self._previous().location)
         
         if self._match(TokenType.STRING, TokenType.NUMBER, TokenType.BOOLEAN, TokenType.NULL):
             value = self._previous().value
@@ -702,11 +725,11 @@ class Parser:
         self._consume(TokenType.RIGHT_BRACE, "Expected '}' after block")
         return BlockNode(statements, location)
     
-    def _expression_statement(self) -> ASTNode:
+    def _expression_statement(self) -> ExpressionStatementNode:
         """Parse expression statement"""
         expr = self._expression()
         self._consume(TokenType.SEMICOLON, "Expected ';' after expression")
-        return expr
+        return ExpressionStatementNode(expr, expr.location)
     
     def _expression(self) -> ExpressionNode:
         """Parse expression"""

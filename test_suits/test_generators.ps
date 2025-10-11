@@ -1,15 +1,15 @@
-func countdown(n: Int) {
+function countdown(n: number) {
     while n > 0 {
-        yield n
-        n = n - 1
+        yield n;
+        n = n - 1;
     }
 }
 
 for num in countdown(5) {
-    print(num)
+    console.log(num);
 }
 
-let gen = countdown(3)
-print(next(gen))
-print(next(gen))
-print(next(gen))
+let gen = countdown(3);
+console.log(next(gen));
+console.log(next(gen));
+console.log(next(gen));

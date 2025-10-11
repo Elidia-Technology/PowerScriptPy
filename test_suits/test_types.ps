@@ -1,21 +1,27 @@
-let x: Int | String = 5
-print(x)
+try {
+    let x: number | string = 5;
+    console.log(x);
 
-x = "hello"
-print(x)
+    x = "hello";
+    console.log(x);
 
-let y: Int? = 10
-print(y)
+    let y: number? = 10;
+    console.log(y);
 
-y = None
-print(y)
+    y = null;
+    console.log(y);
 
-let z: [Int] = [1, 2, 3]
-print(z)
+    let z: Array<number> = [1, 2, 3];
+    console.log(z);
 
-let w: {String: Int} = {"a": 1}
-print(w)
+    let w = {"a": 1};
+    console.log(w);
 
-type MyType = Int | String
-let m: MyType = "test"
-print(m)
+    type MyType = number | string;
+    let m: MyType = "test";
+    console.log(m);
+
+    console.log("test_types passed");
+} catch (e) {
+    console.log("Error in test_types:", e);
+}

@@ -435,7 +435,23 @@ class Transpiler(ASTVisitor):
         func = node.callee.accept(self)
         args = [arg.accept(self) for arg in node.arguments]
         
+        # Special handling for console.log -> print
+        if isinstance(func, ast.Attribute) and isinstance(func.value, ast.Name) and func.value.id == 'console' and func.attr == 'log':
+            return ast.Call(func=ast.Name(id='print', ctx=ast.Load()), args=args, keywords=[])
+        
+        # Map PowerScript method names to Python equivalents
+        method_mapping = {
+            'push': 'append',
+            # Add more mappings as needed
+        }
+        if isinstance(func, ast.Attribute) and func.attr in method_mapping:
+            func = ast.Attribute(value=func.value, attr=method_mapping[func.attr], ctx=ast.Load())
+        
         return ast.Call(func=func, args=args, keywords=[])
+    
+    def visit_expression_statement(self, node: ExpressionStatementNode) -> ast.Expr:
+        """Visit expression statement"""
+        return ast.Expr(value=node.expression.accept(self))
     
     def visit_binary_op(self, node: BinaryOpNode) -> Union[ast.BinOp, ast.Compare, ast.BoolOp, ast.Attribute, ast.Subscript]:
         """Visit binary operation node"""
@@ -444,6 +460,9 @@ class Transpiler(ASTVisitor):
         
         # Handle member access
         if node.operator == '.':
+            # Special case for .length -> len()
+            if isinstance(right, ast.Name) and right.id == 'length':
+                return ast.Call(func=ast.Name(id='len', ctx=ast.Load()), args=[left], keywords=[])
             return ast.Attribute(value=left, attr=right.id, ctx=ast.Load())
         
         # Handle array indexing
@@ -829,7 +848,7 @@ class Transpiler(ASTVisitor):
     def _create_exception_handler(self, catch_node: CatchNode) -> ast.ExceptHandler:
         """Create Python exception handler from catch node"""
         # Exception type
-        exception_type = None
+        exception_type = ast.Name(id='Exception', ctx=ast.Load())
         if catch_node.exception_type:
             # Map PowerScript exception types to Python
             type_map = {
@@ -1076,6 +1095,42 @@ class Transpiler(ASTVisitor):
         value = ast.Constant(value=node.value)
         
         return ast.Subscript(value=literal_name, slice=value, ctx=ast.Load())
+    
+    def visit_generic_type(self, node: GenericTypeNode) -> ast.Subscript:
+        """Visit generic type node (Array<T> becomes List<T>)"""
+        # Map PowerScript types to Python types
+        type_mapping = {
+            'Array': 'List',
+            'Dict': 'Dict',
+            'Set': 'Set',
+        }
+        
+        base_name = type_mapping.get(node.base_type, node.base_type)
+        if base_name in ['List', 'Dict', 'Set']:
+            self.type_imports.append(base_name)
+        
+        base_ast = ast.Name(id=base_name, ctx=ast.Load())
+        
+        # Convert type args
+        type_elts = [arg.accept(self) for arg in node.type_args]
+        
+        if len(type_elts) == 1:
+            slice_value = type_elts[0]
+        else:
+            slice_value = ast.Tuple(elts=type_elts, ctx=ast.Load())
+        
+        return ast.Subscript(value=base_ast, slice=slice_value, ctx=ast.Load())
+    
+    def visit_object_type(self, node: ObjectTypeNode) -> ast.Subscript:
+        """Visit object type node ({name: string} becomes Dict[str, Any])"""
+        self.type_imports.extend(['Dict', 'Any'])
+        
+        dict_name = ast.Name(id='Dict', ctx=ast.Load())
+        str_type = ast.Name(id='str', ctx=ast.Load())
+        any_type = ast.Name(id='Any', ctx=ast.Load())
+        
+        slice_value = ast.Tuple(elts=[str_type, any_type], ctx=ast.Load())
+        return ast.Subscript(value=dict_name, slice=slice_value, ctx=ast.Load())
     
     def visit_generic_constraint(self, node: GenericConstraintNode) -> ast.Name:
         """Visit generic constraint node (T extends U)"""

@@ -4,19 +4,19 @@ enum Color {
     Blue
 }
 
-let c = Color.Red
-print(c)
+let c = Color.Red;
+console.log(c);
 
 with open("temp.txt", "w") as f {
-    f.write("test")
+    f.write("test");
 }
 
-let data = [1, 2, 3, 4, 5]
-let filtered = data.filter(x => x > 2)
-print(filtered)
+let data = [1, 2, 3, 4, 5];
+let filtered = data.filter(x => x > 2);
+console.log(filtered);
 
-let mapped = data.map(x => x * 2)
-print(mapped)
+let mapped = data.map(x => x * 2);
+console.log(mapped);
 
-let sum = data.reduce((acc, x) => acc + x, 0)
-print(sum)
+let sum = data.reduce((acc, x) => acc + x, 0);
+console.log(sum);

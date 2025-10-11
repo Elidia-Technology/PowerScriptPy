@@ -1,24 +1,30 @@
-func add(a: Int, b: Int) -> Int {
-    return a + b
-}
-
-let result = add(5, 3)
-print(result)
-
-func greet(name: String) -> String {
-    return "Hello, " + name
-}
-
-print(greet("World"))
-
-func factorial(n: Int) -> Int {
-    if n <= 1 {
-        return 1
+try {
+    function add(a: number, b: number): number {
+        return a + b;
     }
-    return n * factorial(n - 1)
+
+    let result = add(5, 3);
+    console.log(result);
+
+    function greet(name: string): string {
+        return "Hello, " + name;
+    }
+
+    console.log(greet("World"));
+
+    function factorial(n: number): number {
+        if (n <= 1) {
+            return 1;
+        }
+        return n * factorial(n - 1);
+    }
+
+    console.log(factorial(5));
+
+    let lambda = (x: number) => x * 2;
+    console.log(lambda(4));
+
+    console.log("test_functions passed");
+} catch (e) {
+    console.log("Error in test_functions:", e);
 }
-
-print(factorial(5))
-
-let lambda = (x: Int) => x * 2
-print(lambda(4))

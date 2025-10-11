@@ -77,6 +77,8 @@ class NodeType(Enum):
     LITERAL_TYPE = "literal_type"
     GENERIC_CONSTRAINT = "generic_constraint"
     TYPE_ALIAS = "type_alias"
+    GENERIC_TYPE = "generic_type"
+    OBJECT_TYPE = "object_type"
 
 
 class AccessModifier(Enum):
@@ -196,6 +198,17 @@ class ExpressionNode(ASTNode):
     
     def __init__(self, node_type: NodeType = NodeType.EXPRESSION, location: Optional[SourceLocation] = None):
         super().__init__(node_type, location)
+
+
+class ExpressionStatementNode(ASTNode):
+    """AST node for expression statements"""
+    
+    def __init__(self, expression: ExpressionNode, location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.EXPRESSION, location)  # Using EXPRESSION for now
+        self.expression = expression
+    
+    def accept(self, visitor):
+        return visitor.visit_expression_statement(self)
 
 
 class IdentifierNode(ExpressionNode):
@@ -723,6 +736,31 @@ class TypeAliasNode(ASTNode):
         return visitor.visit_type_alias(self)
 
 
+class GenericTypeNode(ExpressionNode):
+    """Generic type node (e.g., Array<T>, Dict<K,V>)"""
+    
+    def __init__(self, base_type: str, type_args: List[ExpressionNode], 
+                 location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.GENERIC_TYPE, location)
+        self.base_type = base_type
+        self.type_args = type_args
+    
+    def accept(self, visitor):
+        return visitor.visit_generic_type(self)
+
+
+class ObjectTypeNode(ExpressionNode):
+    """Object type node (e.g., {name: string, age: number})"""
+    
+    def __init__(self, properties: Dict[str, ExpressionNode], 
+                 location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.OBJECT_TYPE, location)
+        self.properties = properties
+    
+    def accept(self, visitor):
+        return visitor.visit_object_type(self)
+
+
 # Visitor interface
 class ASTVisitor(ABC):
     """Abstract base class for AST visitors"""
@@ -849,3 +887,9 @@ class ASTVisitor(ABC):
     
     @abstractmethod
     def visit_type_alias(self, node: TypeAliasNode): pass
+    
+    @abstractmethod
+    def visit_generic_type(self, node: GenericTypeNode): pass
+    
+    @abstractmethod
+    def visit_object_type(self, node: ObjectTypeNode): pass

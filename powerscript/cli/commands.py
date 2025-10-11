@@ -274,7 +274,10 @@ class RunCommand(Command):
             # Run the Python file
             print(f"Running {source_file}...")
             cmd = [sys.executable, str(python_file)] + args.args
-            result = subprocess.run(cmd)
+            import os
+            env = os.environ.copy()
+            env['PYTHONPATH'] = str(Path.cwd())
+            result = subprocess.run(cmd, env=env)
             return result.returncode
             
         except Exception as e:

@@ -1509,6 +1509,18 @@ try:
 except ImportError:
     pass
 
+# Additional modules
+from .database import Database, create_database
+# from .gui import Window, create_window  # Tkinter not available
+from .networking import HTTPClient, create_http_client
+
+BUILT_IN_GLOBALS['Database'] = Database
+BUILT_IN_GLOBALS['create_database'] = create_database
+# BUILT_IN_GLOBALS['Window'] = Window
+# BUILT_IN_GLOBALS['create_window'] = create_window
+BUILT_IN_GLOBALS['HTTPClient'] = HTTPClient
+BUILT_IN_GLOBALS['create_http_client'] = create_http_client
+
 try:
     import matplotlib.pyplot as plt
     BUILT_IN_GLOBALS['matplotlib'] = plt
