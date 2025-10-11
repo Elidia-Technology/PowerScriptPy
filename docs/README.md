@@ -29,7 +29,7 @@ Welcome to the comprehensive PowerScript documentation!
 - **[Roadmap](roadmap.md)** - Future plans and features
 - **[Changelog](changelog.md)** - Version history and updates
 
-## �� Quick Navigation
+## 🚀 Quick Navigation
 
 **New to PowerScript?**
 1. Start with [Installation](installation.md)
