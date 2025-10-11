@@ -1,5 +1,4 @@
-try {
-try {
+
     class Person {
         name: string;
         age: number;
@@ -9,15 +8,10 @@ try {
             this.age = age;
         }
 
-        greet(): string {
+    function greet(): string {
             return "Hello, my name is " + this.name;
         }
     }
-
-    let p = new Person("Alice", 30);
-    console.log(p.greet());
-    console.log(p.age);
-
     class Student extends Person {
         grade: string;
 
@@ -26,17 +20,19 @@ try {
             this.grade = grade;
         }
 
-        study(): string {
+    function study(): string {
             return this.name + " is studying in grade " + this.grade;
         }
     }
 
+try {
+    let p = new Person("Alice", 30);
+    console.log(p.greet());
+    console.log(p.age);
     let s = new Student("Bob", 20, "A");
     console.log(s.greet());
     console.log(s.study());
 } catch (e) {
     console.log("Error in test_classes:", e);
-}    console.log("test_classes passed");
-} catch (e) {
-    console.log("Error in test_classes:", e);
 }
+console.log("test_classes passed");

@@ -96,7 +96,7 @@ class Parser:
         
         # Base classes
         base_classes = []
-        if self._match(TokenType.COLON):  # Using : for inheritance
+        if self._match(TokenType.COLON) or self._match(TokenType.EXTENDS):  # Using : or extends for inheritance
             base_classes.append(self._consume(TokenType.IDENTIFIER, "Expected base class name").value)
             while self._match(TokenType.COMMA):
                 base_classes.append(self._consume(TokenType.IDENTIFIER, "Expected base class name").value)
