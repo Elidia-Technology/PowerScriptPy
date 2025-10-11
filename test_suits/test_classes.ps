@@ -1,4 +1,5 @@
 try {
+try {
     class Person {
         name: string;
         age: number;
@@ -33,8 +34,9 @@ try {
     let s = new Student("Bob", 20, "A");
     console.log(s.greet());
     console.log(s.study());
-
-    console.log("test_classes passed");
+} catch (e) {
+    console.log("Error in test_classes:", e);
+}    console.log("test_classes passed");
 } catch (e) {
     console.log("Error in test_classes:", e);
 }

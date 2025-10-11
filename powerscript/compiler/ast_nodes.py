@@ -79,6 +79,7 @@ class NodeType(Enum):
     TYPE_ALIAS = "type_alias"
     GENERIC_TYPE = "generic_type"
     OBJECT_TYPE = "object_type"
+    OPTIONAL_TYPE = "optional_type"
 
 
 class AccessModifier(Enum):
@@ -178,7 +179,7 @@ class ParameterNode(ASTNode):
 class VariableNode(ASTNode):
     """AST node for variable declarations"""
     
-    def __init__(self, name: str, var_type: Optional[str] = None,
+    def __init__(self, name: str, var_type: Optional['ExpressionNode'] = None,
                  initializer: Optional['ExpressionNode'] = None,
                  is_const: bool = False, access_modifier: AccessModifier = AccessModifier.PUBLIC,
                  location: Optional[SourceLocation] = None):
@@ -761,6 +762,18 @@ class ObjectTypeNode(ExpressionNode):
         return visitor.visit_object_type(self)
 
 
+class OptionalTypeNode(ExpressionNode):
+    """Optional type node (e.g., T?)"""
+    
+    def __init__(self, type_expr: ExpressionNode, 
+                 location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.OPTIONAL_TYPE, location)
+        self.type_expr = type_expr
+    
+    def accept(self, visitor):
+        return visitor.visit_optional_type(self)
+
+
 # Visitor interface
 class ASTVisitor(ABC):
     """Abstract base class for AST visitors"""
@@ -893,3 +906,6 @@ class ASTVisitor(ABC):
     
     @abstractmethod
     def visit_object_type(self, node: ObjectTypeNode): pass
+    
+    @abstractmethod
+    def visit_optional_type(self, node: OptionalTypeNode): pass

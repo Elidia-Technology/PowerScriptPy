@@ -49,8 +49,13 @@ class Transpiler(ASTVisitor):
         self.current_class: Optional[str] = None
         self.imports: Dict[str, List[str]] = {}
         self.type_imports: List[str] = []
-        self.runtime_checks_enabled = True
+        self.runtime_checks_enabled = False
         self.strict_typing = True
+        self.type_map = {
+            'number': 'float',
+            'string': 'str',
+            'boolean': 'bool'
+        }
     
     def transpile(self, powerscript_nodes: List[ASTNode]) -> ast.Module:
         """Transpile PowerScript AST to Python AST Module"""
@@ -116,7 +121,13 @@ class Transpiler(ASTVisitor):
             imports.append(asyncio_import)
         
         # Add runtime validation imports if needed
-        # Note: beartype import removed for now - runtime_checks_enabled defaults to False
+        if self.runtime_checks_enabled:
+            beartype_import = ast.ImportFrom(
+                module='beartype',
+                names=[ast.alias(name='beartype', asname=None)],
+                level=0
+            )
+            imports.append(beartype_import)
         
         return imports
     
@@ -329,7 +340,8 @@ class Transpiler(ASTVisitor):
     
     def visit_identifier(self, node: IdentifierNode) -> ast.Name:
         """Visit identifier node"""
-        return ast.Name(id=node.name, ctx=ast.Load())
+        name = self.type_map.get(node.name, node.name)
+        return ast.Name(id=name, ctx=ast.Load())
     
     def visit_literal(self, node: LiteralNode) -> ast.Constant:
         """Visit literal node"""
@@ -1073,7 +1085,8 @@ class Transpiler(ASTVisitor):
         type_elts = []
         for type_node in node.types:
             if isinstance(type_node, IdentifierNode):
-                type_elts.append(ast.Name(id=type_node.name, ctx=ast.Load()))
+                name = self.type_map.get(type_node.name, type_node.name)
+                type_elts.append(ast.Name(id=name, ctx=ast.Load()))
             else:
                 type_elts.append(type_node.accept(self))
         
@@ -1095,6 +1108,17 @@ class Transpiler(ASTVisitor):
         value = ast.Constant(value=node.value)
         
         return ast.Subscript(value=literal_name, slice=value, ctx=ast.Load())
+    
+    def visit_optional_type(self, node: OptionalTypeNode) -> ast.Subscript:
+        """Visit optional type node (T? becomes Union[T, None])"""
+        self.type_imports.append('Union')
+        
+        union_name = ast.Name(id='Union', ctx=ast.Load())
+        type_arg = node.type_expr.accept(self)
+        none_type = ast.Constant(value=None)
+        
+        slice_value = ast.Tuple(elts=[type_arg, none_type], ctx=ast.Load())
+        return ast.Subscript(value=union_name, slice=slice_value, ctx=ast.Load())
     
     def visit_generic_type(self, node: GenericTypeNode) -> ast.Subscript:
         """Visit generic type node (Array<T> becomes List<T>)"""

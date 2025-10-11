@@ -237,7 +237,7 @@ class Parser:
         # Type annotation
         var_type = None
         if self._match(TokenType.COLON):
-            var_type = self._type_annotation()
+            var_type = self._type_expression()
         
         # Initializer
         initializer = None
@@ -465,7 +465,7 @@ class Parser:
     def _primary_type(self) -> ExpressionNode:
         """Parse primary type expression"""
         if self._match(TokenType.IDENTIFIER):
-            name = self._previous().value
+            type_expr = IdentifierNode(self._previous().value, self._previous().location)
             # Check for generic type
             if self._check(TokenType.LESS_THAN):
                 self._advance()  # consume <
@@ -474,9 +474,11 @@ class Parser:
                 while self._match(TokenType.COMMA):
                     type_args.append(self._type_expression())
                 self._consume(TokenType.GREATER_THAN, "Expected '>' after type arguments")
-                return GenericTypeNode(name, type_args, self._previous().location)
-            else:
-                return IdentifierNode(name, self._previous().location)
+                type_expr = GenericTypeNode(self._previous().value, type_args, self._previous().location)
+            # Check for optional
+            if self._match(TokenType.QUESTION):
+                type_expr = OptionalTypeNode(type_expr, self._previous().location)
+            return type_expr
         
         if self._match(TokenType.LEFT_BRACE):
             properties = {}

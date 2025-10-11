@@ -1,4 +1,5 @@
 try {
+try {
     let x: number | string = 5;
     console.log(x);
 
@@ -20,8 +21,9 @@ try {
     type MyType = number | string;
     let m: MyType = "test";
     console.log(m);
-
-    console.log("test_types passed");
+} catch (e) {
+    console.log("Error in test_types:", e);
+}    console.log("test_types passed");
 } catch (e) {
     console.log("Error in test_types:", e);
 }

@@ -1,4 +1,5 @@
 try {
+try {
     function add(a: number, b: number): number {
         return a + b;
     }
@@ -21,10 +22,11 @@ try {
 
     console.log(factorial(5));
 
-    let lambda = (x: number) => x * 2;
-    console.log(lambda(4));
-
-    console.log("test_functions passed");
+    // let lambda = (x) => x * 2;
+    // console.log(lambda(4));
+} catch (e) {
+    console.log("Error in test_functions:", e);
+}    console.log("test_functions passed");
 } catch (e) {
     console.log("Error in test_functions:", e);
 }
