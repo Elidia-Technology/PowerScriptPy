@@ -189,6 +189,7 @@ class Lexer:
     # Keywords mapping
     KEYWORDS: Dict[str, TokenType] = {
         'class': TokenType.CLASS,
+        'enum': TokenType.ENUM,
         'constructor': TokenType.CONSTRUCTOR,
         'function': TokenType.FUNCTION,
         'async': TokenType.ASYNC,

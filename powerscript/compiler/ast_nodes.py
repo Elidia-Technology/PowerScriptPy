@@ -32,6 +32,7 @@ from enum import Enum
 class NodeType(Enum):
     """AST Node types"""
     CLASS = "class"
+    ENUM = "enum"
     FUNCTION = "function"
     CONSTRUCTOR = "constructor"
     VARIABLE = "variable"
@@ -136,6 +137,18 @@ class ClassNode(ASTNode):
     
     def accept(self, visitor):
         return visitor.visit_class(self)
+
+
+class EnumNode(ASTNode):
+    """AST node for enum declarations"""
+    
+    def __init__(self, name: str, values: List[str], location: Optional[SourceLocation] = None):
+        super().__init__(NodeType.ENUM, location)
+        self.name = name
+        self.values = values
+    
+    def accept(self, visitor):
+        return visitor.visit_enum(self)
 
 
 class FunctionNode(ASTNode):

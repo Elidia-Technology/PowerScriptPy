@@ -194,6 +194,28 @@ class Transpiler(ASTVisitor):
         self.current_class = None
         return class_def
     
+    def visit_enum(self, node: EnumNode) -> ast.ClassDef:
+        """Visit enum node - convert to class with constants"""
+        body = []
+        
+        for i, value in enumerate(node.values):
+            assign = ast.Assign(
+                targets=[ast.Name(id=value, ctx=ast.Store())],
+                value=ast.Constant(value=i)
+            )
+            body.append(assign)
+        
+        if not body:
+            body.append(ast.Pass())
+        
+        return ast.ClassDef(
+            name=node.name,
+            bases=[],
+            keywords=[],
+            decorator_list=[],
+            body=body
+        )
+    
     def visit_function(self, node: FunctionNode) -> ast.FunctionDef:
         """Visit function node"""
         # Handle constructor specially
@@ -458,6 +480,23 @@ class Transpiler(ASTVisitor):
         }
         if isinstance(func, ast.Attribute) and func.attr in method_mapping:
             func = ast.Attribute(value=func.value, attr=method_mapping[func.attr], ctx=ast.Load())
+        
+        # Special handling for array methods
+        if isinstance(func, ast.Attribute) and func.attr == 'filter':
+            # data.filter(lambda) -> filter(lambda, data)
+            return ast.Call(func=ast.Name(id='filter', ctx=ast.Load()), args=[args[0], func.value], keywords=[])
+        elif isinstance(func, ast.Attribute) and func.attr == 'map':
+            # data.map(lambda) -> map(lambda, data)
+            return ast.Call(func=ast.Name(id='map', ctx=ast.Load()), args=[args[0], func.value], keywords=[])
+        elif isinstance(func, ast.Attribute) and func.attr == 'reduce':
+            # Assume reduce is imported or available
+            self.type_imports.append('functools')
+            reduce_call = ast.Call(
+                func=ast.Attribute(value=ast.Name(id='functools', ctx=ast.Load()), attr='reduce', ctx=ast.Load()),
+                args=[args[0], func.value] + args[1:],  # lambda, data, initial
+                keywords=[]
+            )
+            return reduce_call
         
         return ast.Call(func=func, args=args, keywords=[])
     

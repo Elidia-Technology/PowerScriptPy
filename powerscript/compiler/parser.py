@@ -65,6 +65,8 @@ class Parser:
                 return self._export_declaration()
             elif self._match(TokenType.CLASS):
                 return self._class_declaration()
+            elif self._match(TokenType.ENUM):
+                return self._enum_declaration()
             elif self._match(TokenType.FUNCTION):
                 return self._function_declaration()
             elif self._match(TokenType.ASYNC):
@@ -129,6 +131,23 @@ class Parser:
         
         self._consume(TokenType.RIGHT_BRACE, "Expected '}' after class body")
         return class_node
+    
+    def _enum_declaration(self) -> EnumNode:
+        """Parse enum declaration"""
+        name_token = self._consume(TokenType.IDENTIFIER, "Expected enum name")
+        name = name_token.value
+        
+        self._consume(TokenType.LEFT_BRACE, "Expected '{' after enum name")
+        
+        values = []
+        while not self._check(TokenType.RIGHT_BRACE) and not self._is_at_end():
+            value_token = self._consume(TokenType.IDENTIFIER, "Expected enum value")
+            values.append(value_token.value)
+            if not self._match(TokenType.COMMA):
+                break
+        
+        self._consume(TokenType.RIGHT_BRACE, "Expected '}' after enum values")
+        return EnumNode(name, values, name_token.location)
     
     def _constructor_declaration(self, access_modifier: AccessModifier) -> FunctionNode:
         """Parse constructor declaration"""

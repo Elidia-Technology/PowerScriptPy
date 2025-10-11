@@ -1046,11 +1046,13 @@ def zip_func(*iterables):
 
 def map_func(function, *iterables):
     """Map function over iterables"""
-    return list(map(function, *iterables))
+    import builtins
+    return list(builtins.map(function, *iterables))
 
 def filter_func(function, iterable):
     """Filter iterable"""
-    return list(filter(function, iterable))
+    import builtins
+    return list(builtins.filter(function, iterable))
 
 def range_func(*args):
     """Create range"""
@@ -1058,7 +1060,8 @@ def range_func(*args):
 
 def list_func(iterable=None):
     """Create list"""
-    return list(iterable) if iterable is not None else []
+    import builtins
+    return builtins.list(iterable) if iterable is not None else []
 
 def tuple_func(iterable=None):
     """Create tuple"""
@@ -1150,7 +1153,8 @@ def compile_func(source, filename, mode, flags=0, dont_inherit=False, optimize=-
 
 def open_func(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None):
     """Open file"""
-    return open(file, mode, buffering, encoding, errors, newline, closefd, opener)
+    import builtins
+    return builtins.open(file, mode, buffering, encoding, errors, newline, closefd, opener)
 
 def callable_func(obj):
     """Check if object is callable"""
@@ -1256,6 +1260,7 @@ BUILT_IN_GLOBALS = {
     'Set': Set,
     'FileStream': FileStream,
     'FileError': FileError,
+    'Database': Database,
     
     # Core Python built-in functions
     'console': _console,
