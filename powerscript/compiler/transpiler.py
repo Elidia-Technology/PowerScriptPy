@@ -411,7 +411,13 @@ class Transpiler(ASTVisitor):
         keys = []
         values = []
         for key_node, value_node in node.properties:
-            keys.append(key_node.accept(self))
+            # If key is an identifier, convert it to a string literal
+            # This handles JavaScript-style object literals like {name: "John"}
+            if isinstance(key_node, IdentifierNode):
+                key_ast = ast.Constant(value=key_node.name)
+            else:
+                key_ast = key_node.accept(self)
+            keys.append(key_ast)
             values.append(value_node.accept(self))
         return ast.Dict(keys=keys, values=values)
     

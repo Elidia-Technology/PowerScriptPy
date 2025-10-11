@@ -14,10 +14,10 @@ let numbers = [1, 2, 3, 4, 5];
 console.log("Numbers:", numbers);
 
 // Array length
-console.log("Array length:", numbers.length);
+console.log("Array length:", len(numbers));
 
 // Array manipulation
-numbers.push(6);
+numbers.append(6);
 console.log("After push(6):", numbers);
 
 // Object literals
@@ -28,8 +28,8 @@ let person = {
 };
 
 console.log("Person:", person);
-console.log("Person name:", person.name);
-console.log("Person age:", person.age);
+console.log("Person name:", person["name"]);
+console.log("Person age:", person["age"]);
 
 // Nested objects
 let company = {
@@ -41,8 +41,8 @@ let company = {
     }
 };
 
-console.log("Company:", company.name);
-console.log("Location:", company.location.city);
+console.log("Company:", company["name"]);
+console.log("Location:", company["location"]["city"]);
 
 // Array of objects
 let users = [
@@ -53,7 +53,7 @@ let users = [
 
 console.log("Users:");
 for (user in users) {
-    console.log("  ", user.name, ":", user.score);
+    console.log("  ", user["name"], ":", user["score"]);
 }
 
 // Multi-dimensional arrays
