@@ -1,0 +1,81 @@
+// Test 10: Enums
+// Tests: enum declaration, enum values, enum usage
+
+console.log("=== Test 10: Enums ===");
+
+// Simple enum
+enum Color {
+    RED,
+    GREEN,
+    BLUE,
+    YELLOW
+}
+
+console.log("Color.RED:", Color.RED);
+console.log("Color.GREEN:", Color.GREEN);
+console.log("Color.BLUE:", Color.BLUE);
+
+// Using enum in variables
+let favoriteColor = Color.BLUE;
+console.log("Favorite color:", favoriteColor);
+
+// Enum in conditionals
+if (favoriteColor == Color.BLUE) {
+    console.log("Blue is the favorite color!");
+}
+
+// Enum for status
+enum Status {
+    PENDING,
+    APPROVED,
+    REJECTED,
+    CANCELLED
+}
+
+let orderStatus = Status.APPROVED;
+console.log("Order status:", orderStatus);
+
+// Switch with enum
+switch (orderStatus) {
+    case Status.PENDING:
+        console.log("Order is pending");
+        break;
+    case Status.APPROVED:
+        console.log("Order approved!");
+        break;
+    case Status.REJECTED:
+        console.log("Order rejected");
+        break;
+    default:
+        console.log("Unknown status");
+}
+
+// Enum for directions
+enum Direction {
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST
+}
+
+function move(direction) {
+    switch (direction) {
+        case Direction.NORTH:
+            console.log("Moving North");
+            break;
+        case Direction.SOUTH:
+            console.log("Moving South");
+            break;
+        case Direction.EAST:
+            console.log("Moving East");
+            break;
+        case Direction.WEST:
+            console.log("Moving West");
+            break;
+    }
+}
+
+move(Direction.NORTH);
+move(Direction.EAST);
+
+console.log("✅ Test 10 Passed: Enums");

@@ -1,0 +1,105 @@
+// Test 13: Advanced Functions
+// Tests: closures, higher-order functions, callbacks, recursion
+
+console.log("=== Test 13: Advanced Functions ===");
+
+// Closures (using arrow functions)
+function makeCounter() {
+    let count = 0;
+    let increment = () => {
+        count = count + 1;
+        return count;
+    };
+    return increment;
+}
+
+let counter = makeCounter();
+console.log("Counter 1:", counter());
+console.log("Counter 2:", counter());
+console.log("Counter 3:", counter());
+
+// Higher-order functions
+function applyOperation(x, y, operation) {
+    return operation(x, y);
+}
+
+let add = (a, b) => a + b;
+let multiply = (a, b) => a * b;
+
+console.log("Apply add:", applyOperation(5, 3, add));
+console.log("Apply multiply:", applyOperation(5, 3, multiply));
+
+// Function returning function
+function makeMultiplier(factor) {
+    let multiply = (number) => number * factor;
+    return multiply;
+}
+
+let double = makeMultiplier(2);
+let triple = makeMultiplier(3);
+
+console.log("Double 5:", double(5));
+console.log("Triple 5:", triple(5));
+
+// Array operations (simulated map/filter/reduce)
+let numbers = [1, 2, 3, 4, 5];
+
+// Map simulation
+function mapArray(arr, fn) {
+    let result = [];
+    for (item in arr) {
+        result.push(fn(item));
+    }
+    return result;
+}
+
+let squared = mapArray(numbers, x => x * x);
+console.log("Squared:", squared);
+
+// Filter simulation
+function filterArray(arr, predicate) {
+    let result = [];
+    for (item in arr) {
+        if (predicate(item)) {
+            result.push(item);
+        }
+    }
+    return result;
+}
+
+let evens = filterArray(numbers, x => x % 2 == 0);
+console.log("Even numbers:", evens);
+
+// Reduce simulation
+function reduceArray(arr, fn, initial) {
+    let accumulator = initial;
+    for (item in arr) {
+        accumulator = fn(accumulator, item);
+    }
+    return accumulator;
+}
+
+let sum = reduceArray(numbers, (acc, x) => acc + x, 0);
+console.log("Sum:", sum);
+
+// Recursive functions
+function fibonacci(n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+console.log("Fibonacci(10):", fibonacci(10));
+
+// Tail recursion
+function sumRange(n, acc = 0) {
+    if (n <= 0) {
+        return acc;
+    }
+    return sumRange(n - 1, acc + n);
+}
+
+console.log("Sum 1 to 10:", sumRange(10));
+
+console.log("✅ Test 13 Passed: Advanced Functions");

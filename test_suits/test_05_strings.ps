@@ -1,0 +1,58 @@
+// Test 05: String Operations
+// Tests: string methods, template literals, f-strings, concatenation
+
+console.log("=== Test 05: String Operations ===");
+
+// String concatenation
+let first = "Power";
+let last = "Script";
+let full = first + last;
+console.log("Concatenation:", full);
+
+// String with numbers
+let version = 1;
+let message = "Version " + version + ".0";
+console.log("Message:", message);
+
+// F-strings
+let name = "Alice";
+let age = 25;
+let fstring = f"Name: {name}, Age: {age}";
+console.log("F-string:", fstring);
+
+// Template literals
+let x = 10;
+let y = 20;
+let template = `Sum of ${x} and ${y} is ${x + y}`;
+console.log("Template:", template);
+
+// Multi-line strings
+let multiline = `This is a
+multi-line
+string`;
+console.log("Multi-line:");
+console.log(multiline);
+
+// String with special characters
+let quote = "He said, \"Hello!\"";
+console.log("Quote:", quote);
+
+// String comparisons
+let str1 = "abc";
+let str2 = "abc";
+let str3 = "def";
+
+console.log("str1 == str2:", str1 == str2);
+console.log("str1 == str3:", str1 == str3);
+
+// String length
+let text = "PowerScript";
+console.log("Length of 'PowerScript':", text.length);
+
+// Complex f-strings
+let price = 19.99;
+let quantity = 3;
+let total = f"Total: ${price * quantity}";
+console.log("Shopping:", total);
+
+console.log("✅ Test 05 Passed: String Operations");

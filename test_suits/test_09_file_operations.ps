@@ -1,0 +1,70 @@
+// Test 09: File Operations
+// Tests: File I/O, JSON, Path operations
+
+console.log("=== Test 09: File Operations ===");
+
+// File write and read
+let testFile = "test_output.txt";
+let content = "Hello from PowerScript!";
+
+console.log("Writing to file:", testFile);
+File.write_text(testFile, content);
+
+console.log("Reading from file:", testFile);
+let readContent = File.read_text(testFile);
+console.log("Content:", readContent);
+
+// File append
+let appendContent = "\nThis is appended text.";
+console.log("Appending to file");
+File.append_text(testFile, appendContent);
+
+let fullContent = File.read_text(testFile);
+console.log("Full content:", fullContent);
+
+// File existence check
+let exists = File.exists(testFile);
+console.log("File exists:", exists);
+
+// JSON operations
+let jsonFile = "test_data.json";
+let jsonData = {
+    name: "PowerScript",
+    version: "1.0.0",
+    features: ["transpiler", "type system", "async support"]
+};
+
+console.log("Writing JSON file");
+File.write_json(jsonFile, jsonData);
+
+console.log("Reading JSON file");
+let loadedData = File.read_json(jsonFile);
+console.log("Loaded data:", loadedData);
+
+// Path operations
+let path1 = "folder";
+let path2 = "file.txt";
+let joined = Path.join(path1, path2);
+console.log("Joined path:", joined);
+
+let filename = Path.filename(testFile);
+console.log("Filename:", filename);
+
+// Directory operations
+let testDir = "test_directory";
+console.log("Creating directory:", testDir);
+Directory.create(testDir);
+
+let dirExists = Directory.exists(testDir);
+console.log("Directory exists:", dirExists);
+
+// List current directory
+console.log("Current directory:", Directory.current());
+
+// Cleanup
+console.log("Cleaning up test files");
+File.delete(testFile);
+File.delete(jsonFile);
+Directory.delete(testDir);
+
+console.log("✅ Test 09 Passed: File Operations");

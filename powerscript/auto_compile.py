@@ -12,9 +12,9 @@ from typing import List, Optional
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
-from ..compiler.lexer import Lexer
-from ..compiler.parser import Parser
-from ..compiler.transpiler import Transpiler
+from .compiler.lexer import Lexer
+from .compiler.parser import Parser
+from .compiler.transpiler import Transpiler
 
 
 class PSFileHandler(FileSystemEventHandler):
@@ -50,8 +50,6 @@ class TPSAutoCompiler:
         self.watch = watch
         self.output_dir = output_dir
         self.observer = None
-        self.lexer = Lexer()
-        self.parser = Parser()
         self.transpiler = Transpiler()
         
         # Ensure output directory exists
@@ -63,14 +61,15 @@ class TPSAutoCompiler:
             with open(ps_file, 'r', encoding='utf-8') as f:
                 source_code = f.read()
             
-            # Tokenize
-            tokens = self.lexer.tokenize(source_code, ps_file)
+            # Lex and parse the source code
+            lexer = Lexer(source_code, ps_file)
+            lexer.tokenize()
             
-            # Parse
-            ast = self.parser.parse(tokens)
+            parser = Parser(lexer)
+            ast_nodes = parser.parse()
             
-            # Transpile
-            python_code = self.transpiler.transpile(ast)
+            # Transpile to Python source
+            python_code = self.transpiler.transpile_to_code(ast_nodes)
             
             # Write output
             ps_path = Path(ps_file)

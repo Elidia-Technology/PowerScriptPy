@@ -1,0 +1,83 @@
+// Test 02: Control Flow
+// Tests: if/else, while, for, switch/case, break, continue
+
+console.log("=== Test 02: Control Flow ===");
+
+// If-else statements
+let age = 25;
+
+if (age >= 18) {
+    console.log("Adult: age is", age);
+} else {
+    console.log("Minor: age is", age);
+}
+
+// Nested if-else
+let score = 85;
+
+if (score >= 90) {
+    console.log("Grade: A");
+} else if (score >= 80) {
+    console.log("Grade: B");
+} else if (score >= 70) {
+    console.log("Grade: C");
+} else {
+    console.log("Grade: F");
+}
+
+// While loop
+let counter = 0;
+console.log("While loop:");
+while (counter < 3) {
+    console.log("  Counter:", counter);
+    counter = counter + 1;
+}
+
+// For loop
+console.log("For loop:");
+let numbers = [1, 2, 3, 4, 5];
+for (num in numbers) {
+    console.log("  Number:", num);
+}
+
+// For loop with break
+console.log("For loop with break:");
+for (num in numbers) {
+    if (num == 3) {
+        console.log("  Breaking at:", num);
+        break;
+    }
+    console.log("  Number:", num);
+}
+
+// For loop with continue
+console.log("For loop with continue:");
+for (num in numbers) {
+    if (num == 3) {
+        continue;
+    }
+    console.log("  Number:", num);
+}
+
+// Switch statement
+let day = 3;
+console.log("Switch statement (day =", day, "):");
+
+switch (day) {
+    case 1:
+        console.log("  Monday");
+        break;
+    case 2:
+        console.log("  Tuesday");
+        break;
+    case 3:
+        console.log("  Wednesday");
+        break;
+    case 4, 5:
+        console.log("  Thursday or Friday");
+        break;
+    default:
+        console.log("  Weekend");
+}
+
+console.log("✅ Test 02 Passed: Control Flow");

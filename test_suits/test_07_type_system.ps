@@ -1,0 +1,74 @@
+// Test 07: Type System
+// Tests: type annotations, type aliases, union types, optional types
+
+console.log("=== Test 07: Type System ===");
+
+// Basic type annotations
+let name: string = "PowerScript";
+let age: number = 1;
+let isActive: boolean = true;
+
+console.log("Name:", name);
+console.log("Age:", age);
+console.log("Active:", isActive);
+
+// Function with type annotations
+function addNumbers(a: number, b: number): number {
+    return a + b;
+}
+
+let result: number = addNumbers(10, 20);
+console.log("10 + 20 =", result);
+
+// Type aliases
+type UserID = string;
+type Age = number;
+
+let userId: UserID = "user123";
+let userAge: Age = 25;
+
+console.log("User ID:", userId);
+console.log("User Age:", userAge);
+
+// Union types
+type StringOrNumber = string | number;
+
+function printValue(value: StringOrNumber) {
+    console.log("Value:", value);
+}
+
+printValue("hello");
+printValue(42);
+
+// Literal types
+type Status = "active" | "inactive" | "pending";
+
+let userStatus: Status = "active";
+console.log("Status:", userStatus);
+
+// Optional parameters
+function greet(name: string, title = "User") {
+    console.log(f"Hello, {title} {name}!");
+}
+
+greet("Alice", "Dr.");
+greet("Bob");
+
+// Array types (without type annotations for now)
+let numbers = [1, 2, 3, 4, 5];
+let names = ["Alice", "Bob", "Charlie"];
+
+console.log("Numbers:", numbers);
+console.log("Names:", names);
+
+// Function type annotations
+function processString(input: string, processor): string {
+    return processor(input);
+}
+
+let uppercase = (s: string) => s.toUpperCase();
+// Note: toUpperCase might not be implemented, using simple return
+let processed = processString("hello", uppercase);
+console.log("Processed:", processed);
+
+console.log("✅ Test 07 Passed: Type System");

@@ -1,0 +1,98 @@
+// Test 06: Classes and OOP
+// Tests: class declarations, constructors, methods, inheritance, access modifiers
+
+console.log("=== Test 06: Classes and OOP ===");
+
+// Basic class
+class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    function greet() {
+        console.log(f"Hello, I'm {this.name}, {this.age} years old");
+    }
+    
+    function birthday() {
+        this.age = this.age + 1;
+        console.log(f"{this.name} is now {this.age} years old");
+    }
+}
+
+let person1 = new Person("Alice", 25);
+person1.greet();
+person1.birthday();
+
+console.log("---");
+
+// Class with access modifiers
+class BankAccount {
+    public let accountNumber;
+    private let balance;
+    
+    constructor(accountNumber, initialBalance) {
+        this.accountNumber = accountNumber;
+        this.balance = initialBalance;
+    }
+    
+    public function deposit(amount) {
+        this.balance = this.balance + amount;
+        console.log(f"Deposited ${amount}. New balance: ${this.balance}");
+    }
+    
+    public function getBalance() {
+        return this.balance;
+    }
+}
+
+let account = new BankAccount("123456", 1000);
+account.deposit(500);
+console.log("Current balance:", account.getBalance());
+
+// Inheritance
+class Animal {
+    constructor(name) {
+        this.name = name;
+    }
+    
+    function speak() {
+        console.log(f"{this.name} makes a sound");
+    }
+}
+
+class Dog extends Animal {
+    constructor(name, breed) {
+        super(name);
+        this.breed = breed;
+    }
+    
+    function speak() {
+        console.log(f"{this.name} barks! Woof!");
+    }
+    
+    function getBreed() {
+        return this.breed;
+    }
+}
+
+let dog = new Dog("Buddy", "Golden Retriever");
+dog.speak();
+console.log("Breed:", dog.getBreed());
+
+// Class with static-like methods
+class Calculator {
+    function add(a, b) {
+        return a + b;
+    }
+    
+    function multiply(a, b) {
+        return a * b;
+    }
+}
+
+let calc = new Calculator();
+console.log("Calculator: 5 + 3 =", calc.add(5, 3));
+console.log("Calculator: 4 * 6 =", calc.multiply(4, 6));
+
+console.log("✅ Test 06 Passed: Classes and OOP");

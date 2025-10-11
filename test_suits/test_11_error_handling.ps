@@ -1,0 +1,85 @@
+// Test 11: Error Handling
+// Tests: try/catch/finally, throw, error types
+
+console.log("=== Test 11: Error Handling ===");
+
+// Basic try-catch
+try {
+    console.log("Inside try block");
+    let x = 10;
+    let y = 0;
+    // This might cause issues in some contexts
+    if (y == 0) {
+        throw "Division by zero error";
+    }
+    let result = x / y;
+} catch (error) {
+    console.log("Caught error:", error);
+}
+
+// Try-catch-finally
+try {
+    console.log("Executing risky operation");
+    let data = {name: "test"};
+    console.log("Data:", data.name);
+} catch (error) {
+    console.log("Error occurred:", error);
+} finally {
+    console.log("Cleanup completed");
+}
+
+// Multiple catch blocks
+function riskyOperation(value) {
+    if (value < 0) {
+        throw "Negative value error";
+    }
+    if (value == 0) {
+        throw "Zero value error";
+    }
+    return 100 / value;
+}
+
+try {
+    let result1 = riskyOperation(10);
+    console.log("Result 1:", result1);
+    
+    let result2 = riskyOperation(0);
+    console.log("Result 2:", result2);
+} catch (error) {
+    console.log("Operation failed:", error);
+}
+
+// Nested try-catch
+try {
+    console.log("Outer try");
+    try {
+        console.log("Inner try");
+        throw "Inner error";
+    } catch (innerError) {
+        console.log("Inner catch:", innerError);
+    }
+    console.log("After inner try-catch");
+} catch (outerError) {
+    console.log("Outer catch:", outerError);
+}
+
+// Error propagation
+function level3() {
+    throw "Error at level 3";
+}
+
+function level2() {
+    level3();
+}
+
+function level1() {
+    try {
+        level2();
+    } catch (error) {
+        console.log("Caught at level 1:", error);
+    }
+}
+
+level1();
+
+console.log("✅ Test 11 Passed: Error Handling");

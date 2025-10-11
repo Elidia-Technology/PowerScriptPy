@@ -1,0 +1,61 @@
+// Test 08: Async/Await
+// Tests: async functions, await expressions, promises
+
+console.log("=== Test 08: Async/Await ===");
+
+// Simple async function
+async function fetchData() {
+    console.log("Fetching data...");
+    return "Data retrieved";
+}
+
+// Async function with await
+async function processData() {
+    console.log("Starting process...");
+    let data = await fetchData();
+    console.log("Received:", data);
+    return "Process complete";
+}
+
+// Call async function
+let promise = processData();
+console.log("Async operation initiated");
+
+// Async function with delay simulation
+async function delayedFunction() {
+    console.log("Delayed function started");
+    // Simulating async work
+    let result = await fetchData();
+    console.log("Delayed function completed");
+    return result;
+}
+
+// Multiple async operations
+async function multipleOperations() {
+    console.log("Starting multiple operations");
+    
+    let result1 = await fetchData();
+    console.log("First operation:", result1);
+    
+    let result2 = await fetchData();
+    console.log("Second operation:", result2);
+    
+    return "All operations complete";
+}
+
+// Error handling in async
+async function errorHandlingAsync() {
+    try {
+        let data = await fetchData();
+        console.log("Success:", data);
+    } catch (error) {
+        console.log("Error caught:", error);
+    }
+}
+
+// Run async functions
+delayedFunction();
+multipleOperations();
+errorHandlingAsync();
+
+console.log("✅ Test 08 Passed: Async/Await");

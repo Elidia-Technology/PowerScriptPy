@@ -1,0 +1,68 @@
+// Test 04: Arrays and Objects
+// Tests: array operations, object literals, destructuring
+
+console.log("=== Test 04: Arrays and Objects ===");
+
+// Array creation and access
+let fruits = ["apple", "banana", "cherry"];
+console.log("Fruits:", fruits);
+console.log("First fruit:", fruits[0]);
+console.log("Last fruit:", fruits[2]);
+
+// Array operations
+let numbers = [1, 2, 3, 4, 5];
+console.log("Numbers:", numbers);
+
+// Array length
+console.log("Array length:", numbers.length);
+
+// Array manipulation
+numbers.push(6);
+console.log("After push(6):", numbers);
+
+// Object literals
+let person = {
+    name: "John",
+    age: 30,
+    city: "New York"
+};
+
+console.log("Person:", person);
+console.log("Person name:", person.name);
+console.log("Person age:", person.age);
+
+// Nested objects
+let company = {
+    name: "Tech Corp",
+    employees: 100,
+    location: {
+        city: "San Francisco",
+        country: "USA"
+    }
+};
+
+console.log("Company:", company.name);
+console.log("Location:", company.location.city);
+
+// Array of objects
+let users = [
+    {name: "Alice", score: 95},
+    {name: "Bob", score: 87},
+    {name: "Charlie", score: 92}
+];
+
+console.log("Users:");
+for (user in users) {
+    console.log("  ", user.name, ":", user.score);
+}
+
+// Multi-dimensional arrays
+let matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+];
+
+console.log("Matrix[1][1] =", matrix[1][1]);
+
+console.log("✅ Test 04 Passed: Arrays and Objects");

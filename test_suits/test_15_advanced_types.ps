@@ -1,0 +1,133 @@
+// Test 15: Advanced Types
+// Tests: generics, interfaces, complex type structures
+
+console.log("=== Test 15: Advanced Types ===");
+
+// Generic class simulation
+class Container {
+    constructor(value) {
+        this.value = value;
+    }
+    
+    function getValue() {
+        return this.value;
+    }
+    
+    function setValue(newValue) {
+        this.value = newValue;
+    }
+}
+
+let stringContainer = new Container("Hello");
+console.log("String container:", stringContainer.getValue());
+
+let numberContainer = new Container(42);
+console.log("Number container:", numberContainer.getValue());
+
+// Interface-like structure using class
+class Shape {
+    constructor() {
+        // Base class
+    }
+    
+    function area() {
+        return 0;
+    }
+    
+    function perimeter() {
+        return 0;
+    }
+}
+
+class Rectangle extends Shape {
+    constructor(width, height) {
+        super();
+        this.width = width;
+        this.height = height;
+    }
+    
+    function area() {
+        return this.width * this.height;
+    }
+    
+    function perimeter() {
+        return 2 * (this.width + this.height);
+    }
+}
+
+class Circle extends Shape {
+    constructor(radius) {
+        super();
+        this.radius = radius;
+    }
+    
+    function area() {
+        return 3.14159 * this.radius * this.radius;
+    }
+    
+    function perimeter() {
+        return 2 * 3.14159 * this.radius;
+    }
+}
+
+let rect = new Rectangle(5, 10);
+console.log("Rectangle area:", rect.area());
+console.log("Rectangle perimeter:", rect.perimeter());
+
+let circle = new Circle(7);
+console.log("Circle area:", circle.area());
+console.log("Circle perimeter:", circle.perimeter());
+
+// Type checking simulation
+function processValue(value) {
+    if (typeof value == "string") {
+        console.log("Processing string:", value);
+    } else if (typeof value == "number") {
+        console.log("Processing number:", value);
+    } else {
+        console.log("Processing other type:", value);
+    }
+}
+
+processValue("hello");
+processValue(42);
+processValue(true);
+
+// Complex nested types
+let user = {
+    id: 1,
+    name: "Alice",
+    address: {
+        street: "123 Main St",
+        city: "Boston",
+        zipCode: "02101"
+    },
+    contacts: [
+        {type: "email", value: "alice@example.com"},
+        {type: "phone", value: "555-1234"}
+    ]
+};
+
+console.log("User:", user.name);
+console.log("City:", user.address.city);
+console.log("First contact:", user.contacts[0].value);
+
+// Tuple-like structures
+let point = [10, 20];
+let x = point[0];
+let y = point[1];
+console.log(f"Point: ({x}, {y})");
+
+// Optional chaining simulation
+function getProperty(obj, prop) {
+    if (obj) {
+        return obj[prop];
+    }
+    return null;
+}
+
+let data = {name: "Test"};
+let name = getProperty(data, "name");
+console.log("Name:", name);
+
+console.log("✅ Test 15 Passed: Advanced Types");

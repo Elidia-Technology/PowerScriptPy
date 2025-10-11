@@ -1,0 +1,101 @@
+// Test 14: Operators and Expressions
+// Tests: arithmetic, comparison, logical, bitwise operators
+
+console.log("=== Test 14: Operators and Expressions ===");
+
+// Arithmetic operators
+let a = 10;
+let b = 3;
+
+console.log("a + b =", a + b);
+console.log("a - b =", a - b);
+console.log("a * b =", a * b);
+console.log("a / b =", a / b);
+console.log("a % b =", a % b);
+console.log("a ^ b =", Math.pow(a, b));
+
+// Compound assignment
+let x = 5;
+console.log("Initial x:", x);
+
+x = x + 3;
+console.log("x += 3:", x);
+
+x = x * 2;
+console.log("x *= 2:", x);
+
+x = x - 4;
+console.log("x -= 4:", x);
+
+// Comparison operators
+let num1 = 10;
+let num2 = 20;
+
+console.log("10 == 20:", num1 == num2);
+console.log("10 != 20:", num1 != num2);
+console.log("10 < 20:", num1 < num2);
+console.log("10 > 20:", num1 > num2);
+console.log("10 <= 20:", num1 <= num2);
+console.log("10 >= 20:", num1 >= num2);
+
+// Logical operators
+let t = true;
+let f = false;
+
+console.log("true && false:", t && f);
+console.log("true || false:", t || f);
+console.log("!true:", !t);
+console.log("!false:", !f);
+
+// Logical operators with values
+let age = 25;
+let hasLicense = true;
+
+let canDrive = age >= 18 && hasLicense;
+console.log("Can drive:", canDrive);
+
+let needsAttention = age < 18 || !hasLicense;
+console.log("Needs attention:", needsAttention);
+
+// Bitwise operators
+let bits1 = 5;   // 0101 in binary
+let bits2 = 3;   // 0011 in binary
+
+console.log("5 & 3 =", bits1 & bits2);   // AND: 0001 = 1
+console.log("5 | 3 =", bits1 | bits2);   // OR:  0111 = 7
+console.log("5 ^ 3 =", bits1 ^ bits2);   // XOR: 0110 = 6
+console.log("~5 =", ~bits1);             // NOT
+console.log("5 << 1 =", bits1 << 1);     // Left shift
+console.log("5 >> 1 =", bits1 >> 1);     // Right shift
+
+// Ternary operator equivalent (using if-else)
+let score = 85;
+let grade = "";
+if (score >= 90) {
+    grade = "A";
+} else if (score >= 80) {
+    grade = "B";
+} else {
+    grade = "C";
+}
+console.log("Grade:", grade);
+
+// Expression evaluation order
+let result = 2 + 3 * 4;
+console.log("2 + 3 * 4 =", result);
+
+let result2 = (2 + 3) * 4;
+console.log("(2 + 3) * 4 =", result2);
+
+// Boolean expressions
+let value = 0;
+if (!value) {
+    console.log("Value is falsy");
+}
+
+let name = "Alice";
+if (name) {
+    console.log("Name is truthy");
+}
+
+console.log("✅ Test 14 Passed: Operators and Expressions");
