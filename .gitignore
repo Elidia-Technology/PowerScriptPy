@@ -1,5 +1,8 @@
 # PowerScript .gitignore
 
+# Archive folder (documentation backups)
+archive/
+
 # Build outputs
 build/
 dist/
