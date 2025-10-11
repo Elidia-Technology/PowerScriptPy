@@ -1,9 +1,9 @@
 # PowerScript .gitignore
 
-# Archive folder (documentation backups)
+# Project configuration
 archive/
 
-# Root-level files (keep only README.md public)
+# Root-level configuration and documentation
 /*.txt
 /*.toml
 /*.sh
@@ -15,8 +15,9 @@ archive/
 /*.cfg
 /*.ini
 /*.conf
+/*.in
 
-# But allow README.md
+# Public documentation
 !README.md
 
 # Build outputs
