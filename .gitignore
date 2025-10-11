@@ -3,6 +3,22 @@
 # Archive folder (documentation backups)
 archive/
 
+# Root-level files (keep only README.md public)
+/*.txt
+/*.toml
+/*.sh
+/*.md
+/*.json
+/*.py
+/*.yaml
+/*.yml
+/*.cfg
+/*.ini
+/*.conf
+
+# But allow README.md
+!README.md
+
 # Build outputs
 build/
 dist/
