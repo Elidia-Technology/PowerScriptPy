@@ -381,7 +381,7 @@ let z = bool(1);       // To boolean
 ### Building from Source
 1. Clone the repository
 2. Install dependencies: `npm install`
-3. Compile TypeScript: `npm run compile`
+3. Compile extension source: `npm run compile`
 4. Package extension: `vsce package`
 5. Install: `code --install-extension powerscript-1.0.0.vsix`
 
@@ -398,7 +398,7 @@ vscode-extension/
 │   └── powerscript.json     # Code snippets
 ├── language-configuration.json     # Language configuration
 ├── package.json             # Extension manifest
-└── tsconfig.json           # TypeScript configuration
+└── tsconfig.json           # Build configuration
 ```
 
 ## Contributing

@@ -96,7 +96,7 @@ cd Python-PowerScript/vscode-extension
 # Install dependencies
 npm install
 
-# Compile TypeScript
+# Compile the extension source
 npm run compile
 
 # Package the extension
