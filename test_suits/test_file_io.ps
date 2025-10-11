@@ -1,0 +1,11 @@
+let file = open("test.txt", "w")
+file.write("Hello, file!")
+file.close()
+
+let file2 = open("test.txt", "r")
+let content = file2.read()
+print(content)
+file2.close()
+
+import os
+os.remove("test.txt")

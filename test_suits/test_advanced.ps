@@ -1,0 +1,22 @@
+enum Color {
+    Red,
+    Green,
+    Blue
+}
+
+let c = Color.Red
+print(c)
+
+with open("temp.txt", "w") as f {
+    f.write("test")
+}
+
+let data = [1, 2, 3, 4, 5]
+let filtered = data.filter(x => x > 2)
+print(filtered)
+
+let mapped = data.map(x => x * 2)
+print(mapped)
+
+let sum = data.reduce((acc, x) => acc + x, 0)
+print(sum)

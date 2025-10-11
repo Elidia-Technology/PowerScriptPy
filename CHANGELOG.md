@@ -2,7 +2,7 @@
 
 All notable changes to PowerScript (TPS) will be documented in this file.
 
-## [1.0.0] - 2025-10-10
+## [1.0.0b1] - 2025-01-08
 
 ### Added
 - Initial release of Typed PowerScript (TPS)

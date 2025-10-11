@@ -1,0 +1,15 @@
+func countdown(n: Int) {
+    while n > 0 {
+        yield n
+        n = n - 1
+    }
+}
+
+for num in countdown(5) {
+    print(num)
+}
+
+let gen = countdown(3)
+print(next(gen))
+print(next(gen))
+print(next(gen))

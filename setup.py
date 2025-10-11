@@ -38,7 +38,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="tps",
-    version="1.0.0",
+    version="1.0.0b1",
     description="Typed PowerScript (TPS) - A fully structured development language that transpiles to Python",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -48,7 +48,7 @@ setup(
     license="MIT",
     packages=find_packages(),
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",

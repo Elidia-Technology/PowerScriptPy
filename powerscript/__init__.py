@@ -46,7 +46,7 @@ Usage:
     ps main.ps  # Quick run
 """
 
-__version__ = "1.0.0"
+__version__ = "1.0.0b1"
 __author__ = "PowerScript Team (Elite India Org)"
 __package_name__ = "tps"
 

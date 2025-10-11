@@ -1,0 +1,9 @@
+let numbers = [1, 2, 3, 4, 5]
+let squares = [x * x for x in numbers if x % 2 == 0]
+print(squares)
+
+let dict_comp = {str(x): x * 2 for x in numbers}
+print(dict_comp)
+
+let set_comp = {x for x in numbers if x > 2}
+print(set_comp)
