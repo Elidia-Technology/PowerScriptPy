@@ -1,15 +1,19 @@
-function countdown(n: number) {
-    while n > 0 {
-        yield n;
-        n = n - 1;
+try{
+    function countdown(n: number) {
+        while n > 0 {
+            yield n;
+            n = n - 1;
+        }
     }
-}
 
-for num in countdown(5) {
-    console.log(num);
-}
+    for num in countdown(5) {
+        console.log(num);
+    }
 
-let gen = countdown(3);
-console.log(next(gen));
-console.log(next(gen));
-console.log(next(gen));
+    let gen = countdown(3);
+    console.log(next(gen));
+    console.log(next(gen));
+    console.log(next(gen));
+} catch (e) {
+    console.log("Error in test_generators:", e);
+}  

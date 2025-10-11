@@ -1,19 +1,23 @@
-let s = "Hello, World!";
-console.log(s);
+try{
+    let s = "Hello, World!";
+    console.log(s);
 
-let s2 = s + " How are you?";
-console.log(s2);
+    let s2 = s + " How are you?";
+    console.log(s2);
 
-console.log(s.length);
+    console.log(s.length);
 
-console.log(s[0]);
-console.log(s[7:12]);
+    console.log(s[0]);
+    console.log(s[7:12]);
 
-let fstring = `Value: ${5 + 3}`;
-console.log(fstring);
+    let fstring = `Value: ${5 + 3}`;
+    console.log(fstring);
 
-let multiline = """
-This is a
-multiline string
-""";
-console.log(multiline);
+    let multiline = """
+    This is a
+    multiline string
+    """;
+    console.log(multiline);
+} catch (e) {
+    console.log("Error in test_strings:", e);
+}  

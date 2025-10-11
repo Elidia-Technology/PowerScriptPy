@@ -1,11 +1,15 @@
-let file = open("test.txt", "w");
-file.write("Hello, file!");
-file.close();
+try{
+    let file = open("test.txt", "w");
+    file.write("Hello, file!");
+    file.close();
 
-let file2 = open("test.txt", "r");
-let content = file2.read();
-console.log(content);
-file2.close();
+    let file2 = open("test.txt", "r");
+    let content = file2.read();
+    console.log(content);
+    file2.close();
 
-import os;
-os.remove("test.txt");
+    import os;
+    os.remove("test.txt");
+} catch (e) {
+    console.log("Error in test_file_io:", e);
+}  

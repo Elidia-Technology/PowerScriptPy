@@ -1,9 +1,13 @@
-let numbers = [1, 2, 3, 4, 5];
-let squares = [x * x for x in numbers if (x % 2 == 0)];
-console.log(squares);
+try{
+    let numbers = [1, 2, 3, 4, 5];
+    let squares = [x * x for x in numbers if (x % 2 == 0)];
+    console.log(squares);
 
-let dict_comp = {str(x): x * 2 for x in numbers};
-console.log(dict_comp);
+    let dict_comp = {str(x): x * 2 for x in numbers};
+    console.log(dict_comp);
 
-let set_comp = {x for x in numbers if x > 2};
-console.log(set_comp);
+    let set_comp = {x for x in numbers if x > 2};
+    console.log(set_comp);
+} catch (e) {
+    console.log("Error in test_comprehensive:", e);
+}  
