@@ -2,7 +2,7 @@
 
 # MIT License
 #
-# Copyright (c) 2025 Saleem Ahmad (Elite India Org Team)
+# Copyright (c) 2025 Saleem Ahmad (Elidia Technology Pvt Ltd)
 # Email: team@eliteindia.org
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy

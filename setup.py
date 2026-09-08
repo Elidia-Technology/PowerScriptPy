@@ -1,7 +1,7 @@
 """
 MIT License
 
-Copyright (c) 2025 Saleem Ahmad (Elite India Org Team)
+Copyright (c) 2025 Saleem Ahmad (Elidia Technology Pvt Ltd)
 Email: team@eliteindia.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -42,7 +42,7 @@ setup(
     description="Typed PowerScript (TPS) - A fully structured development language that transpiles to Python",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author="Saleem Ahmad (Elite India Org Team)",
+    author="Saleem Ahmad (Elidia Technology Pvt Ltd)",
     author_email="saleemlww@gmail.com",
     url="https://github.com/SaleemLww/PowerScript-EITPS",
     license="MIT",

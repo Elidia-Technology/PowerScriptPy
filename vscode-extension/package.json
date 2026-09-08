@@ -4,7 +4,7 @@
   "description": "Full IDE support for PowerScript language with LSP, debugging, and syntax highlighting",
   "version": "1.0.0",
   "publisher": "powerscript-team",
-  "author": "Saleem Ahmad (Elite India Org Team) <team@eliteindia.org>",
+  "author": "Saleem Ahmad (Elidia Technology Pvt Ltd) <team@eliteindia.org>",
   "license": "MIT",
   "engines": {
     "vscode": "^1.60.0"

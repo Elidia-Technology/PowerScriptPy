@@ -413,7 +413,7 @@ vscode-extension/
 
 MIT License
 
-Copyright (c) 2025 Saleem Ahmad (Elite India Org Team)
+Copyright (c) 2025 Saleem Ahmad (Elidia Technology Pvt Ltd)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -433,7 +433,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-**Author**: Saleem Ahmad (Elite India Org Team)  
+**Author**: Saleem Ahmad (Elidia Technology Pvt Ltd)  
 **Email**: team@eliteindia.org
 
 ## Support
